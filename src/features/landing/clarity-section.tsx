@@ -1,4 +1,5 @@
 import { formatMoney } from "@/components/money";
+import { Orbits } from "./orbits";
 
 // Illustrative numbers that match the hero cards: 4.218,90 − 2.958,90 − 54,00 × 12 = 612,00.
 const BALANCE = 421890;
@@ -21,7 +22,18 @@ export function ClaritySection() {
   const [whole, cents] = formatMoney(LEFTOVER).split(",");
 
   return (
-    <section id="clareza" aria-labelledby="clareza-title" className="bg-graphite text-on-dark">
+    <section
+      id="clareza"
+      aria-labelledby="clareza-title"
+      className="relative isolate overflow-hidden rounded-t-[2rem] bg-graphite text-on-dark md:rounded-t-[3rem]"
+    >
+      {/* Depth: a warm light behind the panel, a faint one at the top edge, the sun's orbits and grain. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_45%_60%_at_76%_58%,rgb(242_140_40/0.22),transparent_70%),radial-gradient(ellipse_60%_35%_at_15%_0%,rgb(242_140_40/0.07),transparent_70%)]"
+      />
+      <Orbits className="absolute top-1/2 right-[-18rem] -z-10 hidden size-[56rem] -translate-y-1/2 opacity-60 md:block" />
+      <div aria-hidden="true" className="grain pointer-events-none absolute inset-0 -z-10" />
       <div className="shell grid gap-12 py-24 *:min-w-0 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-16 md:py-32">
         <div className="reveal">
           <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.08em] text-on-dark-muted uppercase">
@@ -41,7 +53,7 @@ export function ClaritySection() {
           </p>
         </div>
 
-        <div className="reveal rounded-[1.75rem] border border-white/[0.07] bg-white/[0.03] p-6 sm:p-8">
+        <div className="reveal rounded-[1.75rem] border border-white/[0.08] bg-white/[0.04] p-6 backdrop-blur-md sm:p-8">
           <p className="text-sm text-on-dark-muted">Até o próximo salário, dia 5</p>
           <p className="mt-2 flex flex-wrap items-baseline gap-x-3">
             <span className="text-5xl font-semibold tracking-[-0.05em] tabular-nums sm:text-7xl">
