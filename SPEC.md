@@ -7,6 +7,7 @@
 Construir o site e o Internet Banking do **Âmbar**, um banco digital **fictício** que "explica, avisa e não julga". É uma peça de portfólio de frontend: o objetivo é mostrar processo e qualidade de nível sênior (estado, formulários, acessibilidade, testes e polimento), não só uma landing page.
 
 **Quem usa:**
+
 - **Recrutador ou entrevistador:** precisa entender o produto em 90 segundos e encontrar raciocínio de engenharia (o motor de insights) e cuidado de UX (calma, acessibilidade).
 - **Persona da demo:** Marina, 27 anos, salário no dia 5, com aluguel, streaming e delivery.
 
@@ -14,13 +15,13 @@ Construir o site e o Internet Banking do **Âmbar**, um banco digital **fictíci
 
 ## Mapa de módulos
 
-| Módulo | Responsabilidade | Depende de | Fase |
-|---|---|---|---|
-| `foundation` | Scaffold, design tokens, fontes, layout base, logo | — | 1 |
-| `landing` | Página institucional em 4 capítulos | `foundation` | 1 |
-| `auth` | Login com conta demo, validação, área protegida | `foundation` | 2 |
-| `insights` | Dataset de 90 dias e as 3 regras como funções puras | — | 3 |
-| `banking` | Dashboard e extrato, com dados via MSW e TanStack Query | `auth`, `insights` | 3 |
+| Módulo       | Responsabilidade                                        | Depende de         | Fase |
+| ------------ | ------------------------------------------------------- | ------------------ | ---- |
+| `foundation` | Scaffold, design tokens, fontes, layout base, logo      | —                  | 1    |
+| `landing`    | Página institucional em 4 capítulos                     | `foundation`       | 1    |
+| `auth`       | Login com conta demo, validação, área protegida         | `foundation`       | 2    |
+| `insights`   | Dataset de 90 dias e as 3 regras como funções puras     | —                  | 3    |
+| `banking`    | Dashboard e extrato, com dados via MSW e TanStack Query | `auth`, `insights` | 3    |
 
 **Ordem:** `foundation` → `landing` → `auth` → `insights` → `banking`.
 Os módulos `auth`, `insights` e `banking` estão **resumidos** aqui. Cada um será detalhado quando a sua fase começar.
@@ -29,13 +30,13 @@ Os módulos `auth`, `insights` e `banking` estão **resumidos** aqui. Cada um se
 
 Cada ferramenta entra **só na sua fase** (regra do README).
 
-| Fase | Ferramentas |
-|---|---|
-| 1 | Next.js (App Router, versão estável no dia do scaffold), TypeScript `strict`, Tailwind CSS, ESLint, Prettier |
-| 2 | React Hook Form + Zod |
-| 3 | MSW, TanStack Query, Motion (`motion/react`) |
-| 4 | Vitest + Testing Library, Playwright, GitHub Actions |
-| 5 | React Three Fiber + drei (fora do MVP) |
+| Fase | Ferramentas                                                                                                  |
+| ---- | ------------------------------------------------------------------------------------------------------------ |
+| 1    | Next.js (App Router, versão estável no dia do scaffold), TypeScript `strict`, Tailwind CSS, ESLint, Prettier |
+| 2    | React Hook Form + Zod                                                                                        |
+| 3    | MSW, TanStack Query, Motion (`motion/react`)                                                                 |
+| 4    | Vitest + Testing Library, Playwright, GitHub Actions                                                         |
+| 5    | React Three Fiber + drei (fora do MVP)                                                                       |
 
 - Gerenciador de pacotes: `npm`. Node 24.
 - Deploy: Vercel.
@@ -108,17 +109,20 @@ export function Money({ cents, className }: MoneyProps) {
 ## Limites
 
 **Sempre:**
+
 - Seguir os tokens e o documento de design.
 - Garantir contraste AA, foco visível, navegação por teclado e respeito a `prefers-reduced-motion`.
 - Rodar `lint`, `typecheck` e `build` antes de cada commit.
 - Explicar o porquê de cada mudança relevante (modo mentor).
 
 **Perguntar antes:**
+
 - Adicionar qualquer dependência.
 - Mudar o design aprovado, os tokens ou a estrutura de pastas.
 - Antecipar ferramentas de fases futuras.
 
 **Nunca:**
+
 - Commitar segredos ou chaves.
 - Dizer que o banco é real (nada de "Banco Central" ou "FGC").
 - Usar `any`.
@@ -130,6 +134,7 @@ export function Money({ cents, className }: MoneyProps) {
 ## Módulo `foundation` (Fase 1)
 
 **Entregas**
+
 1. Scaffold do Next.js, com TypeScript strict, Tailwind, ESLint e Prettier, e os scripts `typecheck` e `format`.
 2. **Design tokens** em `globals.css`:
    - as cores do documento de design;
@@ -150,18 +155,19 @@ export function Money({ cents, className }: MoneyProps) {
 
 Construída **seção por seção**. Cada seção é uma tarefa revisada por você antes da próxima. É a peça mais caprichada do site, mas com o timebox definido no plano.
 
-| Seção | Conteúdo (detalhes no doc de design, seção 3) |
-|---|---|
-| Menu | Logo, âncoras "Conta" e "Cartão", botão "Entrar" |
-| 1 · Hero (claro) | Eyebrow "Conta digital", título "Sem susto no fim do mês.", texto de apoio, botão "Experimentar com conta demo", cartão de saldo escuro com um recado |
-| 2 · Clareza (grafite) | Título, saldo gigante em números tabulares, linha de progresso âmbar |
-| 3 · Cartão (resina) | Título e cartão de resina em CSS, com o logo gravado |
-| 4 · Fechamento (claro) | "Veja o Âmbar funcionando com uma conta demo.", linha de confiança, botão |
-| Rodapé | "Âmbar é um banco fictício, projeto de portfólio." |
+| Seção                  | Conteúdo (detalhes no doc de design, seção 3)                                                                                                         |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Menu                   | Logo, âncoras "Conta" e "Cartão", botão "Entrar"                                                                                                      |
+| 1 · Hero (claro)       | Eyebrow "Conta digital", título "Sem susto no fim do mês.", texto de apoio, botão "Experimentar com conta demo", cartão de saldo escuro com um recado |
+| 2 · Clareza (grafite)  | Título, saldo gigante em números tabulares, linha de progresso âmbar                                                                                  |
+| 3 · Cartão (resina)    | Título e cartão de resina em CSS, com o logo gravado                                                                                                  |
+| 4 · Fechamento (claro) | "Veja o Âmbar funcionando com uma conta demo.", linha de confiança, botão                                                                             |
+| Rodapé                 | "Âmbar é um banco fictício, projeto de portfólio."                                                                                                    |
 
 **Regras:** os números exibidos na landing são **ilustrativos**. O recado não tem botões que parecem clicáveis. Os botões levam para `/login`, que na Fase 1 mostra "em breve".
 
 **Pronto quando:**
+
 - [ ] Bate com o mockup aprovado no computador e no celular (a partir de 320 px, sem rolagem horizontal).
 - [ ] No celular, o cartão de saldo aparece **antes** do botão.
 - [ ] Toda a página é navegável por teclado, com foco visível e ordem lógica; as âncoras do menu funcionam.
@@ -171,12 +177,15 @@ Construída **seção por seção**. Cada seção é uma tarefa revisada por voc
 - [ ] A auditoria do `impeccable` não aponta problemas P0 nem P1.
 
 ## Módulo `auth` (Fase 2), resumo
+
 Login com conta demo **já preenchida**. Validação com React Hook Form + Zod. Mensagens de erro que não culpam o usuário. Sessão falsa guardada no navegador, e as rotas de `(banking)` redirecionam para o login quando não há sessão. **Não há segurança real**, porque não existe servidor. Será detalhado quando a Fase 2 começar.
 
 ## Módulo `insights` (Fase 3), resumo
+
 Dataset de 90 dias da Marina (centavos inteiros, "hoje" congelado em 18/11/2026, fuso de São Paulo) e as 3 regras do doc de design, seção 2.1: projeção, comparação por categoria e recorrência perto de renovar. Cada regra devolve também o texto de "Como calculamos isso?". Não usa React. Será detalhado quando a Fase 3 começar.
 
 ## Módulo `banking` (Fase 3), resumo
+
 - **Dashboard:** projeção em destaque e aviso de renovação.
 - **Extrato:** nomes legíveis e a comparação no meio da lista.
 - Dados via MSW e TanStack Query, com estados de carregando, erro e vazio.
@@ -185,12 +194,14 @@ Dataset de 90 dias da Marina (centavos inteiros, "hoje" congelado em 18/11/2026,
 Será detalhado quando a Fase 3 começar.
 
 ## Critérios de sucesso do MVP
+
 - Os 5 módulos estão "prontos", segundo os critérios de cada um.
 - Todo insight exibido vem de uma regra calculada; nenhum é texto fixo.
 - O fluxo completo (landing → conta demo → dashboard → extrato) funciona no celular e no teclado.
 - O site está publicado na Vercel, e o README explica o projeto em 90 segundos.
 
 ## Perguntas em aberto
+
 - O timebox exato da landing (definido no plano).
 - Testes das regras de `insights/` na Fase 3 ou só na 4.
 - Modo escuro do Internet Banking (depois do MVP).
