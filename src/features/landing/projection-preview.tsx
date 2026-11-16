@@ -5,7 +5,7 @@ export function ProjectionPreview() {
   return (
     <div
       aria-hidden="true"
-      className="w-72 rounded-card bg-white p-5 text-ink shadow-[0_24px_60px_-28px_rgb(120_60_0/0.45)]"
+      className="w-full rounded-card bg-white p-5 text-ink shadow-[0_24px_60px_-28px_rgb(120_60_0/0.45)]"
     >
       <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.08em] text-ink-muted uppercase">
         <span className="size-1.5 rounded-full bg-amber-signal" />
