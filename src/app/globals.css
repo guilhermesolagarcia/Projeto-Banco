@@ -94,6 +94,27 @@
 
 html {
   scroll-behavior: smooth;
+  /* Thin warm scrollbar instead of the default gray. */
+  scrollbar-width: thin;
+  scrollbar-color: #cbbfae transparent;
+  /* No blue flash on tap; buttons give their own pressed feedback. */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fewer orphan words: balanced headings, prettier paragraphs. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+p,
+li {
+  text-wrap: pretty;
+}
+
+/* Anchored sections stop with breathing room instead of glued to the top edge. */
+section[id] {
+  scroll-margin-top: 1.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -111,6 +132,12 @@ html {
 
 body {
   background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* Text selection in brand amber; ink on amber passes AA (7.59:1). */
+::selection {
+  background: var(--color-amber);
   color: var(--color-ink);
 }
 
