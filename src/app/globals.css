@@ -112,6 +112,23 @@ li {
   text-wrap: pretty;
 }
 
+/*
+ * Scroll reveal with native scroll-driven animations (no JavaScript).
+ * Browsers without support simply show the content; reduced motion turns it off below.
+ */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 55%;
+  }
+  .reveal-grow {
+    animation: grow-x linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 45%;
+  }
+}
+
 /* Anchored sections stop with breathing room instead of glued to the top edge. */
 section[id] {
   scroll-margin-top: 1.5rem;
@@ -127,6 +144,11 @@ section[id] {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  /* Scroll-driven animations ignore duration, so switch them off explicitly. */
+  .reveal,
+  .reveal-grow {
+    animation: none !important;
   }
 }
 

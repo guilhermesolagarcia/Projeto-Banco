@@ -1,3 +1,4 @@
+import { ClaritySection } from "@/features/landing/clarity-section";
 import { Hero } from "@/features/landing/hero";
 import { SiteHeader } from "@/features/landing/site-header";
 
@@ -13,6 +14,7 @@ export default function Home() {
       <SiteHeader />
       <main id="conteudo">
         <Hero />
+        <ClaritySection />
       </main>
     </>
   );
