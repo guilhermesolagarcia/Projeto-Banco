@@ -25,15 +25,10 @@ export function ClaritySection() {
     <section
       id="clareza"
       aria-labelledby="clareza-title"
-      className="relative isolate overflow-hidden rounded-t-[2rem] bg-graphite text-on-dark md:rounded-t-[3rem]"
+      className="relative isolate overflow-hidden bg-graphite text-on-dark"
     >
-      {/* Depth: a warm light behind the panel, a faint one at the top edge, the sun's orbits and grain. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_45%_60%_at_76%_58%,rgb(242_140_40/0.22),transparent_70%),radial-gradient(ellipse_60%_35%_at_15%_0%,rgb(242_140_40/0.07),transparent_70%)]"
-      />
+      {/* The sun's orbits, scaled up behind the panel. */}
       <Orbits className="absolute top-1/2 right-[-18rem] -z-10 hidden size-[56rem] -translate-y-1/2 opacity-60 md:block" />
-      <div aria-hidden="true" className="grain pointer-events-none absolute inset-0 -z-10" />
       <div className="shell grid gap-12 py-24 *:min-w-0 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-16 md:py-32">
         <div className="reveal">
           <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.08em] text-on-dark-muted uppercase">
