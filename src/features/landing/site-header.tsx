@@ -3,7 +3,7 @@ import { Logo } from "@/components/logo";
 
 export function SiteHeader() {
   return (
-    <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 sm:px-8">
+    <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-5 sm:px-8 lg:px-10">
       <Link href="/" aria-label="Âmbar, página inicial" className="rounded-md">
         <Logo />
       </Link>

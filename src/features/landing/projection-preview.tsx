@@ -15,7 +15,7 @@ export function ProjectionPreview() {
         Dá para chegar até dia 5 com folga.
       </p>
       <div className="mt-4 h-1.5 rounded-pill bg-paper">
-        <div className="h-full w-[62%] rounded-pill bg-amber" />
+        <div className="h-full w-[62%] origin-left animate-grow-x rounded-pill bg-amber [animation-delay:1100ms]" />
       </div>
       <p className="mt-2 text-sm text-ink-muted">
         Sobram <Money cents={61200} className="font-medium text-ink" /> de folga

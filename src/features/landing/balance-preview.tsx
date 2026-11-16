@@ -23,7 +23,7 @@ export function BalancePreview() {
           />
           <span>
             Streaming renova amanhã: <Money cents={3990} />.{" "}
-            <span className="text-on-dark-muted">Subiu R$ 5 desde o mês passado.</span>
+            <span className="text-on-dark-muted">Subiu R$&nbsp;5 desde o mês passado.</span>
           </span>
         </figcaption>
       </div>
