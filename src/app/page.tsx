@@ -1,3 +1,4 @@
+import { CardSection } from "@/features/landing/card-section";
 import { ClaritySection } from "@/features/landing/clarity-section";
 import { Hero } from "@/features/landing/hero";
 import { SiteHeader } from "@/features/landing/site-header";
@@ -15,6 +16,7 @@ export default function Home() {
       <main id="conteudo">
         <Hero />
         <ClaritySection />
+        <CardSection />
       </main>
     </>
   );
