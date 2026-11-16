@@ -50,7 +50,7 @@ O dono do projeto pesquisou sites de bancos e não gostou de nenhum: *"elementos
 | 4. Fechamento | Claro (papel) | "Abra sua conta em 5 minutos.", a linha de confiança e o botão | Conversão |
 
 **Regras de composição**
-- O laranja é **luz e sinal, nunca fundo de seção**. Ele aparece em: brilhos radiais, o ponto do logo (`Âmbar.`), o ponto das eyebrows, a linha de progresso, o cartão de resina e o marcador dos recados.
+- O laranja é **luz e sinal, nunca fundo de seção**. Ele aparece em: brilhos radiais, o sol do logo, o ponto das eyebrows, a linha de progresso, o cartão de resina e o marcador dos recados.
 - O escuro aparece **em faixas** (seções 2 e 3) e em objetos (o cartão de saldo). Ele dá peso de banco sem deixar o site pesado.
 - **Uma ação principal por seção.** O menu do topo fica em 2 itens + "Entrar": Conta e Cartão (veja a seção 6).
 - **Botões em pílula.** O botão principal é preto quente sobre fundo claro.
@@ -80,6 +80,18 @@ O dono do projeto pesquisou sites de bancos e não gostou de nenhum: *"elementos
 - **Números de dinheiro sempre com `font-variant-numeric: tabular-nums`.** É o sinal silencioso de precisão.
 - Os centavos do saldo gigante ficam em tom mais apagado (`R$ 4.218` + `,90`).
 
+## 4.1 Logo (decidido)
+
+Um **sol de realeza**: um núcleo, um **anel fino** (lembra moeda e selo de garantia), um respiro e **raios ondulados longos e curtos se alternando**, todos ondulados e em simetria total. Ao lado dele, a palavra "Âmbar" em Host Grotesk 600.
+
+- **Marca completa** acima de 32 px: núcleo, anel, 8 raios longos e 8 curtos.
+- **Versão reduzida** em 32 px ou menos (favicon): o mesmo sol **sem os raios curtos**, com o anel e os 8 raios longos levemente mais encorpados. É o mesmo desenho simplificado, nunca um desenho novo.
+- O círculo nunca encosta nos raios.
+- Nunca alternar raios retos e ondulados, para não lembrar o Sol de Mayo, da bandeira argentina.
+- O SVG usa `currentColor`.
+
+Referência visual e SVG-fonte: [`docs/brand/ambar-logo.html`](../../brand/ambar-logo.html). Abra no navegador para ver.
+
 ## 5. Restrições
 - Stack, fases e regras do `README.md` e do `CLAUDE.md`: Next.js + TS strict + Tailwind, e nenhuma ferramenta antes da fase dela.
 - Acessibilidade obrigatória: contraste, foco visível, teclado e `prefers-reduced-motion` (os brilhos e a inclinação do cartão não dependem de animação).
@@ -95,7 +107,6 @@ O dono do projeto pesquisou sites de bancos e não gostou de nenhum: *"elementos
 ## 7. Fica a cargo de quem construir
 - Espaçamentos exatos, raios e sombras, desde que respeitem a sensação de calma e de muito respiro.
 - Os textos das seções 2 a 4 podem ser refinados, mantendo o tom: claro, humano, sem jargão e sem exclamação.
-- O desenho exato do logo. Por ora, a palavra "Âmbar" seguida de um ponto âmbar.
 - Rodapé: simples, escuro ou claro, com o aviso de banco fictício (veja a seção 6).
 
 ## 8. Próximos passos da Fase 0
