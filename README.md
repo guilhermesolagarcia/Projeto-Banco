@@ -2,7 +2,7 @@
 
 Site e Internet Banking de um **banco fictício**, construído como projeto de portfólio para praticar frontend com processo e qualidade de nível sênior.
 
-> **Status:** Fase 0 (planejamento). Nenhum código ainda. Próximo passo: definir a identidade do banco (nome, conceito e público-alvo) e escrever o PRD.
+> **Status:** Fase 0 (planejamento). Nenhum código ainda. Conceito, direção visual e logo definidos. Próximo passo: escrever o PRD do MVP e fechar os design tokens.
 
 ---
 
@@ -121,7 +121,7 @@ Aplicação de simulação multiagente (não é skill). Exige Python 3.11–3.12
 
 ## Decisões pendentes
 
-- [ ] Nome do banco
-- [ ] Conceito e proposta de valor
-- [ ] Público-alvo
-- [ ] Direção visual (paleta, tipografia)
+- [x] Nome do banco: **Âmbar**
+- [x] Conceito e proposta de valor: um banco que explica, avisa e não julga ("Sem susto no fim do mês")
+- [x] Público-alvo: todo mundo
+- [x] Direção visual (paleta, tipografia e logo): veja [`docs/superpowers/specs/2026-11-16-ambar-concept-design.md`](docs/superpowers/specs/2026-11-16-ambar-concept-design.md) e [`docs/brand/ambar-logo.html`](docs/brand/ambar-logo.html)
