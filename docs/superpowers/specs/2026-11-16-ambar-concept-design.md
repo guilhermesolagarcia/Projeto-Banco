@@ -11,9 +11,11 @@ O diferencial é a **postura**: a maioria dos bancos trata o cliente como númer
 Na prática, isso significa:
 
 - **Clareza no lugar do jargão.** "Você gastou R$ 340 a mais que no mês passado, a maior parte em delivery."
-- **Avisos que protegem.** "Sua assinatura renova amanhã. Você não usa há 2 meses."
+- **Avisos que protegem.** "Streaming renova amanhã: R$ 39,90 (subiu R$ 5)." O banco só usa dados que realmente tem; ele não sabe se você assiste à Netflix.
 - **Tom humano.** Saldo baixo vira um próximo passo, não um alerta vermelho gritando.
-- **Aprender usando.** A educação financeira acontece no momento em que é útil. Não existe aba de "cursos".
+- **Aprender usando.** Todo insight mostra **como foi calculado** ("Como calculamos isso?"). A pessoa aprende finanças vendo a própria conta. Não existe aba de "cursos".
+
+**A postura não é só texto, é lógica:** todo insight é **calculado a partir das transações** por funções puras e testáveis (veja a seção 2.1). Nenhum insight é uma frase fixa.
 
 **O nome:** âmbar é uma luz quente e translúcida. Dá para ver através dele (transparência, clareza) e ele acolhe (calma). O laranja da marca representa **luz**, não grito.
 
@@ -38,16 +40,75 @@ O dono do projeto pesquisou sites de bancos e não gostou de nenhum: *"elementos
 - Encher a tela. Cada elemento precisa justificar a sua presença.
 - Texto âmbar sem contraste suficiente (veja a seção 4).
 
+## 2.1 Motor de insights (o coração do MVP)
+
+> Adicionado após a validação com o `llm-council` (16/11/2026). O conselho concluiu que, sem cálculo, o conceito vira "strings bonitas no mock". Com cálculo, ele vira o diferencial técnico do portfólio.
+
+Cada regra segue a frase "**o Âmbar calcula X a partir de Y e comunica Z**". Todas são funções TypeScript puras, separadas da interface e testáveis.
+
+**Regra 1 · Projeção até o próximo salário** *(a prova de "Sem susto no fim do mês")*
+- Calcula quanto vai sobrar até o próximo salário, a partir do saldo, das contas agendadas e do gasto médio diário.
+- Comunica "Dá para chegar até dia 30 com folga", "no limite" ou "Vai faltar R$ X", sempre com um próximo passo.
+```
+sobra = saldo − contas agendadas até o salário − (gasto médio diário × dias restantes)
+gasto médio diário = gastos variáveis dos últimos 60 dias ÷ 60
+sobra ≥ 10% do gasto do mês  → com folga
+0 ≤ sobra < 10%              → no limite
+sobra < 0                    → vai faltar R$ |sobra|  (tom calmo + próximo passo)
+```
+
+**Regra 2 · Comparação por categoria**
+- Calcula a diferença de gasto em cada categoria entre o mês atual e **o mesmo período** do mês anterior.
+- Comunica só a maior variação: "Você gastou R$ 120 a mais com delivery que no mesmo ponto do mês passado."
+```
+diferença = gasto(categoria, dia 1 até hoje, mês atual) − gasto(categoria, dia 1 até hoje, mês anterior)
+mostra se: diferença ≥ R$ 50 e ≥ 20%
+```
+
+**Regra 3 · Cobrança recorrente perto de renovar**
+- Detecta cobranças que se repetem no extrato e avisa as que vencem em até 2 dias.
+- Destaca quando o preço subiu: "Streaming renova amanhã: R$ 39,90 (subiu R$ 5)."
+```
+recorrente = 3 ou mais cobranças do mesmo estabelecimento, intervalo de 28 a 31 dias, valor com variação de até 10%
+próxima cobrança = última + intervalo médio
+avisa se: próxima − hoje ≤ 2 dias
+```
+
+**"Como calculamos isso?"** Todo insight tem esse link discreto, que mostra a conta em português simples. Exemplo: "Saldo de R$ 1.240 − R$ 380 de contas agendadas − R$ 32 por dia × 12 dias". É o pilar "aprender usando" virando regra, e conversa com o nome: âmbar é translúcido, dá para ver através.
+
+**Requisitos de dados**
+- **Dataset fictício:** 1 persona e 90 dias de transações em JSON, com categoria, estabelecimento e recorrências. Tem padrões plantados: um pico de delivery e uma assinatura que subiu de preço. Esse JSON vira os dados do MSW.
+- **Dinheiro em centavos inteiros** (`number`), formatado com `Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })`. Números decimais erram nas contas com dinheiro.
+- **"Hoje" congelado** na demo. Sem isso, "renova amanhã" deixa de funcionar uma semana depois do deploy.
+
+**Mapa de telas (regra de corte: regra sem tela sai, tela de insight sem regra também)**
+| Tela | Regras |
+|---|---|
+| Dashboard | Projeção (1) em destaque + aviso de renovação (3) em card |
+| Extrato | Nomes de estabelecimento legíveis + comparação (2) no meio da lista |
+| Login | Não carrega o conceito: conta demo já preenchida e erros que não culpam o usuário |
+
+**Avisos acessíveis** (num banco que "avisa", o aviso acessível é o próprio conceito)
+- Nunca só pela cor: sempre **ícone + texto**.
+- `role="status"` / `aria-live="polite"`, com texto que o leitor de tela anuncia sem alarmar.
+- **Cor semântica de aviso separada do âmbar da marca.** Se tudo é âmbar, o aviso perde destaque. Ela será definida na etapa de design tokens.
+
+**"Não julga" na prática:** o PRD vai trazer os textos dos casos difíceis (vai faltar dinheiro, saldo negativo, gasto alto). Calma não pode virar omissão: o problema é sempre dito com clareza, junto com o próximo passo.
+
+**Resposta para a entrevista sobre concorrência:** Nubank, Inter e C6 já categorizam gastos. O diferencial do Âmbar não é a categorização. É **a projeção, o tom e a transparência do cálculo**.
+
 ## 3. Direção visual (decidida)
 
 **Estrutura:** a landing é **uma página só, em capítulos**. Ela começa clara, escurece onde fala de dinheiro e volta ao claro no fechamento. É o mesmo banco com a luz acesa e apagada: mesma fonte, mesmas cores e mesmas regras do início ao fim.
 
 | Seção | Fundo | Conteúdo | Papel |
 |---|---|---|---|
-| 1. Primeira dobra | Claro (papel) | Menu curto, eyebrow "Conta digital", título "Sem susto no fim do mês.", texto de apoio, botão "Abrir conta" e, ao lado, um **cartão de saldo escuro** com um recado âmbar | Primeira impressão calma |
+| 1. Primeira dobra | Claro (papel) | Menu curto, eyebrow "Conta digital", título "Sem susto no fim do mês.", texto de apoio, botão "Experimentar com conta demo" e, ao lado, um **cartão de saldo escuro** com um recado âmbar | Primeira impressão calma |
 | 2. Clareza | Escuro (grafite) | "Saiba quanto do mês o seu dinheiro aguenta.", **saldo gigante** em números tabulares e uma **linha de progresso âmbar** ("Dá para chegar até dia 30 com folga.") | Mostrar o conceito com dinheiro de verdade |
 | 3. Cartão | Escuro (resina) | "Um cartão que parece luz." e o **cartão de resina âmbar** inclinado, com brilho | Objeto de marca; prepara a Fase 5 (cartão 3D) |
-| 4. Fechamento | Claro (papel) | "Abra sua conta em 5 minutos.", a linha de confiança e o botão | Conversão |
+| 4. Fechamento | Claro (papel) | "Veja o Âmbar funcionando com uma conta demo.", a linha de confiança e o botão | Conversão |
+
+**Timebox da landing:** a landing é a porta de entrada, não o produto. Ela tem um prazo máximo definido no plano. O brilho e o polimento extra ficam para depois do MVP.
 
 **Regras de composição**
 - O laranja é **luz e sinal, nunca fundo de seção**. Ele aparece em: brilhos radiais, o sol do logo, o ponto das eyebrows, a linha de progresso, o cartão de resina e o marcador dos recados.
@@ -99,7 +160,7 @@ Referência visual e SVG-fonte: [`docs/brand/ambar-logo.html`](../../brand/ambar
 
 ## 6. Decisões tomadas na revisão (chamadas do Claude, revisáveis)
 - **Menu:** **Conta** e **Cartão** são âncoras para as seções 2 (`#clareza`) e 3 (`#cartao`). **Segurança sai do menu**, porque não existe uma seção para ela e adicionar conteúdo só para justificar o link contraria a regra de "menos é mais".
-- **"Entrar" e "Abrir conta"** levam para `/login`. Como o MVP não tem fluxo de cadastro, "abrir conta" significa experimentar o Internet Banking com uma **conta demo**. Na Fase 1, `/login` é uma página simples de "em breve", para nenhum link ficar sem destino (o que seria ruim para teclado e leitor de tela). O login de verdade chega na Fase 2.
+- **O botão principal é "Experimentar com conta demo"**, não "Abrir conta". O council apontou que "Abrir conta" promete um cadastro e entrega uma tela de senha. Esse botão e o "Entrar" levam para `/login`, com a conta demo já preenchida. Na Fase 1, `/login` é uma página simples de "em breve", para nenhum link ficar sem destino (o que seria ruim para teclado e leitor de tela). O login de verdade chega na Fase 2.
 - **Sem modo escuro automático do sistema na landing.** A página já alterna claro e escuro por capítulo, por design. Os tokens têm um valor por papel. O modo escuro será decidido separadamente para o Internet Banking.
 - **Linha de confiança:** "Conta gratuita · Sem tarifa de manutenção". **Nunca** "regulado pelo Banco Central" nem "FGC": o banco é fictício. O rodapé diz explicitamente "Âmbar é um banco fictício, projeto de portfólio".
 - **O cartão de resina é feito em código** (CSS: gradiente, brilho e sombra), não em imagem. Ele vira um componente reutilizado na versão 2D de reserva e serve de base para o cartão 3D da Fase 5.
@@ -110,5 +171,6 @@ Referência visual e SVG-fonte: [`docs/brand/ambar-logo.html`](../../brand/ambar
 - Rodapé: simples, escuro ou claro, com o aviso de banco fictício (veja a seção 6).
 
 ## 8. Próximos passos da Fase 0
-1. PRD do MVP (`agent-skills` `/spec` → `/plan`).
-2. Design tokens definitivos, com os contrastes validados.
+1. ~~Validação do conceito (`llm-council`)~~: feita em 16/11/2026, e o resultado está na seção 2.1.
+2. PRD do MVP (`agent-skills` `/spec` → `/plan`), com o motor de insights como requisito central.
+3. Design tokens definitivos, com os contrastes validados e a cor semântica de aviso.
