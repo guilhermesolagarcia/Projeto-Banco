@@ -17,7 +17,7 @@ const PILLARS = [
 export function Hero() {
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden">
-      <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 pt-8 pb-12 [grid-template-areas:'text'_'card'_'cta'] sm:px-8 md:grid-cols-[1.05fr_1fr] md:gap-x-10 md:px-10 md:pt-14 md:pb-16 md:[grid-template-areas:'text_card'_'cta_card']">
+      <div className="shell grid gap-8 pt-8 pb-12 [grid-template-areas:'text'_'card'_'cta'] md:grid-cols-[1.15fr_1fr] md:gap-x-10 md:pt-14 md:pb-16 md:[grid-template-areas:'text_card'_'cta_card']">
         <div className="[grid-area:text] md:self-end">
           <p className="flex animate-rise items-center gap-2 text-xs font-semibold tracking-[0.08em] text-ink-muted uppercase">
             <span aria-hidden="true" className="size-2 rounded-full bg-amber-signal" />
@@ -25,11 +25,10 @@ export function Hero() {
           </p>
           <h1
             id="hero-title"
-            className="mt-4 animate-rise text-[2.75rem] leading-[0.96] font-semibold tracking-[-0.045em] [animation-delay:80ms] sm:text-6xl md:mt-6 lg:text-[5.75rem] xl:text-[6.5rem]"
+            className="mt-4 animate-rise text-[2.75rem] leading-[0.96] font-semibold tracking-[-0.045em] [animation-delay:80ms] sm:text-6xl md:mt-6 md:text-[clamp(3.25rem,5.6vw,5.25rem)]"
           >
-            Sem susto no
-            <br />
-            fim do mês.
+            <span className="block whitespace-nowrap">Sem susto no</span>
+            <span className="block whitespace-nowrap">fim do mês.</span>
           </h1>
           <p className="mt-5 max-w-md animate-rise text-lg leading-relaxed text-ink-muted [animation-delay:180ms] md:mt-7 lg:text-xl">
             Um banco que te avisa antes, em português claro, quando algo no seu dinheiro merece
@@ -68,7 +67,7 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="mx-auto w-full max-w-7xl px-4 pb-14 sm:px-8 md:px-10 md:pb-20">
+      <div className="shell pb-14 md:pb-20">
         <ul className="grid gap-6 border-t border-ink/10 pt-8 sm:grid-cols-3 sm:gap-10">
           {PILLARS.map((pillar, i) => (
             <li

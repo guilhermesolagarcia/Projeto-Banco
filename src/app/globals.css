@@ -67,6 +67,31 @@
   --font-sans: var(--font-host-grotesk), ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Page container: one place for the side margins, so every section lines up. */
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (width >= 40rem) {
+    .shell {
+      padding-inline: 2rem;
+    }
+  }
+  @media (width >= 48rem) {
+    .shell {
+      padding-inline: 3.5rem;
+    }
+  }
+  @media (width >= 80rem) {
+    .shell {
+      padding-inline: 5rem;
+    }
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
