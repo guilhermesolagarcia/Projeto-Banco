@@ -1,27 +1,28 @@
 import type { ReactNode } from "react";
 import { Money } from "@/components/money";
 import { projectUntilPayday } from "@/insights/projection";
+import {
+  ACCOUNT,
+  DAYS_TO_PAYDAY as DAYS_LEFT,
+  PAYDAY_DAY,
+  RENEWAL,
+  TODAY,
+  formatDate,
+} from "./example";
 
-// Rule 1 runs for real here, with the same example as the README.
-const BALANCE = 421890;
-const SCHEDULED = 295890;
-const DAILY = 5400;
-const DAYS_LEFT = 12;
-const projection = projectUntilPayday({
-  balance: BALANCE,
-  scheduled: SCHEDULED,
-  dailySpending: DAILY,
-  daysLeft: DAYS_LEFT,
-});
+// Rule 1 runs for real here, with Marina's example (./example).
+const { balance: BALANCE, scheduled: SCHEDULED, dailySpending: DAILY } = ACCOUNT;
+const projection = projectUntilPayday({ ...ACCOUNT, daysLeft: DAYS_LEFT });
 const SPENDING = DAILY * DAYS_LEFT;
+const TODAY_DAY = TODAY.getUTCDate();
 
 // Rule 2: same point of the month, last month vs. this month (delivery).
 const LAST_MONTH = 26000;
 const THIS_MONTH = 38000;
 
 // Rule 3: a recurring charge whose price went up.
-const OLD_PRICE = 3490;
-const NEW_PRICE = 3990;
+const { oldPrice: OLD_PRICE, newPrice: NEW_PRICE } = RENEWAL;
+const RENEWAL_MONTH = formatDate(RENEWAL.date, { month: "short" }).replace(".", "");
 
 const pct = (part: number, whole: number) => `${(part / whole) * 100}%`;
 
@@ -108,7 +109,7 @@ export function AlertsSection() {
           <li className={`${TILE} md:col-span-3 md:row-span-2`}>
             <Kind>Projeção</Kind>
             <h3 className="mt-6 text-xl font-semibold tracking-tight md:text-2xl">
-              Dá para chegar até dia 5 com folga.
+              Dá para chegar até dia {PAYDAY_DAY} com folga.
             </h3>
             <p className="mt-8 text-6xl leading-none font-semibold tracking-[-0.045em] sm:text-7xl">
               <Money cents={projection.leftover} />
@@ -170,7 +171,7 @@ export function AlertsSection() {
             <dl className="mt-8 mb-8 space-y-4 text-sm">
               <div>
                 <div className="flex justify-between text-ink-muted">
-                  <dt>Mês passado, até dia 23</dt>
+                  <dt>Mês passado, até dia {TODAY_DAY}</dt>
                   <dd>
                     <Money cents={LAST_MONTH} />
                   </dd>
@@ -183,7 +184,7 @@ export function AlertsSection() {
               </div>
               <div>
                 <div className="flex justify-between font-medium">
-                  <dt>Este mês, até dia 23</dt>
+                  <dt>Este mês, até dia {TODAY_DAY}</dt>
                   <dd>
                     <Money cents={THIS_MONTH} />
                   </dd>
@@ -206,9 +207,11 @@ export function AlertsSection() {
                 className="w-16 shrink-0 overflow-hidden rounded-2xl text-center shadow-[inset_0_0_0_1px_rgb(22_18_14/0.08)]"
               >
                 <p className="bg-attention py-1 text-[0.65rem] font-semibold tracking-wider text-white uppercase">
-                  Nov
+                  {RENEWAL_MONTH}
                 </p>
-                <p className="py-1.5 text-2xl font-semibold tabular-nums">18</p>
+                <p className="py-1.5 text-2xl font-semibold tabular-nums">
+                  {RENEWAL.date.getUTCDate()}
+                </p>
               </div>
               <h3 className="text-xl leading-snug font-semibold tracking-tight">
                 Streaming renova amanhã.

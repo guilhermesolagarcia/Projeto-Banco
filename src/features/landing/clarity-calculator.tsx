@@ -3,9 +3,14 @@
 import { useId, useState } from "react";
 import { formatAmount, formatMoney, parseMoneyInput } from "@/components/money";
 import { projectUntilPayday, type ProjectionStatus } from "@/insights/projection";
+import { ACCOUNT, DAYS_TO_PAYDAY } from "./example";
 
-// The landing example: 4.218,90 − 2.958,90 − 54,00 × 12 = 612,00.
-const EXAMPLE = { balance: 421890, scheduled: 295890, daily: 5400, days: 12 };
+const EXAMPLE = {
+  balance: ACCOUNT.balance,
+  scheduled: ACCOUNT.scheduled,
+  daily: ACCOUNT.dailySpending,
+  days: DAYS_TO_PAYDAY,
+};
 
 const STATUS_TEXT: Record<ProjectionStatus, string> = {
   comfortable: "Dá para chegar até o salário com folga.",

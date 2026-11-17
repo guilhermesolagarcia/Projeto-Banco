@@ -1,6 +1,7 @@
 import { Money } from "@/components/money";
+import { ACCOUNT, RENEWAL } from "./example";
 
-// Illustrative numbers for the landing only; real insights are computed in the banking module.
+// Marina's account on "today" (see ./example); real insights are computed in the banking module.
 export function BalancePreview() {
   return (
     <figure
@@ -14,7 +15,7 @@ export function BalancePreview() {
       <div className="relative">
         <p className="text-sm text-on-dark-muted">Saldo disponível</p>
         <p className="mt-1 text-4xl font-semibold tracking-tight">
-          <Money cents={421890} />
+          <Money cents={ACCOUNT.balance} />
         </p>
         <figcaption className="mt-5 flex gap-3 rounded-2xl bg-white/[0.06] p-3.5 text-[0.9375rem] leading-snug">
           <span
@@ -22,8 +23,10 @@ export function BalancePreview() {
             className="mt-1.5 size-2 shrink-0 rounded-full bg-amber-on-dark"
           />
           <span>
-            Streaming renova amanhã: <Money cents={3990} />.{" "}
-            <span className="text-on-dark-muted">Subiu R$&nbsp;5 desde o mês passado.</span>
+            Streaming renova amanhã: <Money cents={RENEWAL.newPrice} />.{" "}
+            <span className="text-on-dark-muted">
+              Subiu <Money cents={RENEWAL.newPrice - RENEWAL.oldPrice} /> desde o mês passado.
+            </span>
           </span>
         </figcaption>
       </div>

@@ -1,9 +1,13 @@
 import { Sun } from "@/components/logo";
 import { Money } from "@/components/money";
+import { PAYDAY, addDays, daysBetween, formatDate } from "./example";
 
-// Same moment for both banks: a R$ 89,90 purchase with R$ 51,70 in the account.
+// A "what if the month got tight" moment, a few days before payday: same scene for both banks.
 const PURCHASE = 8990;
 const BALANCE = 5170;
+const MOMENT = addDays(PAYDAY, -3);
+const DAYS_TO_PAYDAY = daysBetween(MOMENT, PAYDAY);
+const LOCK_DATE = formatDate(MOMENT, { weekday: "long", day: "numeric", month: "long" });
 
 /*
  * The toggle is two native radios; CSS :has() swaps the scene. No JavaScript:
@@ -35,8 +39,8 @@ export function NoJudgmentSection() {
           Saldo baixo não é bronca.
         </h2>
         <p className="reveal mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink-muted">
-          Uma compra de <Money cents={PURCHASE} /> no mercado, com <Money cents={BALANCE} /> na
-          conta. O mesmo momento, contado de dois jeitos.
+          E se o mês apertar? Uma compra de <Money cents={PURCHASE} /> no mercado, com{" "}
+          <Money cents={BALANCE} /> na conta. O mesmo momento, contado de dois jeitos.
         </p>
 
         <fieldset className="reveal mt-10 inline-flex rounded-pill bg-ink/[0.06] p-1">
@@ -70,7 +74,7 @@ export function NoJudgmentSection() {
                 className="relative mx-auto mt-3 h-6 w-20 rounded-pill bg-black"
               />
               <div aria-hidden="true" className="relative mt-8 text-center text-on-dark">
-                <p className="text-sm font-medium opacity-80">terça-feira, 17 de novembro</p>
+                <p className="text-sm font-medium opacity-80">{LOCK_DATE}</p>
                 <p className="text-7xl leading-none font-semibold tracking-[-0.04em] tabular-nums">
                   14:32
                 </p>
@@ -120,8 +124,8 @@ export function NoJudgmentSection() {
                       Faltaram <Money cents={PURCHASE - BALANCE} /> para a compra no mercado.
                     </p>
                     <p className="mt-1 text-sm leading-snug text-ink-muted">
-                      Seu salário cai em 3 dias. Se for urgente, dá para usar a reserva. Sem tarifa,
-                      sem juros.
+                      Seu salário cai em {DAYS_TO_PAYDAY} dias. Se for urgente, dá para usar a
+                      reserva. Sem tarifa, sem juros.
                     </p>
                   </div>
                 </div>

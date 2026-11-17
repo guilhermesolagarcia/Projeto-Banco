@@ -1,3 +1,5 @@
+import { PAYDAY_DAY } from "./example";
+
 // Only the doubts that stop someone from trying the demo. Answers start with the answer.
 const QUESTIONS = [
   {
@@ -6,7 +8,7 @@ const QUESTIONS = [
   },
   {
     q: "Como funciona a conta demo?",
-    a: "O login já vem preenchido: é só entrar. Você vê a conta da Marina, 27 anos, salário no dia 5, com aluguel, streaming e delivery, e os avisos calculados a partir das transações dela.",
+    a: `O login já vem preenchido: é só entrar. Você vê a conta da Marina, 27 anos, salário no dia ${PAYDAY_DAY}, com aluguel, streaming e delivery, e os avisos calculados a partir das transações dela.`,
   },
   {
     q: "O que vocês fazem com meus dados?",

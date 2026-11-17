@@ -1,13 +1,9 @@
 import { Money } from "@/components/money";
 import { projectUntilPayday } from "@/insights/projection";
+import { ACCOUNT, DAYS_TO_PAYDAY, PAYDAY_DAY } from "./example";
 
 // Same example as the clarity simulator, computed by the same Rule 1 function.
-const example = projectUntilPayday({
-  balance: 421890,
-  scheduled: 295890,
-  dailySpending: 5400,
-  daysLeft: 12,
-});
+const example = projectUntilPayday({ ...ACCOUNT, daysLeft: DAYS_TO_PAYDAY });
 
 export function ProjectionPreview() {
   return (
@@ -20,7 +16,7 @@ export function ProjectionPreview() {
         Até o próximo salário
       </p>
       <p className="mt-3 text-lg leading-snug font-semibold tracking-tight">
-        Dá para chegar até dia 5 com folga.
+        Dá para chegar até dia {PAYDAY_DAY} com folga.
       </p>
       <div className="mt-4 h-1.5 rounded-pill bg-paper">
         <div
