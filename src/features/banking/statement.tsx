@@ -81,7 +81,7 @@ function MonthSummary({ month, current }: { month: MonthGroup; current: boolean 
         {month.label}
         {current && <span className="ml-2 text-base font-normal text-ink-muted">até hoje</span>}
       </h2>
-      <dl className="mt-5 grid grid-cols-2 gap-4">
+      <dl className="mt-7 grid grid-cols-2 gap-6">
         <div>
           <dt className="text-sm text-ink-muted">Entrou</dt>
           <dd className="mt-1 text-2xl font-semibold text-positive tabular-nums">
@@ -96,19 +96,19 @@ function MonthSummary({ month, current }: { month: MonthGroup; current: boolean 
         </div>
       </dl>
       {/* The bar is decorative for screen readers: the legend below writes every value. */}
-      <div aria-hidden="true" className="mt-6 flex h-3 gap-0.5 overflow-hidden rounded-pill">
+      <div aria-hidden="true" className="mt-8 flex h-4 gap-1">
         {segments.map((s) => (
           <span
             key={s.key}
             title={s.label}
-            className={SEGMENT_COLOR[s.key]}
+            className={`min-w-1.5 rounded-pill ${SEGMENT_COLOR[s.key]}`}
             style={{ width: `${(s.spent / month.spent) * 100}%` }}
           />
         ))}
       </div>
       <ul
         aria-label="Para onde foi o dinheiro"
-        className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 text-sm sm:grid-cols-3"
+        className="mt-6 grid grid-cols-1 gap-x-10 gap-y-3 text-sm sm:grid-cols-2 lg:grid-cols-3"
       >
         {segments.map((s) => (
           <li key={s.key} className="flex items-center gap-2">
