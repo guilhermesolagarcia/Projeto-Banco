@@ -100,7 +100,8 @@ function MonthOption({
           className="absolute inset-0 -z-10 rounded-pill bg-white shadow-[0_1px_2px_rgb(22_18_14/0.08),0_4px_14px_-6px_rgb(22_18_14/0.2)]"
         />
       )}
-      <span className="first-letter:uppercase">{label}</span>
+      {/* first-letter only works on blocks: inline-block, so "novembro" shows as "Novembro". */}
+      <span className="inline-block first-letter:uppercase">{label}</span>
     </label>
   );
 }
@@ -154,7 +155,7 @@ function MonthSummary({
   const segments = month.segments.filter((s) => s.spent > 0);
   const dimmed = (key: SegmentKey) => active !== "todos" && active !== key;
   return (
-    <div className={`${CARD} grid gap-8 md:grid-cols-[1fr_15rem] md:items-center`}>
+    <div className={`${CARD} grid gap-8 md:grid-cols-[1fr_17rem] md:items-center`}>
       <div>
         <h2 className="text-2xl font-semibold tracking-tight first-letter:uppercase">
           {month.label}
@@ -205,7 +206,7 @@ function MonthSummary({
               aria-hidden="true"
               className={`size-2.5 shrink-0 rounded-full ${SEGMENT_COLOR[s.key]}`}
             />
-            <span className="text-ink-muted">{s.label}</span>
+            <span className="text-ink-muted md:whitespace-nowrap">{s.label}</span>
             <span className="ml-auto pl-4 tabular-nums">
               <Money cents={s.spent} />
             </span>

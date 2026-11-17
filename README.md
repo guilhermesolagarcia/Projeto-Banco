@@ -65,7 +65,9 @@ O Âmbar faz o contrário. A dor que originou o projeto foi simples: _"elementos
 
 ## ☀ Telas
 
-<img src="docs/readme/hero.png" alt="Primeira dobra da landing: título 'Sem susto no fim do mês', cartão de saldo, cartão de projeção e órbitas do sol" width="100%" />
+> Prints gerados pelo Playwright (`SCREENSHOTS=1 npx playwright test screenshots --project=desktop`), então eles mostram o site como ele é, não um mockup.
+
+<img src="docs/readme/hero.png" alt="Primeira dobra da landing: título Sem susto no fim do mês, cartão de saldo, cartão de projeção e órbitas do sol" width="100%" />
 
 <p align="center"><sub><b>Hero</b> · o cartão de saldo e a projeção mostram o conceito antes do botão. As órbitas são o anel do logo, ampliado.</sub></p>
 
@@ -73,13 +75,19 @@ O Âmbar faz o contrário. A dor que originou o projeto foi simples: _"elementos
 
 <img src="docs/readme/clareza.png" alt="Seção Clareza: simulador interativo da projeção até o salário" width="100%" />
 
-<p align="center"><sub><b>Clareza</b> · um simulador de verdade: mude os números e a conta se refaz, calculada pela mesma função que o dashboard vai usar.</sub></p>
+<p align="center"><sub><b>Clareza</b> · um simulador de verdade: mude os números e a conta se refaz, com o número rolando até o novo valor. Usa a mesma função do painel.</sub></p>
 
 <br />
 
-<img src="docs/readme/avisos.png" alt="Seção Avisos: três cartões de aviso, cada um com 'Como sabemos'" width="100%" />
+<img src="docs/readme/avisos.png" alt="Seção Avisos: a renovação em destaque com o histórico de cobranças, a comparação e a projeção" width="100%" />
 
-<p align="center"><sub><b>Avisos</b> · os três tipos de insight. A cor de aviso (o sino) é separada do âmbar da marca, e todo aviso tem ícone além da cor.</sub></p>
+<p align="center"><sub><b>Avisos</b> · os três tipos de insight, calculados a partir dos dados da Marina. O histórico mostra <i>como</i> o Âmbar sabe que é uma assinatura.</sub></p>
+
+<br />
+
+<img src="docs/readme/nao-julga.png" alt="Seção Não julga: um iPhone na tela de bloqueio com o seletor Banco comum ou Âmbar" width="100%" />
+
+<p align="center"><sub><b>Não julga</b> · a mesma compra recusada, contada por dois bancos. A troca de cenas é CSS puro (<code>:has()</code> em rádios nativos).</sub></p>
 
 <br />
 
@@ -89,13 +97,25 @@ O Âmbar faz o contrário. A dor que originou o projeto foi simples: _"elementos
 
 <br />
 
+<img src="docs/readme/painel.png" alt="Painel da conta demo: projeção até o salário, saldo, avisos e últimas transações" width="100%" />
+
+<p align="center"><sub><b>Painel</b> · nada aqui é texto fixo: R$ 612,00, a renovação e a comparação saem das regras rodando sobre 148 transações, servidas por uma API falsa (MSW).</sub></p>
+
+<br />
+
+<img src="docs/readme/extrato.png" alt="Extrato: filtros de mês e categoria, resumo do mês com barra colorida e a lista por dia" width="100%" />
+
+<p align="center"><sub><b>Extrato</b> · um mês por vez, filtro por categoria e a comparação aparecendo no meio da lista. Cores de categoria validadas para daltonismo.</sub></p>
+
+<br />
+
 <div align="center">
   <img src="docs/readme/mobile-hero.png" alt="Hero no celular" width="30%" />
   &nbsp;
   <img src="docs/readme/mobile-clareza.png" alt="Simulador no celular" width="30%" />
   &nbsp;
-  <img src="docs/readme/mobile-cartao.png" alt="Cartão no celular" width="30%" />
-  <p><sub><b>Mobile-first</b> · a partir de 320 px, sem rolagem lateral. No celular, o exemplo aparece antes do botão.</sub></p>
+  <img src="docs/readme/mobile-painel.png" alt="Painel no celular" width="30%" />
+  <p><sub><b>Mobile-first</b> · a partir de 320 px, sem rolagem lateral (um teste do Playwright garante). No celular, o exemplo aparece antes do botão.</sub></p>
 </div>
 
 <br />

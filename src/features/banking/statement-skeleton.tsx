@@ -8,7 +8,7 @@ function Block({ className }: { className: string }) {
 export function StatementSkeleton() {
   return (
     <div role="status" aria-label="Carregando o extrato" className="space-y-6">
-      <div className={`${CARD} grid gap-8 md:grid-cols-[1fr_15rem] md:items-center`}>
+      <div className={`${CARD} grid gap-8 md:grid-cols-[1fr_17rem] md:items-center`}>
         <div>
           <Block className="h-7 w-56" />
           <Block className="mt-7 h-12 w-72 max-w-full" />

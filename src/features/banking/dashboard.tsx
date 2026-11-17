@@ -119,7 +119,8 @@ function DashboardView({ data }: { data: DashboardData }) {
         <m.section
           variants={MATERIALIZE}
           aria-labelledby="projection-title"
-          className={`${CARD} md:col-span-3 md:row-span-2`}
+          // flex column: when the card stretches to the right column, the bar and the math sit at the bottom.
+          className={`${CARD} flex flex-col md:col-span-3 md:row-span-2`}
         >
           <p className="flex items-center gap-2 text-sm font-medium text-ink-muted">
             <span aria-hidden="true" className="size-2 rounded-full bg-amber-signal" />
@@ -144,7 +145,7 @@ function DashboardView({ data }: { data: DashboardData }) {
               Dá para ajustar gastando <Money cents={projection.dailyCut} /> a menos por dia.
             </p>
           )}
-          <div aria-hidden="true" className="mt-8 h-2 rounded-pill bg-paper">
+          <div aria-hidden="true" className="mt-8 h-2 rounded-pill bg-paper md:mt-auto">
             <m.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}

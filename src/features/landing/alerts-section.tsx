@@ -149,10 +149,10 @@ export function AlertsSection() {
                   </span>
                   <RiseBar
                     delay={0.25 + index * 0.08}
-                    className={`w-full rounded-xl ${BAR[charge.kind]}`}
+                    className={`w-8 rounded-lg sm:w-10 ${BAR[charge.kind]}`}
                     style={{ height: `${(charge.cents / NEW_PRICE) * 6}rem` }}
                   />
-                  <span className="text-ink-muted capitalize">
+                  <span className="block text-ink-muted first-letter:uppercase">
                     {charge.kind === "next" ? "amanhã (previsto)" : charge.month}
                   </span>
                 </li>
