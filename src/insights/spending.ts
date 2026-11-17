@@ -37,8 +37,8 @@ export function averageDailySpending(
   return Math.round(spent(variable, addDays(today, -(days - 1)), today) / days);
 }
 
-export type Comparison = {
-  category: string;
+export type Comparison<C extends string = string> = {
+  category: C;
   /** Spent from day 1 to today's day, last month. */
   before: number;
   /** Spent from day 1 to today, this month. */
@@ -54,11 +54,11 @@ const MIN_RATIO = 0.2;
  * Rule 2: compares each category with the same point of last month and returns the biggest
  * rise worth mentioning, or null when nothing changed enough.
  */
-export function compareWithLastMonth(
+export function compareWithLastMonth<C extends string>(
   rows: readonly SpendingRow[],
   today: string,
-  categories: readonly string[],
-): Comparison | null {
+  categories: readonly C[],
+): Comparison<C> | null {
   const [year, month, day] = today.split("-").map(Number);
   const monthStart = today.slice(0, 8) + "01";
   const last = new Date(Date.UTC(year, month - 2, 1));
@@ -66,7 +66,7 @@ export function compareWithLastMonth(
   const lastStart = last.toISOString().slice(0, 10);
   const lastSameDay = addDays(lastStart, Math.min(day, lastMonthDays) - 1);
 
-  let best: Comparison | null = null;
+  let best: Comparison<C> | null = null;
   for (const category of categories) {
     const before = spent(rows, lastStart, lastSameDay, category);
     const now = spent(rows, monthStart, today, category);

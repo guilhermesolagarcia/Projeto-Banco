@@ -1,41 +1,275 @@
-"use client";
-
+import type { Metadata } from "next";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import type { ReactNode } from "react";
 import { Logo } from "@/components/logo";
-import { endSession } from "@/features/auth/session";
+import { Money } from "@/components/money";
+import { SignOutButton } from "@/features/auth/sign-out-button";
+import { CATEGORY_LABEL, DASHBOARD, formatDay } from "@/features/banking/dashboard-data";
 
-// Phase 2 placeholder behind the session guard. The real dashboard arrives in Phase 3.
-export default function HomePage() {
-  const router = useRouter();
+export const metadata: Metadata = { title: "Início · Âmbar" };
 
-  function signOut() {
-    endSession();
-    router.replace("/login");
-  }
+const { projection, renewals, comparison } = DASHBOARD;
+const paydayDay = formatDay(DASHBOARD.payday, { day: "numeric" });
+const spendingUntilPayday = DASHBOARD.dailySpending * DASHBOARD.daysLeft;
 
+const STATUS_TITLE = {
+  comfortable: `Dá para chegar até dia ${paydayDay} com folga.`,
+  tight: `Dá para chegar até dia ${paydayDay}, mas no limite.`,
+  short: `Vai faltar antes do dia ${paydayDay}.`,
+} as const;
+
+const CARD =
+  "rounded-[2rem] bg-white p-7 shadow-[0_1px_0_rgb(22_18_14/0.04),0_30px_60px_-40px_rgb(120_60_0/0.4)] md:p-9";
+
+function when(daysUntil: number): string {
+  if (daysUntil === 0) return "hoje";
+  if (daysUntil === 1) return "amanhã";
+  return `em ${daysUntil} dias`;
+}
+
+function BellIcon() {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      className="size-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      aria-hidden="true"
+    >
+      <path
+        d="M10 3a4.5 4.5 0 0 0-4.5 4.5c0 3.5-1.5 5-1.5 5h12s-1.5-1.5-1.5-5A4.5 4.5 0 0 0 10 3Z"
+        strokeLinejoin="round"
+      />
+      <path d="M8.5 15.5a1.5 1.5 0 0 0 3 0" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function Alert({
+  icon,
+  title,
+  children,
+}: {
+  icon: ReactNode;
+  title: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <li className="flex gap-3 border-t border-ink/10 py-4 first:border-t-0 first:pt-0 last:pb-0">
+      <span className="mt-1 shrink-0">{icon}</span>
+      <div>
+        <p className="font-semibold tracking-tight">{title}</p>
+        <p className="mt-1 text-sm text-ink-muted">{children}</p>
+      </div>
+    </li>
+  );
+}
+
+export default function DashboardPage() {
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="shell flex items-center justify-between py-5">
         <Link href="/" aria-label="Âmbar, página inicial" className="rounded-md">
           <Logo />
         </Link>
-        <button
-          type="button"
-          onClick={signOut}
-          className="rounded-pill px-3 py-2 text-sm text-ink-muted hover:text-ink"
-        >
-          Sair
-        </button>
+        <SignOutButton />
       </header>
-      <main className="shell flex flex-1 flex-col justify-center gap-4 pb-24">
-        <h1 className="animate-rise text-5xl leading-[0.98] font-semibold tracking-[-0.045em] sm:text-6xl">
+
+      <main className="shell flex-1 pt-6 pb-24 md:pt-10">
+        <p className="animate-rise text-ink-muted first-letter:uppercase">
+          {formatDay(DASHBOARD.today, { weekday: "long", day: "numeric", month: "long" })}
+        </p>
+        <h1 className="mt-2 animate-rise text-5xl leading-[0.98] font-semibold tracking-[-0.045em] [animation-delay:80ms] sm:text-6xl">
           Olá, Marina.
         </h1>
-        <p className="max-w-md animate-rise text-lg leading-relaxed text-ink-muted [animation-delay:120ms]">
-          Você entrou na conta demo. O painel com a sua projeção, os avisos e o extrato chega na
-          próxima fase.
-        </p>
+
+        <div className="mt-10 grid gap-5 md:grid-cols-5 md:gap-6">
+          {/* Rule 1 · Projection: the headline of the account */}
+          <section
+            aria-labelledby="projection-title"
+            className={`${CARD} animate-card-in [animation-delay:150ms] md:col-span-3 md:row-span-2`}
+          >
+            <p className="flex items-center gap-2 text-sm font-medium text-ink-muted">
+              <span aria-hidden="true" className="size-2 rounded-full bg-amber-signal" />
+              Até o salário, dia {paydayDay} · daqui a {DASHBOARD.daysLeft} dias
+            </p>
+            <h2
+              id="projection-title"
+              className="mt-5 text-xl font-semibold tracking-tight md:text-2xl"
+            >
+              {STATUS_TITLE[projection.status]}
+            </h2>
+            <p className="mt-6 flex flex-wrap items-baseline gap-x-3">
+              <span className="text-6xl leading-none font-semibold tracking-[-0.045em] sm:text-7xl">
+                <Money cents={Math.abs(projection.leftover)} />
+              </span>
+              <span className="text-ink-muted">
+                {projection.status === "short" ? "faltando" : "de folga"}
+              </span>
+            </p>
+            {projection.status === "short" && (
+              <p className="mt-3 text-ink-muted">
+                Dá para ajustar gastando <Money cents={projection.dailyCut} /> a menos por dia.
+              </p>
+            )}
+            <div aria-hidden="true" className="mt-8 h-2 rounded-pill bg-paper">
+              <div
+                className="h-full origin-left animate-grow-x rounded-pill bg-amber [animation-delay:600ms]"
+                style={{ width: `${Math.round(projection.share * 100)}%` }}
+              />
+            </div>
+
+            <details className="group/how mt-8 border-t border-ink/10 pt-4">
+              <summary className="flex cursor-pointer list-none items-center justify-between font-medium [&::-webkit-details-marker]:hidden">
+                Como calculamos isso?
+                <span
+                  aria-hidden="true"
+                  className="grid size-6 place-items-center rounded-full bg-ink/[0.06] leading-none transition-[rotate] duration-300 ease-calm group-open/how:rotate-45"
+                >
+                  +
+                </span>
+              </summary>
+              <dl className="mt-4 space-y-2 text-sm tabular-nums">
+                <div className="flex justify-between gap-4">
+                  <dt className="text-ink-muted">Saldo hoje</dt>
+                  <dd>
+                    <Money cents={DASHBOARD.balance} />
+                  </dd>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <dt className="text-ink-muted">− Contas agendadas até o salário</dt>
+                  <dd>
+                    <Money cents={DASHBOARD.scheduled} />
+                  </dd>
+                </div>
+                <div className="flex justify-between gap-4">
+                  <dt className="text-ink-muted">
+                    − <Money cents={DASHBOARD.dailySpending} /> por dia × {DASHBOARD.daysLeft} dias
+                  </dt>
+                  <dd>
+                    <Money cents={spendingUntilPayday} />
+                  </dd>
+                </div>
+                <div className="flex justify-between gap-4 border-t border-ink/10 pt-2 font-semibold">
+                  <dt>{projection.leftover < 0 ? "Falta" : "Sobra"}</dt>
+                  <dd>
+                    <Money cents={Math.abs(projection.leftover)} />
+                  </dd>
+                </div>
+              </dl>
+              <p className="mt-3 text-sm text-ink-muted">
+                O gasto por dia é a média dos seus gastos do dia a dia nos últimos 60 dias.
+              </p>
+            </details>
+          </section>
+
+          {/* Balance */}
+          <section
+            aria-labelledby="balance-title"
+            className="relative animate-card-in overflow-hidden rounded-[2rem] bg-ink p-7 text-on-dark [animation-delay:250ms] md:col-span-2 md:p-9"
+          >
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_90%_0%,rgb(242_140_40/0.42),transparent_55%)]"
+            />
+            <h2 id="balance-title" className="relative text-sm text-on-dark-muted">
+              Saldo disponível
+            </h2>
+            <p className="relative mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">
+              <Money cents={DASHBOARD.balance} />
+            </p>
+          </section>
+
+          {/* Alerts: only what the rules found today */}
+          <section
+            aria-labelledby="alerts-title"
+            className={`${CARD} animate-card-in [animation-delay:350ms] md:col-span-2`}
+          >
+            <h2 id="alerts-title" className="text-sm font-medium text-ink-muted">
+              Avisos
+            </h2>
+            <ul className="mt-4">
+              {renewals.map((renewal) => (
+                <Alert
+                  key={renewal.merchant}
+                  icon={
+                    <span className="text-attention">
+                      <BellIcon />
+                    </span>
+                  }
+                  title={
+                    <>
+                      {renewal.merchant} renova {when(renewal.daysUntil)}:{" "}
+                      <Money cents={renewal.amount} />.
+                    </>
+                  }
+                >
+                  {renewal.increasedOn ? (
+                    <>
+                      <Money cents={renewal.increase} /> mais caro desde{" "}
+                      {formatDay(renewal.increasedOn, { month: "long" })}. Se não usa mais, dá tempo
+                      de cancelar.
+                    </>
+                  ) : (
+                    "Se não usa mais, dá tempo de cancelar."
+                  )}
+                </Alert>
+              ))}
+              {comparison && (
+                <Alert
+                  icon={
+                    <span
+                      aria-hidden="true"
+                      className="mt-1 block size-2 rounded-full bg-amber-signal"
+                    />
+                  }
+                  title={
+                    <>
+                      <Money cents={comparison.difference} /> a mais com{" "}
+                      {CATEGORY_LABEL[comparison.category].toLowerCase()}.
+                    </>
+                  }
+                >
+                  Mesmo ponto do mês passado: <Money cents={comparison.before} />. Este mês:{" "}
+                  <Money cents={comparison.now} />.
+                </Alert>
+              )}
+              {renewals.length === 0 && !comparison && (
+                <li className="text-ink-muted">Nada pedindo atenção agora. Tudo tranquilo.</li>
+              )}
+            </ul>
+          </section>
+        </div>
+
+        {/* Recent transactions */}
+        <section aria-labelledby="recent-title" className={`${CARD} mt-5 md:mt-6`}>
+          <h2 id="recent-title" className="text-sm font-medium text-ink-muted">
+            Últimas transações
+          </h2>
+          <ul className="mt-2">
+            {DASHBOARD.recent.map((t) => (
+              <li
+                key={t.id}
+                className="flex items-center justify-between gap-4 border-t border-ink/10 py-4 first:border-t-0"
+              >
+                <div className="min-w-0">
+                  <p className="truncate font-medium">{t.merchant}</p>
+                  <p className="text-sm text-ink-muted">
+                    {CATEGORY_LABEL[t.category]} ·{" "}
+                    {formatDay(t.date, { day: "numeric", month: "short" })}
+                  </p>
+                </div>
+                <p
+                  className={`shrink-0 font-medium tabular-nums ${t.amount > 0 ? "text-positive" : ""}`}
+                >
+                  {t.amount > 0 ? "+ " : "− "}
+                  <Money cents={Math.abs(t.amount)} />
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
       </main>
     </div>
   );
