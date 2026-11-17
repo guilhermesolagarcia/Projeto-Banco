@@ -62,7 +62,7 @@ export function Hero() {
             Experimentar com conta demo
           </Link>
           <p className="mt-3 text-center text-sm text-ink-muted sm:text-left">
-            Conta gratuita · Sem tarifa de manutenção
+            Conta demo · Sem cadastro
           </p>
         </div>
       </div>

@@ -37,7 +37,7 @@ export function CardSection() {
             Feito de âmbar: translúcido, quente e sem anuidade. Cada compra aparece no app na mesma
             hora, explicada do jeito que você entende.
           </p>
-          <p className="mt-8 inline-flex items-center gap-2 rounded-pill border border-white/10 px-4 py-2 text-sm text-on-dark-muted">
+          <p className="mt-8 flex items-center gap-2 text-sm text-on-dark-muted">
             <span aria-hidden="true" className="size-1.5 rounded-full bg-amber-on-dark" />
             Em breve: personalize o seu em 3D
           </p>
