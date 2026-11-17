@@ -166,13 +166,14 @@ npm install
 npm run dev        # → http://localhost:3000
 ```
 
-| Comando                  | O que faz                                                             |
-| :----------------------- | :-------------------------------------------------------------------- |
-| `npm run build`          | Build de produção                                                     |
-| `npm run lint`           | ESLint                                                                |
-| `npm run typecheck`      | Gera os tipos de rota e roda o `tsc`                                  |
-| `npm run format`         | Prettier                                                              |
-| `npm run check:insights` | Testa as regras do motor de insights (Node puro, até o Vitest chegar) |
+| Comando             | O que faz                                                             |
+| :------------------ | :-------------------------------------------------------------------- |
+| `npm run build`     | Build de produção                                                     |
+| `npm run lint`      | ESLint                                                                |
+| `npm run typecheck` | Gera os tipos de rota e roda o `tsc`                                  |
+| `npm run format`    | Prettier                                                              |
+| `npm test`          | Roda os testes (Vitest)                                               |
+| `npm run coverage`  | Testes + cobertura; as regras do motor de insights exigem 90% ou mais |
 
 <br />
 
