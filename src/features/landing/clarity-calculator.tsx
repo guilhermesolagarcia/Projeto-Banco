@@ -12,6 +12,10 @@ const EXAMPLE = {
   days: DAYS_TO_PAYDAY,
 };
 
+/** Field value → cents, capped at R$ 9.999.999,99 so a pasted huge number can't break the layout. */
+const MAX_CENTS = 999_999_999;
+const toCents = (value: string) => Math.min(parseMoneyInput(value) ?? 0, MAX_CENTS);
+
 const STATUS_TEXT: Record<ProjectionStatus, string> = {
   comfortable: "Dá para chegar até o salário com folga.",
   tight: "Dá para chegar, mas no limite. Vale segurar um pouco.",
@@ -28,23 +32,22 @@ type MoneyFieldProps = {
 function MoneyField({ label, prefix, value, onChange }: MoneyFieldProps) {
   const id = useId();
   return (
-    <div className="flex items-center justify-between gap-4 border-b border-white/[0.06] py-2.5">
+    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 border-b border-white/[0.06] py-2.5">
       <label htmlFor={id} className="text-on-dark-muted">
         {label}
       </label>
-      <span className="flex shrink-0 items-center gap-1.5 tabular-nums">
+      <span className="ml-auto flex shrink-0 items-center gap-1.5 tabular-nums">
         {prefix && <span aria-hidden="true">{prefix}</span>}
         <span className="text-on-dark-muted">R$</span>
         <input
           id={id}
           inputMode="decimal"
           autoComplete="off"
+          maxLength={12}
           value={value}
-          onChange={(event) => onChange(event.target.value)}
-          onBlur={() => {
-            const cents = parseMoneyInput(value);
-            onChange(formatAmount(cents ?? 0));
-          }}
+          // Only digits and separators: a minus or a letter can't sneak in and change the math.
+          onChange={(event) => onChange(event.target.value.replace(/[^\d.,]/g, ""))}
+          onBlur={() => onChange(formatAmount(toCents(value)))}
           className="w-28 rounded-md border border-white/10 bg-white/[0.04] px-2 py-1 text-right tabular-nums transition-colors hover:border-white/20 focus:border-amber"
         />
       </span>
@@ -61,9 +64,9 @@ export function ClarityCalculator() {
 
   const daysLeft = Math.min(31, Math.max(1, Number.parseInt(days, 10) || 1));
   const result = projectUntilPayday({
-    balance: parseMoneyInput(balance) ?? 0,
-    scheduled: parseMoneyInput(scheduled) ?? 0,
-    dailySpending: parseMoneyInput(daily) ?? 0,
+    balance: toCents(balance),
+    scheduled: toCents(scheduled),
+    dailySpending: toCents(daily),
     daysLeft,
   });
 
@@ -83,7 +86,7 @@ export function ClarityCalculator() {
         Até o próximo salário, daqui a {daysLeft} {daysLeft === 1 ? "dia" : "dias"}
       </p>
       <p className="mt-2 flex flex-wrap items-baseline gap-x-3">
-        <span className="text-5xl font-semibold tracking-[-0.05em] tabular-nums sm:text-7xl">
+        <span className="text-5xl font-semibold tracking-[-0.05em] tabular-nums [overflow-wrap:anywhere] sm:text-7xl">
           {whole}
           <span className="text-on-dark-muted">,{cents}</span>
         </span>
@@ -141,7 +144,7 @@ export function ClarityCalculator() {
             value={daily}
             onChange={setDaily}
           />
-          <div className="flex items-center justify-between gap-4 border-b border-white/[0.06] py-2.5">
+          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 border-b border-white/[0.06] py-2.5">
             <label htmlFor={daysId} className="text-on-dark-muted">
               × dias até o salário
             </label>
