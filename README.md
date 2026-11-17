@@ -6,6 +6,7 @@
 <br />
 
 <img src="https://img.shields.io/badge/status-Fase%204%20·%20qualidade-F28C28?style=flat-square&labelColor=16120E" alt="Status: Fase 4, qualidade" />
+<a href="https://github.com/guilhermesolagarcia/Projeto-Banco/actions/workflows/ci.yml"><img src="https://github.com/guilhermesolagarcia/Projeto-Banco/actions/workflows/ci.yml/badge.svg" alt="CI: lint, tipos e testes" /></a>
 <img src="https://img.shields.io/badge/Next.js-16-16120E?style=flat-square&logo=nextdotjs&logoColor=F4F0EA" alt="Next.js 16" />
 <img src="https://img.shields.io/badge/TypeScript-strict-16120E?style=flat-square&logo=typescript&logoColor=F4F0EA" alt="TypeScript strict" />
 <img src="https://img.shields.io/badge/Tailwind-4-16120E?style=flat-square&logo=tailwindcss&logoColor=F4F0EA" alt="Tailwind CSS 4" />

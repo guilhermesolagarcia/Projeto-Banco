@@ -7,7 +7,8 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
-  reporter: process.env.CI ? "github" : "list",
+  // On CI: annotations on the commit, plus an HTML report kept when something fails.
+  reporter: process.env.CI ? [["github"], ["html", { open: "never" }]] : "list",
   use: {
     baseURL: `http://localhost:${PORT}`,
     locale: "pt-BR",
