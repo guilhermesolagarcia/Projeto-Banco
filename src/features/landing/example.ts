@@ -4,7 +4,8 @@
  * Server-only on purpose: client components get these values through props.
  * UTC everywhere, so server and browser render the same text.
  */
-import { CATEGORY_LABEL, DASHBOARD } from "@/features/banking/dashboard-data";
+import { DASHBOARD } from "@/features/banking/dashboard-data";
+import { CATEGORY_LABEL } from "@/features/banking/format";
 
 const DAY_MS = 86_400_000;
 const toDate = (iso: string) => new Date(`${iso}T00:00:00Z`);

@@ -8,12 +8,11 @@ import {
   TODAY,
   TRANSACTIONS,
   VARIABLE_CATEGORIES,
-  type Category,
 } from "@/mocks/marina";
 
 /*
  * Everything the dashboard shows, computed by the insight rules from Marina's data.
- * Step 4 of Phase 3 moves this behind MSW + TanStack Query; the shape stays the same.
+ * Served by the fake API (src/mocks/handlers.ts) and read by the landing on the server.
  */
 const balance = OPENING_BALANCE + TRANSACTIONS.reduce((sum, t) => sum + t.amount, 0);
 const scheduled = SCHEDULED.reduce((sum, s) => sum + s.amount, 0);
@@ -33,22 +32,5 @@ export const DASHBOARD = {
   recent: TRANSACTIONS.slice(0, 6),
 };
 
-export const CATEGORY_LABEL: Record<Category, string> = {
-  salario: "Salário",
-  moradia: "Moradia",
-  educacao: "Educação",
-  contas: "Contas",
-  assinaturas: "Assinaturas",
-  mercado: "Mercado",
-  delivery: "Delivery",
-  transporte: "Transporte",
-  lazer: "Lazer",
-  saude: "Saúde",
-};
-
-/** "YYYY-MM-DD" → text in pt-BR, read as a calendar day (UTC) so server and browser agree. */
-export function formatDay(iso: string, options: Intl.DateTimeFormatOptions): string {
-  return new Intl.DateTimeFormat("pt-BR", { timeZone: "UTC", ...options }).format(
-    new Date(`${iso}T00:00:00Z`),
-  );
-}
+/** The JSON shape of GET /api/painel. */
+export type DashboardData = typeof DASHBOARD;
