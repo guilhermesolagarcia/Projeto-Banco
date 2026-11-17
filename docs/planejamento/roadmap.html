@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Âmbar · Planejamento</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --paper: #f4f0ea;
+        --white: #ffffff;
+        --ink: #16120e;
+        --muted: #4f473f;
+        --amber: #f28c28;
+        --signal: #d06e0e;
+        --deep: #b5570c;
+        --attention: #b3402a;
+        --positive: #2a7347;
+        --line: rgb(22 18 14 / 0.12);
+      }
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Host Grotesk", ui-sans-serif, system-ui, sans-serif;
+        font-size: 10.5pt;
+        line-height: 1.5;
+      }
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        padding: 20mm 18mm 18mm;
+        page-break-after: always;
+        position: relative;
+        overflow: hidden;
+      }
+      .page:last-child {
+        page-break-after: auto;
+      }
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+        font-weight: 600;
+      }
+      h1 {
+        font-size: 44pt;
+      }
+      h2 {
+        font-size: 24pt;
+        margin-bottom: 6mm;
+      }
+      h3 {
+        font-size: 13pt;
+        letter-spacing: -0.01em;
+        margin-bottom: 2mm;
+      }
+      p {
+        margin: 0 0 3mm;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 2mm;
+        font-size: 8pt;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 4mm;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 2mm;
+        height: 2mm;
+        border-radius: 50%;
+        background: var(--signal);
+      }
+      .card {
+        background: var(--white);
+        border-radius: 5mm;
+        padding: 6mm 7mm;
+        box-shadow: 0 1px 0 rgb(22 18 14 / 0.04);
+        margin-bottom: 4mm;
+        break-inside: avoid;
+      }
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4mm;
+      }
+      .grid3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4mm;
+      }
+      ul {
+        margin: 0;
+        padding-left: 4.5mm;
+      }
+      li {
+        margin-bottom: 1.4mm;
+      }
+      li::marker {
+        color: var(--signal);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 9.5pt;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 2.6mm 2mm;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+      th {
+        font-size: 7.5pt;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .num {
+        font-variant-numeric: tabular-nums;
+      }
+      .tag {
+        display: inline-block;
+        font-size: 7.5pt;
+        font-weight: 600;
+        padding: 0.6mm 2.4mm;
+        border-radius: 99px;
+        background: rgb(22 18 14 / 0.06);
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .tag.done {
+        background: rgb(42 115 71 / 0.12);
+        color: var(--positive);
+      }
+      .tag.next {
+        background: rgb(242 140 40 / 0.18);
+        color: #8a4310;
+      }
+      .note {
+        border-left: 1mm solid var(--signal);
+        background: rgb(242 140 40 / 0.08);
+        border-radius: 0 3mm 3mm 0;
+        padding: 4mm 5mm;
+        margin: 4mm 0;
+        break-inside: avoid;
+      }
+      .note.warn {
+        border-left-color: var(--attention);
+        background: rgb(179 64 42 / 0.07);
+      }
+      .phase-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 5mm;
+      }
+      .phase-num {
+        font-size: 9pt;
+        font-weight: 600;
+        color: var(--signal);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .label {
+        font-size: 7.5pt;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 1.5mm;
+      }
+      .footer {
+        position: absolute;
+        bottom: 9mm;
+        left: 18mm;
+        right: 18mm;
+        display: flex;
+        justify-content: space-between;
+        font-size: 7.5pt;
+        color: var(--muted);
+      }
+      /* Cover */
+      .cover {
+        background: var(--ink);
+        color: #f2f0ed;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .cover .glow {
+        position: absolute;
+        right: -60mm;
+        top: -40mm;
+        width: 200mm;
+        height: 200mm;
+        border-radius: 50%;
+        background: radial-gradient(closest-side, rgb(242 140 40 / 0.45), transparent);
+      }
+      .cover .sun {
+        position: absolute;
+        /* Up and to the right, bleeding off the page: clear of the title. */
+        right: -25mm;
+        top: 10mm;
+        width: 120mm;
+        height: 120mm;
+        color: var(--amber);
+        opacity: 0.9;
+      }
+      .cover h1 {
+        font-size: 50pt;
+        position: relative;
+      }
+      .cover .sub {
+        font-size: 15pt;
+        color: #a8a49f;
+        margin-top: 6mm;
+        max-width: 120mm;
+        position: relative;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 3mm;
+        font-size: 16pt;
+        font-weight: 600;
+        position: relative;
+      }
+      .brand svg {
+        width: 11mm;
+        height: 11mm;
+        color: var(--amber);
+      }
+      .cover .meta {
+        position: relative;
+        font-size: 9pt;
+        color: #a8a49f;
+        display: flex;
+        gap: 10mm;
+      }
+      .cover .meta b {
+        display: block;
+        color: #f2f0ed;
+        font-weight: 600;
+        font-size: 10pt;
+      }
+      .stat {
+        font-size: 26pt;
+        font-weight: 600;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+      .timeline {
+        display: grid;
+        grid-template-columns: 22mm 1fr;
+        gap: 0 5mm;
+      }
+      .timeline .when {
+        font-weight: 600;
+        color: var(--signal);
+        font-size: 9pt;
+        padding-top: 1mm;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 1 · Cover -->
+    <section class="page cover">
+      <div class="glow"></div>
+      <svg class="sun" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">
+        <circle cx="50" cy="50" r="13" />
+        <circle cx="50" cy="50" r="18" fill="none" stroke="currentColor" stroke-width="1.6" />
+        <g id="rays"></g>
+      </svg>
+      <div class="brand">
+        <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">
+          <circle cx="50" cy="50" r="13" />
+          <circle cx="50" cy="50" r="18" fill="none" stroke="currentColor" stroke-width="2.4" />
+          <g class="small-rays"></g>
+        </svg>
+        Âmbar
+      </div>
+      <div>
+        <p class="eyebrow" style="color: #a8a49f">Planejamento · Fases 5 em diante</p>
+        <h1>Do conceito<br />ao banco completo.</h1>
+        <p class="sub">
+          O que já está pronto, o que vem a seguir, em que ordem e com qual critério de “pronto”. Um
+          banco fictício, construído com processo de produto real.
+        </p>
+      </div>
+      <div class="meta">
+        <div><b>17 de novembro de 2026</b>Data</div>
+        <div><b>Rascunho para decisão</b>Status</div>
+        <div><b>Portfólio de frontend</b>Contexto</div>
+      </div>
+    </section>
+
+    <!-- 2 · Where we are -->
+    <section class="page">
+      <p class="eyebrow">Onde estamos</p>
+      <h2>A base está pronta e testada.</h2>
+      <p class="muted" style="max-width: 150mm">
+        Em quatro fases, o Âmbar saiu de uma ideia para um produto que explica, avisa e não julga,
+        com números calculados de verdade e uma esteira de qualidade que roda a cada commit.
+      </p>
+
+      <div class="grid3" style="margin: 6mm 0">
+        <div class="card">
+          <div class="stat num">63</div>
+          <p class="muted">
+            testes automatizados (47 de lógica e componentes, 16 de ponta a ponta)
+          </p>
+        </div>
+        <div class="card">
+          <div class="stat num">100%</div>
+          <p class="muted">de cobertura nas regras do motor de insights</p>
+        </div>
+        <div class="card">
+          <div class="stat num">320 px</div>
+          <p class="muted">menor tela suportada, sem rolagem lateral (testado)</p>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Fase</th>
+            <th>Entrega</th>
+            <th>Ferramentas</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="num">0</td>
+            <td>Conceito, marca, validação, spec</td>
+            <td>brainstorming · llm-council</td>
+            <td><span class="tag done">Pronto</span></td>
+          </tr>
+          <tr>
+            <td class="num">1</td>
+            <td>Fundação e landing (8 seções)</td>
+            <td>Next.js 16 · TypeScript · Tailwind 4</td>
+            <td><span class="tag done">Pronto*</span></td>
+          </tr>
+          <tr>
+            <td class="num">2</td>
+            <td>Login com conta demo e área protegida</td>
+            <td>React Hook Form · Zod</td>
+            <td><span class="tag done">Pronto</span></td>
+          </tr>
+          <tr>
+            <td class="num">3</td>
+            <td>Painel, extrato, motor de insights, API falsa, movimento</td>
+            <td>MSW · TanStack Query · Motion</td>
+            <td><span class="tag done">Pronto</span></td>
+          </tr>
+          <tr>
+            <td class="num">4</td>
+            <td>Testes e integração contínua</td>
+            <td>Vitest · Testing Library · Playwright · GitHub Actions</td>
+            <td><span class="tag done">Pronto</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="muted" style="font-size: 8.5pt; margin-top: 2mm">
+        * Pendências da Fase 1: auditoria Lighthouse e <i>impeccable audit</i>; revisitar o resumo
+        do mês no extrato.
+      </p>
+
+      <div class="card" style="margin-top: 6mm">
+        <h3>Os princípios que continuam valendo</h3>
+        <div class="grid2">
+          <ul>
+            <li>
+              <b>Planejar antes de codar.</b> Cada fase começa com objetivo e “pronto quando”.
+            </li>
+            <li>
+              <b>Nenhum insight é texto fixo.</b> Todo número na tela sai de uma regra testada.
+            </li>
+            <li><b>Calma é produto.</b> Cada elemento novo precisa justificar a sua presença.</li>
+          </ul>
+          <ul>
+            <li>
+              <b>Acessibilidade não é opcional.</b> Teclado, leitor de tela, contraste AA, movimento
+              reduzido.
+            </li>
+            <li><b>Uma ferramenta por fase,</b> quando o problema dela aparece.</li>
+            <li><b>Tudo testado na esteira.</b> Uma fase só fecha com o CI verde.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>Âmbar · Planejamento</span><span>2</span></div>
+    </section>
+
+    <!-- 3 · Roadmap overview -->
+    <section class="page">
+      <p class="eyebrow">O roteiro</p>
+      <h2>Sete fases até o lançamento.</h2>
+      <p class="muted" style="max-width: 155mm">
+        A ordem segue uma regra simples: <b>primeiro o que um banco precisa fazer</b> (mover
+        dinheiro), depois o que diferencia o Âmbar (o assistente, os planos), e por último o que
+        <b>mostra</b> o produto pronto (os anúncios e o lançamento). Anúncio de função que não
+        existe é promessa vazia.
+      </p>
+
+      <table style="margin-top: 5mm">
+        <thead>
+          <tr>
+            <th>Fase</th>
+            <th>Entrega</th>
+            <th>Por que nessa posição</th>
+            <th>Novas ferramentas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="num"><b>5</b></td>
+            <td>
+              <b>Pix e transferências</b><br /><span class="muted"
+                >enviar, receber, comprovante</span
+              >
+            </td>
+            <td>É o coração de um banco. Sem mover dinheiro, o Âmbar é só um extrato bonito.</td>
+            <td>Mutações no TanStack Query, QR Code</td>
+          </tr>
+          <tr>
+            <td class="num"><b>6</b></td>
+            <td><b>Planos</b><br /><span class="muted">decisão em aberto, pág. 5</span></td>
+            <td>Usa o motor de insights e a projeção, que já existem.</td>
+            <td>A definir com a decisão</td>
+          </tr>
+          <tr>
+            <td class="num"><b>7</b></td>
+            <td><b>Assistente virtual</b></td>
+            <td>Fica melhor quando há mais coisas para explicar: Pix, metas, planos.</td>
+            <td>Etapa 1: nenhuma. Etapa 2: API do Claude</td>
+          </tr>
+          <tr>
+            <td class="num"><b>8</b></td>
+            <td><b>Benefícios e parceiros</b></td>
+            <td>Benefício calculado a partir dos gastos, outra regra do motor.</td>
+            <td>Nenhuma</td>
+          </tr>
+          <tr>
+            <td class="num"><b>9</b></td>
+            <td><b>Cartão 3D personalizável</b></td>
+            <td>Já estava no roteiro; vira o “uau” dos anúncios.</td>
+            <td>React Three Fiber · drei</td>
+          </tr>
+          <tr>
+            <td class="num"><b>10</b></td>
+            <td><b>Anúncios em vídeo</b></td>
+            <td>Mostram as funções prontas, com as cores e os componentes do próprio site.</td>
+            <td>Remotion</td>
+          </tr>
+          <tr>
+            <td class="num"><b>11</b></td>
+            <td><b>Lançamento</b></td>
+            <td>Publicar só quando o produto estiver à altura.</td>
+            <td>Vercel · Lighthouse</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="note">
+        <b>Sobre o cartão 3D:</b> ele era a Fase 5 no roteiro original. A proposta é movê-lo para
+        depois das funções de banco, para ele aparecer nos anúncios já “vestindo” um produto
+        completo. Se preferir manter a ordem antiga, nada nas outras fases depende dele.
+      </div>
+      <div class="footer"><span>Âmbar · Planejamento</span><span>3</span></div>
+    </section>
+
+    <!-- 4 · Phase 5: Pix -->
+    <section class="page">
+      <div class="phase-head">
+        <div>
+          <p class="phase-num">Fase 5</p>
+          <h2 style="margin: 1mm 0 0">Pix e transferências</h2>
+        </div>
+        <span class="tag next">Próxima</span>
+      </div>
+      <p class="muted" style="max-width: 155mm">
+        Enviar e receber dinheiro, do jeito Âmbar: antes de confirmar, a pessoa vê
+        <b>como fica o mês</b>
+        depois daquele Pix. É a Regra 1 (projeção) aplicada no momento em que ela mais importa.
+      </p>
+
+      <div class="grid2" style="margin-top: 5mm">
+        <div class="card">
+          <p class="label">Enviar</p>
+          <ul>
+            <li>Pix por chave: e-mail, telefone, CPF fictício ou chave aleatória.</li>
+            <li>Contatos recentes e favoritos.</li>
+            <li>Revisão antes de confirmar: valor, para quem, quando.</li>
+            <li>
+              <b>“Depois desse Pix, sobram R$ X até dia 5”</b>, com o “Como calculamos isso?”.
+            </li>
+            <li>Agendar para outra data, com a projeção recalculada.</li>
+            <li>Comprovante para compartilhar.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="label">Receber</p>
+          <ul>
+            <li>Minhas chaves Pix (criar e apagar, na conta demo).</li>
+            <li>QR Code com valor opcional e “copia e cola”.</li>
+            <li>Pedido de pagamento com link.</li>
+            <li>O extrato passa a mostrar entradas e saídas de Pix, com os nomes legíveis.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <p class="label">Como o conceito aparece</p>
+          <ul>
+            <li><b>Explica:</b> o impacto na projeção antes do “confirmar”.</li>
+            <li><b>Avisa:</b> “Esse Pix aperta o mês” quando a sobra fica no limite.</li>
+            <li><b>Não julga:</b> o aviso nunca bloqueia; a decisão é da pessoa.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="label">Pronto quando</p>
+          <ul>
+            <li>Enviar, agendar e receber funcionam no celular e no teclado.</li>
+            <li>A projeção recalculada vem de uma regra testada.</li>
+            <li>Erros (saldo insuficiente, chave inválida) não culpam ninguém.</li>
+            <li>Fluxo novo no Playwright e CI verde.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note warn">
+        <b>Limite honesto:</b> é tudo de mentira (MSW e o navegador). Nenhum dado real de pessoa,
+        CPF de verdade ou integração com o sistema Pix do Banco Central. Os textos da tela dizem
+        isso.
+      </div>
+      <div class="footer"><span>Âmbar · Planejamento</span><span>4</span></div>
+    </section>
+
+    <!-- 5 · Phase 6: plans (decision) -->
+    <section class="page">
+      <p class="phase-num">Fase 6 · Decisão em aberto</p>
+      <h2 style="margin-top: 1mm">Planos</h2>
+      <p class="muted" style="max-width: 155mm">
+        “Planos” pode significar duas coisas bem diferentes. As duas cabem no Âmbar; a pergunta é
+        qual vem primeiro.
+      </p>
+
+      <div class="grid2" style="margin-top: 5mm">
+        <div class="card">
+          <p class="label">A · Planos de conta</p>
+          <p>
+            Níveis de conta, como “Âmbar” (grátis) e “Âmbar Mais” (pago), com benefícios diferentes.
+          </p>
+          <ul>
+            <li>Página de comparação de planos na landing.</li>
+            <li>Tela de “mudar de plano” na conta.</li>
+            <li>Combina com a Fase 8 (benefícios).</li>
+          </ul>
+          <p class="muted" style="margin-top: 3mm">
+            <b>Risco:</b> página de preço é o lugar onde bancos mais escondem letras miúdas. O Âmbar
+            teria que mostrar <i>quanto custa por mês e o que se ganha de volta</i>, calculado com
+            os gastos da pessoa.
+          </p>
+        </div>
+        <div class="card">
+          <p class="label">B · Planejamento financeiro</p>
+          <p>Metas e “caixinhas”: guardar para a viagem, para a reserva, para o IPVA.</p>
+          <ul>
+            <li>Criar uma meta com valor e data.</li>
+            <li>“Para chegar lá, guarde R$ X por mês”, calculado.</li>
+            <li>A projeção do painel passa a considerar o que vai para as caixinhas.</li>
+          </ul>
+          <p class="muted" style="margin-top: 3mm">
+            <b>Força:</b> é a frase-guia “sem susto no fim do mês” levada para o ano inteiro.
+          </p>
+        </div>
+      </div>
+
+      <div class="note">
+        <b>Recomendação:</b> começar pela <b>B (caixinhas e metas)</b>, porque é a mais fiel ao
+        conceito e usa o motor de insights. A <b>A (planos de conta)</b> entra junto com os
+        benefícios na Fase 8, quando houver vantagens reais para mostrar em cada nível.
+      </div>
+      <div class="footer"><span>Âmbar · Planejamento</span><span>5</span></div>
+    </section>
+
+    <!-- 6 · Phase 7: assistant -->
+    <section class="page">
+      <p class="phase-num">Fase 7</p>
+      <h2 style="margin-top: 1mm">Assistente virtual</h2>
+      <p class="muted" style="max-width: 155mm">
+        Um lugar para perguntar sobre o próprio dinheiro em português simples: “quanto posso gastar
+        por dia até o salário?”, “por que meu delivery subiu?”, “quais assinaturas eu tenho?”. A
+        regra de ouro do Âmbar vale aqui também: <b>o assistente nunca inventa um número</b>.
+      </p>
+
+      <div class="grid2" style="margin-top: 5mm">
+        <div class="card">
+          <p class="label">Etapa 1 · Assistente das regras</p>
+          <p>
+            Perguntas reconhecidas por intenção, e respostas montadas
+            <b>pelas mesmas regras do painel</b>.
+          </p>
+          <ul>
+            <li>Grátis, rápido e funciona na conta demo.</li>
+            <li>Toda resposta tem “Como calculamos isso?”.</li>
+            <li>Sugestões de perguntas, para ninguém travar na tela vazia.</li>
+            <li>Totalmente testável.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="label">Etapa 2 · IA de verdade (opcional)</p>
+          <p>
+            A API do Claude entende perguntas livres e
+            <b>chama as nossas regras como ferramentas</b> para buscar os números.
+          </p>
+          <ul>
+            <li>Linguagem natural de verdade.</li>
+            <li>Precisa de servidor (rota do Next) e chave de API.</li>
+            <li>Tem custo por uso: limite de mensagens na demo.</li>
+            <li>A chave nunca vai para o navegador nem para o Git.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note">
+        <b>Recomendação:</b> fazer a Etapa 1 primeiro. Ela já entrega o “uau” e cria as peças
+        (intenções, respostas com cálculo, interface de conversa) que a Etapa 2 reaproveita. A Etapa
+        2 entra se o custo e o servidor fizerem sentido no lançamento.
+      </div>
+
+      <div class="card">
+        <p class="label">Pronto quando</p>
+        <ul>
+          <li>Responde pelo menos 8 tipos de pergunta, cada um com o cálculo à mostra.</li>
+          <li>Quando não sabe, diz que não sabe e sugere o que perguntar.</li>
+          <li>Funciona com leitor de tela: cada resposta é anunciada, e o foco não se perde.</li>
+          <li>Testes de cada intenção; fluxo de conversa no Playwright.</li>
+        </ul>
+      </div>
+      <div class="footer"><span>Âmbar · Planejamento</span><span>6</span></div>
+    </section>
+
+    <!-- 7 · Phase 8 + 9 -->
+    <section class="page">
+      <p class="phase-num">Fase 8</p>
+      <h2 style="margin-top: 1mm">Benefícios e parceiros</h2>
+      <p class="muted" style="max-width: 155mm">
+        Benefício do jeito Âmbar: <b>calculado a partir dos gastos da pessoa</b>, não uma vitrine de
+        ofertas. “Você gastou R$ 380 com delivery este mês; com o cashback do parceiro, R$ 19
+        voltariam.”
+      </p>
+
+      <div class="note warn">
+        <b>Atenção: empresas reais.</b> Mostrar marcas reais como “parceiras” de um banco fictício
+        sugere um acordo que não existe. Isso é associação falsa de marca, pode gerar problema
+        jurídico mesmo num portfólio, e um avaliador atento percebe. <b>Recomendação:</b> parceiros
+        fictícios no mesmo padrão dos dados de hoje (StreamFlix, Rango Delivery, Drogaria Vida) ou
+        categorias genéricas (“cashback em farmácias”). Se um dia houver parceria de verdade, ela
+        entra com autorização por escrito.
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <p class="label">O que entra</p>
+          <ul>
+            <li>Cashback por categoria, calculado sobre o extrato.</li>
+            <li>“Quanto você teria ganhado no último mês”.</li>
+            <li>Parceiros fictícios com página própria.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="label">Pronto quando</p>
+          <ul>
+            <li>Todo benefício mostrado vem de uma regra testada.</li>
+            <li>Nenhuma marca real, nenhum logo de terceiros.</li>
+            <li>Sem “oferta imperdível”: o tom continua calmo.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="phase-num" style="margin-top: 8mm">Fase 9</p>
+      <h2 style="margin-top: 1mm">Cartão 3D personalizável</h2>
+      <div class="grid2">
+        <div class="card">
+          <p class="label">O que entra</p>
+          <ul>
+            <li>O cartão de resina em 3D, girando com o dedo ou o mouse.</li>
+            <li>Escolher a cor da resina e o nome gravado.</li>
+            <li>O cartão em CSS de hoje vira a versão de reserva.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="label">Pronto quando</p>
+          <ul>
+            <li>Roda a 60 quadros por segundo num celular médio.</li>
+            <li>Com movimento reduzido, fica parado e continua bonito.</li>
+            <li>Sem WebGL, cai no cartão em CSS sem quebrar nada.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>Âmbar · Planejamento</span><span>7</span></div>
+    </section>
+
+    <!-- 8 · Phase 10: Remotion -->
+    <section class="page">
+      <p class="phase-num">Fase 10</p>
+      <h2 style="margin-top: 1mm">Anúncios em vídeo com Remotion</h2>
+      <p class="muted" style="max-width: 155mm">
+        O Remotion faz vídeo <b>com código React</b>. Na prática, os anúncios usam as mesmas cores,
+        a mesma fonte, as mesmas molas e até os mesmos componentes do site: o cartão de saldo, a
+        tela de bloqueio do “Não julga”, o cartão de resina. Se o produto muda, o vídeo é
+        renderizado de novo, sem reeditar nada à mão.
+      </p>
+
+      <table style="margin-top: 5mm">
+        <thead>
+          <tr>
+            <th>Roteiro</th>
+            <th>Ideia</th>
+            <th>Formato</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Sem susto</b></td>
+            <td>O saldo, as contas e o “sobram R$ 612 até dia 5” se montando na tela.</td>
+            <td>15 s · 9:16</td>
+          </tr>
+          <tr>
+            <td><b>Não julga</b></td>
+            <td>A tela de bloqueio: “SALDO INSUFICIENTE” vira o recado calmo do Âmbar.</td>
+            <td>15 s · 9:16</td>
+          </tr>
+          <tr>
+            <td><b>Avisa antes</b></td>
+            <td>“StreamFlix renova amanhã”, com o histórico de cobranças subindo.</td>
+            <td>15 s · 9:16</td>
+          </tr>
+          <tr>
+            <td><b>O Âmbar</b></td>
+            <td>Os três pilares e o cartão de resina girando no final.</td>
+            <td>30 s · 16:9</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="grid2" style="margin-top: 5mm">
+        <div class="card">
+          <p class="label">Pronto quando</p>
+          <ul>
+            <li>Os quatro vídeos renderizados em MP4, com legenda.</li>
+            <li>Os números dos vídeos vêm dos mesmos dados da Marina.</li>
+            <li>Música livre de direitos, com a licença registrada.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="label">Cuidados</p>
+          <ul>
+            <li>
+              Licença do Remotion: gratuita para pessoa física e times pequenos; conferir as
+              condições antes de qualquer uso comercial.
+            </li>
+            <li>Nenhuma marca, pessoa ou voz real.</li>
+            <li>Os vídeos dizem que o Âmbar é fictício.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>Âmbar · Planejamento</span><span>8</span></div>
+    </section>
+
+    <!-- 9 · Launch + decisions + next steps -->
+    <section class="page">
+      <p class="phase-num">Fase 11</p>
+      <h2 style="margin-top: 1mm">Lançamento</h2>
+      <div class="card">
+        <ul>
+          <li>Publicação na Vercel, com a demo funcionando de ponta a ponta.</li>
+          <li>Lighthouse no celular: acessibilidade 100, desempenho 90 ou mais.</li>
+          <li>Auditoria final de interface (<i>impeccable audit</i>), sem problemas P0 nem P1.</li>
+          <li>README que explica o projeto em 90 segundos, com os vídeos da Fase 10.</li>
+        </ul>
+      </div>
+
+      <p class="eyebrow" style="margin-top: 8mm">Decisões para você</p>
+      <h2>O que precisa da sua resposta.</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Pergunta</th>
+            <th>Recomendação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="num">1</td>
+            <td>“Planos” são planos de conta (A) ou caixinhas e metas (B)?</td>
+            <td>B primeiro, A junto com os benefícios</td>
+          </tr>
+          <tr>
+            <td class="num">2</td>
+            <td>O assistente usa IA de verdade (com custo e servidor) ou só as regras?</td>
+            <td>Regras primeiro; IA como etapa 2</td>
+          </tr>
+          <tr>
+            <td class="num">3</td>
+            <td>Parceiros reais ou fictícios?</td>
+            <td>Fictícios</td>
+          </tr>
+          <tr>
+            <td class="num">4</td>
+            <td>O cartão 3D vai para depois das funções de banco?</td>
+            <td>Sim (Fase 9)</td>
+          </tr>
+          <tr>
+            <td class="num">5</td>
+            <td>
+              Alguma função de banco que ficou de fora? (boleto, fatura do cartão, investimentos)
+            </td>
+            <td>Boleto e fatura cabem na Fase 5 ou numa 5b</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="eyebrow" style="margin-top: 8mm">Próximos passos</p>
+      <div class="timeline">
+        <div class="when">Agora</div>
+        <div><p>Você responde às 5 decisões.</p></div>
+        <div class="when">Depois</div>
+        <div>
+          <p>
+            Detalhar a Fase 5 na SPEC (telas, regras, “pronto quando”) e montar o visual para
+            aprovação, como fizemos com o extrato.
+          </p>
+        </div>
+        <div class="when">Em paralelo</div>
+        <div><p>Fechar as pendências da Fase 1: Lighthouse e auditoria de interface.</p></div>
+      </div>
+      <div class="footer"><span>Âmbar · Planejamento</span><span>9</span></div>
+    </section>
+
+    <script>
+      // The sun's rays, same path as src/components/logo.tsx.
+      const LONG =
+        "M46.6 27 C44 22.5, 52.5 19.5, 49.2 14.5 C46.5 10.5, 52 8, 49.8 3.5 C49.6 2.6, 50 1.5, 50 1 C51.2 2.5, 53.5 5.5, 52.4 8.5 C51 12, 56 14.5, 53.2 19.5 C51.8 22.5, 55 24.5, 53.4 27 Q50 28.5 46.6 27 Z";
+      const SHORT =
+        "M47 27 C45 23.5, 52 21, 49.4 17 C47.8 14.5, 50 12, 50 10 C51.5 12, 53.2 14.5, 52.2 17 C51 20, 55 23.5, 53 27 Q50 28.2 47 27 Z";
+      const ns = "http://www.w3.org/2000/svg";
+      function rays(group, withShort) {
+        for (let i = 0; i < 8; i++) {
+          const long = document.createElementNS(ns, "path");
+          long.setAttribute("d", LONG);
+          long.setAttribute("transform", `rotate(${i * 45} 50 50)`);
+          group.appendChild(long);
+          if (withShort) {
+            const short = document.createElementNS(ns, "path");
+            short.setAttribute("d", SHORT);
+            short.setAttribute("transform", `rotate(${i * 45 + 22.5} 50 50)`);
+            group.appendChild(short);
+          }
+        }
+      }
+      rays(document.getElementById("rays"), true);
+      rays(document.querySelector(".small-rays"), false);
+    </script>
+  </body>
+</html>
