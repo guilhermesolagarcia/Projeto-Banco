@@ -76,10 +76,11 @@ mostra se: diferença ≥ R$ 50 e ≥ 20%
 **Regra 3 · Cobrança recorrente perto de renovar**
 
 - Detecta cobranças que se repetem no extrato e avisa as que vencem em até 2 dias.
-- Destaca quando o preço subiu: "Streaming renova amanhã: R$ 39,90 (subiu R$ 5)."
+- Destaca quando o preço subiu: "Streaming renova amanhã: R$ 39,90, R$ 5 mais caro desde outubro."
+- _Revisão de 17/11:_ a variação permitida era de 10%, o que fazia o detector perder a assinatura justamente quando ela ficava mais cara (+14%). Agora cada cobrança é comparada com a anterior. E a alta é a que já aconteceu: o banco não sabe o preço de uma cobrança futura, só o das passadas.
 
 ```
-recorrente = 3 ou mais cobranças do mesmo estabelecimento, intervalo de 28 a 31 dias, valor com variação de até 10%
+recorrente = 3 ou mais cobranças do mesmo estabelecimento, intervalo de 28 a 31 dias, cada valor até 20% diferente do anterior
 próxima cobrança = última + intervalo médio
 avisa se: próxima − hoje ≤ 2 dias
 ```
@@ -88,7 +89,7 @@ avisa se: próxima − hoje ≤ 2 dias
 
 **Requisitos de dados**
 
-- **Dataset fictício:** 1 persona e 90 dias de transações em JSON, com categoria, estabelecimento e recorrências. Tem padrões plantados: um pico de delivery e uma assinatura que subiu de preço. Esse JSON vira os dados do MSW.
+- **Dataset fictício:** 1 persona e as transações desde 1º de agosto (quase 4 meses, para a assinatura ter 3 cobranças), em TypeScript (`src/mocks/marina.ts`), com categoria, estabelecimento e recorrências. Tem padrões plantados: um pico de delivery e uma assinatura que subiu de preço. Esse JSON vira os dados do MSW.
 - **Dinheiro em centavos inteiros** (`number`), formatado com `Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })`. Números decimais erram nas contas com dinheiro.
 - **"Hoje" congelado** na demo. Sem isso, "renova amanhã" deixa de funcionar uma semana depois do deploy.
 

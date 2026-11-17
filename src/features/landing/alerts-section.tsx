@@ -13,21 +13,30 @@ const TODAY_DAY = TODAY.getUTCDate();
 
 // Rule 3: the charge repeats every month; the history is how we know it is a subscription.
 const { oldPrice: OLD_PRICE, newPrice: NEW_PRICE } = RENEWAL;
-const monthLabel = (monthsBack: number) =>
-  formatDate(
-    new Date(
-      Date.UTC(
-        RENEWAL.date.getUTCFullYear(),
-        RENEWAL.date.getUTCMonth() - monthsBack,
-        RENEWAL.date.getUTCDate(),
-      ),
+// The price went up at the last charge (October); tomorrow's amount is the prediction.
+const monthsBefore = (back: number) =>
+  new Date(
+    Date.UTC(
+      RENEWAL.date.getUTCFullYear(),
+      RENEWAL.date.getUTCMonth() - back,
+      RENEWAL.date.getUTCDate(),
     ),
-    { month: "short" },
-  ).replace(".", "");
-const HISTORY = [
-  ...[3, 2, 1].map((back) => ({ month: monthLabel(back), cents: OLD_PRICE, next: false })),
-  { month: monthLabel(0), cents: NEW_PRICE, next: true },
+  );
+const monthLabel = (back: number) =>
+  formatDate(monthsBefore(back), { month: "short" }).replace(".", "");
+const RISE_MONTH = formatDate(monthsBefore(1), { month: "long" });
+type Charge = { month: string; cents: number; kind: "past" | "rise" | "next" };
+const HISTORY: Charge[] = [
+  { month: monthLabel(3), cents: OLD_PRICE, kind: "past" },
+  { month: monthLabel(2), cents: OLD_PRICE, kind: "past" },
+  { month: monthLabel(1), cents: NEW_PRICE, kind: "rise" },
+  { month: "amanhã", cents: NEW_PRICE, kind: "next" },
 ];
+const BAR: Record<Charge["kind"], string> = {
+  past: "bg-ink/10",
+  rise: "bg-attention",
+  next: "border-2 border-dashed border-attention/60",
+};
 
 const pct = (part: number, whole: number) => `${(part / whole) * 100}%`;
 
@@ -114,15 +123,15 @@ export function AlertsSection() {
           <li className={`${TILE} md:col-span-3 md:row-span-2`}>
             <Kind attention>Renovação</Kind>
             <h3 className="mt-6 text-2xl leading-snug font-semibold tracking-tight md:text-3xl">
-              Streaming renova amanhã, mais caro.
+              Streaming renova amanhã.
             </h3>
             <p className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
               <span className="text-6xl leading-none font-semibold tracking-[-0.045em] sm:text-7xl">
                 <Money cents={NEW_PRICE} />
               </span>
               <span className="text-ink-muted">
-                era <Money cents={OLD_PRICE} />, subiu{" "}
-                <Money cents={NEW_PRICE - OLD_PRICE} className="font-medium text-attention" />
+                <Money cents={NEW_PRICE - OLD_PRICE} className="font-medium text-attention" /> mais
+                caro desde {RISE_MONTH}
               </span>
             </p>
 
@@ -132,24 +141,24 @@ export function AlertsSection() {
             >
               {HISTORY.map((charge) => (
                 <li key={charge.month} className="flex flex-1 flex-col items-center gap-2 text-sm">
-                  <span className={charge.next ? "font-medium" : "text-ink-muted"}>
+                  <span className={charge.kind === "past" ? "text-ink-muted" : "font-medium"}>
                     <Money cents={charge.cents} />
                   </span>
                   <span
                     aria-hidden="true"
-                    className={`reveal-grow-y w-full origin-bottom rounded-xl ${charge.next ? "bg-attention" : "bg-ink/10"}`}
+                    className={`reveal-grow-y w-full origin-bottom rounded-xl ${BAR[charge.kind]}`}
                     style={{ height: `${(charge.cents / NEW_PRICE) * 6}rem` }}
                   />
                   <span className="text-ink-muted capitalize">
-                    {charge.next ? "amanhã" : charge.month}
+                    {charge.kind === "next" ? "amanhã (previsto)" : charge.month}
                   </span>
                 </li>
               ))}
             </ol>
 
             <How>
-              A mesma cobrança, com valor parecido, a cada ~30 dias. Se não usa mais, dá tempo de
-              cancelar antes de amanhã.
+              A mesma cobrança a cada ~30 dias, e cada uma até 20% diferente da anterior. A próxima
+              é prevista pelo intervalo médio. Se não usa mais, dá tempo de cancelar.
             </How>
           </li>
 
