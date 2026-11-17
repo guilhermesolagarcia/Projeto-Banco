@@ -1,136 +1,115 @@
-# Projeto Banco
+# Âmbar
 
-Site e Internet Banking de um **banco fictício**, construído como projeto de portfólio para praticar frontend com processo e qualidade de nível sênior.
+**Sem susto no fim do mês.** Site e Internet Banking de um banco digital **fictício** que explica, avisa e não julga. É um projeto de portfólio de frontend, feito com processo e qualidade de nível sênior.
 
-> **Status:** Fase 0 (planejamento). Nenhum código ainda. Conceito, direção visual e logo definidos. Próximo passo: escrever o PRD do MVP e fechar os design tokens.
+> ⚠️ **O Âmbar não é um banco real.** Nenhum dado é coletado, e todos os valores são de demonstração.
+
+> **Status:** Fase 1 em andamento. A fundação está pronta e a landing está sendo construída seção por seção. Veja o [diário de bordo](docs/diario/2026-11-16.md).
 
 ---
 
-## Objetivo
+## A ideia
 
-- Fortalecer criatividade e experiência como desenvolvedor frontend com olhar de UX.
-- Programar "como um sênior": **decidir antes de codar**, adotar cada ferramenta só quando ela resolve um problema real e saber justificar cada escolha.
-- Ter uma peça de portfólio que mostre mais do que uma landing page: estado, formulários, acessibilidade, testes e polimento de interação.
+Os bancos lucram com o que o cliente não sabe, e as páginas deles provam isso: a página inicial do C6 tem **129 links**, a do Itaú **141** e a do Santander **117**. Duas delas abrem oferecendo renegociação de dívida ou limite da conta ([pesquisa](docs/research/2026-11-16-landing-bancos.md)). A landing do Âmbar tem **6 links**.
 
-## Escopo do produto
+O Âmbar faz o contrário, em três pilares:
 
-O projeto tem dois produtos, tratados separadamente:
+| Pilar         | Na prática                                                             |
+| ------------- | ---------------------------------------------------------------------- |
+| **Explica**   | Gastos em português claro, e todo número mostra **como foi calculado** |
+| **Avisa**     | Contas, renovações e aperto no fim do mês, **antes** de acontecerem    |
+| **Não julga** | Saldo baixo vira um próximo passo, nunca uma bronca em vermelho        |
 
-| Produto                                                               | Foco                                                 | Peso                               |
-| --------------------------------------------------------------------- | ---------------------------------------------------- | ---------------------------------- |
-| **Site institucional** (landing, produtos, cartões, "abra sua conta") | Marketing, SEO, performance                          | Enxuto, é a porta de entrada       |
-| **Internet Banking** (login, dashboard, extrato, Pix, cartões)        | Estado, formulários, segurança de UI, acessibilidade | **Principal**, é o que impressiona |
+### O diferencial técnico: o motor de insights
 
-### MVP (v1)
+Os avisos não são frases fixas. São **calculados a partir das transações** por funções TypeScript puras, separadas da interface e testáveis, em [`src/insights/`](src/insights):
 
-1. Landing page
-2. Login
-3. Dashboard (saldo, atalhos, resumo)
-4. Extrato
+1. **Projeção até o salário:** saldo − contas agendadas − gasto médio diário × dias restantes.
+2. **Comparação por categoria:** o **mesmo período** do mês anterior, para a comparação ser justa.
+3. **Cobrança recorrente perto de renovar:** detecta assinaturas e avisa quando o preço subiu.
 
-### Depois do MVP
+A regra 1 já roda na landing: o simulador da seção "Clareza" usa a mesma função que o dashboard vai usar.
 
-- Pix / transferências
-- Cartões
-- **Personalização do cartão em 3D** (Fase 5)
+## Rodando localmente
 
-O backend é **simulado**: a API é mockada no navegador com MSW. O projeto é 100% frontend.
+Requisitos: Node 24+.
+
+```bash
+npm install
+npm run dev              # http://localhost:3000
+```
+
+| Comando                  | O que faz                                                             |
+| ------------------------ | --------------------------------------------------------------------- |
+| `npm run build`          | Build de produção                                                     |
+| `npm run lint`           | ESLint                                                                |
+| `npm run typecheck`      | Gera os tipos de rota e roda o `tsc`                                  |
+| `npm run format`         | Prettier                                                              |
+| `npm run check:insights` | Testa as regras do motor de insights (Node puro, até o Vitest chegar) |
 
 ## Stack
 
-| Camada               | Tecnologia                              | Entra na fase |
-| -------------------- | --------------------------------------- | ------------- |
-| Framework            | Next.js (App Router)                    | 1             |
-| Linguagem            | TypeScript em modo `strict`             | 1             |
-| Estilo               | Tailwind CSS + design tokens próprios   | 1             |
-| Qualidade de código  | ESLint + Prettier, Conventional Commits | 1             |
-| Formulários          | React Hook Form + Zod                   | 2             |
-| API simulada         | MSW (Mock Service Worker)               | 3             |
-| Dados do servidor    | TanStack Query                          | 3             |
-| Animação             | Motion (`motion/react`)                 | 3+            |
-| Testes de componente | Vitest + Testing Library                | 4             |
-| Testes E2E           | Playwright                              | 4             |
-| CI                   | GitHub Actions                          | 4             |
-| 3D                   | React Three Fiber + drei                | 5             |
+Cada ferramenta entra **só quando o problema dela aparece**.
 
-**Regra:** nenhuma ferramenta entra antes da fase dela. Primeiro sentimos o problema, depois a ferramenta chega como solução.
+| Camada            | Tecnologia                              | Fase |
+| ----------------- | --------------------------------------- | ---- |
+| Framework         | Next.js 16 (App Router)                 | 1 ✅ |
+| Linguagem         | TypeScript em modo `strict`, sem `any`  | 1 ✅ |
+| Estilo            | Tailwind CSS 4 + design tokens próprios | 1 ✅ |
+| Qualidade         | ESLint + Prettier, Conventional Commits | 1 ✅ |
+| Formulários       | React Hook Form + Zod                   | 2    |
+| API simulada      | MSW (Mock Service Worker)               | 3    |
+| Dados do servidor | TanStack Query                          | 3    |
+| Animação          | Motion (`motion/react`)                 | 3    |
+| Testes            | Vitest + Testing Library, Playwright    | 4    |
+| CI                | GitHub Actions                          | 4    |
+| 3D                | React Three Fiber + drei                | 5    |
+
+Na landing, o movimento é **CSS puro**: animações de entrada e animações guiadas pela rolagem, nativas do navegador. São zero kilobytes de JavaScript, e tudo para com `prefers-reduced-motion`.
 
 ## Fases
 
-### Fase 0: Planejamento ← _estamos aqui_
+- [x] **Fase 0 · Planejamento:** conceito, nome, identidade visual, logo, validação com conselho de IAs, spec
+- [ ] **Fase 1 · Fundação e landing:** ✅ fundação · 🔄 landing (hero, clareza, avisos e cartão prontos)
+- [ ] **Fase 2 · Login:** conta demo, formulário acessível
+- [ ] **Fase 3 · Dashboard e extrato:** MSW, TanStack Query, motor de insights completo
+- [ ] **Fase 4 · Qualidade:** testes de componente, E2E e CI
+- [ ] **Fase 5 · Cartão 3D:** personalização com versão 2D de reserva
 
-- Brainstorming do conceito do banco (nome, proposta, público-alvo, tom visual).
-- Validação do conceito (llm-council; MiroFish opcional como teste de estresse).
-- PRD do MVP.
-- Identidade visual e design tokens (paleta, tipografia, espaçamento, raios, sombras).
+**MVP:** landing, login, dashboard e extrato. **Depois:** Pix, cartões, cartão 3D e modo escuro.
 
-### Fase 1: Fundação
+## Acessibilidade
 
-- Scaffold do Next.js + TS strict + Tailwind + ESLint/Prettier.
-- Design tokens no código.
-- Landing page.
+- Todos os pares de cor com contraste **calculado** (WCAG AA), registrados no [documento de design](docs/superpowers/specs/2026-11-16-ambar-concept-design.md) (seção 4).
+- Foco visível em âmbar, link "Pular para o conteúdo" e navegação completa por teclado.
+- Avisos nunca dependem só da cor (sempre ícone + texto) e são anunciados por leitor de tela (`aria-live`).
+- `prefers-reduced-motion` respeitado em toda animação.
+- Mobile-first, a partir de 320 px, sem rolagem lateral.
 
-### Fase 2: Login
+## Estrutura
 
-- Formulário com React Hook Form + Zod.
-- Estados de erro, loading e acessibilidade de formulário.
+```
+src/
+  app/            → rotas, layout, tokens (globals.css), imagem de compartilhamento, 404
+  components/     → compartilhados: Logo, Money, ResinCard
+  features/       → um módulo por pasta (landing, e depois auth e banking)
+  insights/       → regras puras do motor de insights (sem React)
+docs/
+  superpowers/specs/  → conceito e direção visual
+  brand/              → página do logo (abra no navegador)
+  research/           → pesquisa de páginas de bancos
+  diario/             → diário de bordo
+  processo.md         → como o projeto é construído (skills e princípios)
+SPEC.md           → o que construir, módulo por módulo
+```
 
-### Fase 3: Dashboard e extrato
+## Documentos
 
-- MSW simulando a API (contas, saldo, transações).
-- TanStack Query para cache, loading e erro.
-- Microinterações com Motion.
-
-### Fase 4: Qualidade
-
-- Vitest + Testing Library nos componentes reais.
-- Playwright para os fluxos principais.
-- CI no GitHub Actions (lint, typecheck, testes).
-
-### Fase 5: Cartão 3D
-
-- Personalização do cartão com React Three Fiber.
-- Arrastar para girar, com física de mola (spring).
-- Carregado sob demanda (`next/dynamic`), com versão 2D de reserva e respeito a `prefers-reduced-motion`.
-
-## Kit de skills (Claude Code)
-
-As skills ficam em escopo global (`~/.claude`). Backup e documentação em `mango/Projeto-Hardware/.ferramentas`.
-
-**Princípio: uma ferramenta por trabalho.** Skills que cobrem o mesmo assunto podem dar instruções conflitantes.
-
-| Etapa                | Skill                                                                                          | Papel                                                                           |
-| -------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Ideação              | `superpowers/brainstorming`                                                                    | Gerar e refinar o conceito do banco                                             |
-| Validação da ideia   | `llm-council` (+ `MiroFish`, opcional)                                                         | Testar o conceito contra pontos de vista diferentes                             |
-| PRD e planejamento   | `agent-skills` (`/spec` → `/plan`)                                                             | Spec e quebra em tarefas                                                        |
-| Identidade visual    | `ui-ux-pro-max` (`design-system`) + `awesome-design-md` (refs: Revolut, Wise, Stripe)          | Tokens com justificativa                                                        |
-| Anti-visual genérico | `taste-skill`                                                                                  | Filtro contra o visual "genérico de IA"                                         |
-| Estrutura de UI      | `apple-hig` (dickwu/apple-design-skill, renomeada para não colidir com `apple-design` do Emil) | Revisão pela HIG da Apple: hierarquia, controles, **sem botões desnecessários** |
-| Movimento            | `emil-skills/apple-design` + Motion AI Kit (`/motion`)                                         | Springs, gestos, transições interrompíveis, animações leves                     |
-| Código React/Next    | `vercel-react-best-practices`                                                                  | Padrões e performance da stack                                                  |
-| Simplicidade         | `ponytail`                                                                                     | Evitar superengenharia                                                          |
-| Auditoria de UI/a11y | `impeccable` (`audit`)                                                                         | Um único auditor                                                                |
-| 3D (Fase 5)          | `threejs-skills`                                                                               | Cartão 3D                                                                       |
-| Testes E2E (Fase 4)  | Chrome DevTools MCP + `webapp-testing`                                                         | Fluxos e verificação visual                                                     |
-
-**Fora deste projeto:** GSAP pesado, genjutsu, img2threejs. Um banco precisa transmitir confiança, não espetáculo.
-
-### Sobre o MiroFish
-
-Aplicação de simulação multiagente (não é skill). Exige Python 3.11–3.12, `uv`, Node 18+, chave de API de LLM e chave do Zep Cloud. Consome muitos tokens e não tem precisão comprovada: o resultado serve para **provocar ideias**, não como evidência. Uso planejado: depois do brainstorming, como teste de estresse do conceito.
-
-## Princípios de trabalho
-
-1. **Planejar antes de codar.** PRD primeiro, scaffold depois.
-2. **Uma ferramenta por fase**, introduzida quando o problema aparece.
-3. **Entender antes de aceitar.** Toda sugestão de skill ou agente vem com o "porquê". O objetivo é saber defender cada decisão numa entrevista.
-4. **Acessibilidade não é opcional.** Contraste, foco visível, navegação por teclado, `prefers-reduced-motion`.
-5. **Menos é mais na interface.** Cada botão e cada elemento precisa justificar a sua presença.
-
-## Decisões pendentes
-
-- [x] Nome do banco: **Âmbar**
-- [x] Conceito e proposta de valor: um banco que explica, avisa e não julga ("Sem susto no fim do mês")
-- [x] Público-alvo: todo mundo
-- [x] Direção visual (paleta, tipografia e logo): veja [`docs/superpowers/specs/2026-11-16-ambar-concept-design.md`](docs/superpowers/specs/2026-11-16-ambar-concept-design.md) e [`docs/brand/ambar-logo.html`](docs/brand/ambar-logo.html)
+| Documento                                                                              | Para quê                                            |
+| -------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| [`SPEC.md`](SPEC.md)                                                                   | O que construir, critérios de pronto e limites      |
+| [Conceito e direção visual](docs/superpowers/specs/2026-11-16-ambar-concept-design.md) | O porquê: conceito, tokens, logo, motor de insights |
+| [Logo](docs/brand/ambar-logo.html)                                                     | Marca completa, versão reduzida e regras de uso     |
+| [Pesquisa](docs/research/2026-11-16-landing-bancos.md)                                 | O que os bancos fazem, e o que o Âmbar não faz      |
+| [Diário de bordo](docs/diario/2026-11-16.md)                                           | Decisões, erros e lições de cada dia                |
+| [Processo](docs/processo.md)                                                           | Princípios e kit de skills do Claude Code           |
