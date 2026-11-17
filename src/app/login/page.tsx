@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
+import { LoginForm } from "@/features/auth/login-form";
 import { Orbits } from "@/features/landing/orbits";
 
 export const metadata: Metadata = { title: "Entrar · Âmbar" };
 
-// Demo account, shown on purpose: there is no real auth (no server). See SPEC.md, module auth.
-const DEMO = { email: "marina@ambar.demo", password: "ambar-demo" };
-
-const FIELD =
-  "mt-2 w-full rounded-2xl border border-ink/15 bg-white px-4 py-3.5 text-lg transition-colors hover:border-ink/30 focus:border-amber-signal focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-signal";
-
-// Phase 2, step 1: the approved look. Validation (React Hook Form + Zod) and the session come next.
 export default function LoginPage() {
   return (
     <div className="relative isolate flex min-h-dvh flex-col overflow-hidden">
@@ -39,45 +33,7 @@ export default function LoginPage() {
             É uma conta de demonstração. Já deixamos tudo preenchido: é só entrar.
           </p>
 
-          <form className="mt-8 space-y-5">
-            <div>
-              <label htmlFor="email" className="font-medium">
-                E-mail
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="username"
-                defaultValue={DEMO.email}
-                className={FIELD}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="font-medium">
-                Senha
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                defaultValue={DEMO.password}
-                aria-describedby="password-hint"
-                className={FIELD}
-              />
-              <p id="password-hint" className="mt-2 text-sm text-ink-muted">
-                Senha da demo: <span className="font-medium text-ink">{DEMO.password}</span>
-              </p>
-            </div>
-            {/* type="button" until the form is wired: a plain GET submit would put the password in the URL. */}
-            <button
-              type="button"
-              className="mt-3 w-full rounded-pill bg-ink px-6 py-4 text-lg font-medium text-paper transition-[opacity,transform] duration-200 hover:opacity-90 active:scale-[0.98]"
-            >
-              Entrar como Marina
-            </button>
-          </form>
+          <LoginForm />
 
           <p className="mt-6 flex items-start gap-2 text-sm text-ink-muted">
             <span
