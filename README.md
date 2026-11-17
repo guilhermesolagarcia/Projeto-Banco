@@ -5,7 +5,7 @@
 <br />
 <br />
 
-<img src="https://img.shields.io/badge/status-Fase%203%20·%20dashboard-F28C28?style=flat-square&labelColor=16120E" alt="Status: Fase 3, dashboard" />
+<img src="https://img.shields.io/badge/status-Fase%204%20·%20qualidade-F28C28?style=flat-square&labelColor=16120E" alt="Status: Fase 4, qualidade" />
 <img src="https://img.shields.io/badge/Next.js-16-16120E?style=flat-square&logo=nextdotjs&logoColor=F4F0EA" alt="Next.js 16" />
 <img src="https://img.shields.io/badge/TypeScript-strict-16120E?style=flat-square&logo=typescript&logoColor=F4F0EA" alt="TypeScript strict" />
 <img src="https://img.shields.io/badge/Tailwind-4-16120E?style=flat-square&logo=tailwindcss&logoColor=F4F0EA" alt="Tailwind CSS 4" />
@@ -185,8 +185,8 @@ Cada ferramenta entra **só quando o problema dela aparece**.
 |  0   | Conceito, marca, validação com conselho de IAs, spec | `brainstorming` · `llm-council`                        | ✅  |
 |  1   | Fundação e landing                                   | Next.js · TypeScript · Tailwind · ESLint · Prettier    | 🔄  |
 |  2   | Login com conta demo                                 | React Hook Form · Zod                                  | ✅  |
-|  3   | Dashboard e extrato com o motor de insights          | MSW · TanStack Query · Motion                          | 🔄  |
-|  4   | Qualidade                                            | Vitest · Testing Library · Playwright · GitHub Actions |     |
+|  3   | Dashboard e extrato com o motor de insights          | MSW · TanStack Query · Motion                          | ✅  |
+|  4   | Qualidade                                            | Vitest · Testing Library · Playwright · GitHub Actions | 🔄  |
 |  5   | Cartão 3D personalizável                             | React Three Fiber · drei                               |     |
 
 **Landing:** ✅ hero · ✅ clareza · ✅ avisos · ✅ cartão · ✅ não julga · ✅ perguntas · ✅ fechamento · ✅ rodapé
@@ -211,9 +211,10 @@ Cada ferramenta entra **só quando o problema dela aparece**.
 ```
 src/
   app/            → rotas, layout, tokens (globals.css), imagem de compartilhamento, 404
-  components/     → Logo, Money, ResinCard
-  features/       → um módulo por pasta (landing; depois auth e banking)
+  components/     → Logo, Money, ResinCard e motion/ (molas e a caixa "mostrar mais")
+  features/       → um módulo por pasta: landing, auth e banking
   insights/       → regras puras do motor de insights (sem React)
+  mocks/          → dados da Marina e a API falsa (MSW)
 docs/
   superpowers/specs/  → conceito e direção visual
   brand/              → página do logo
