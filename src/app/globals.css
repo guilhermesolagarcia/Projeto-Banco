@@ -21,6 +21,9 @@
   --color-amber: #f28c28;
   --color-amber-signal: #d06e0e;
   --color-amber-on-dark: #f2a04b;
+  /* Deep amber: the one section background allowed (closing). White on it: 4.85:1 (AA). */
+  --color-amber-deep: #b5570c;
+  --color-amber-ember: #8a4310;
 
   /* Semantic: attention is separate from the brand amber */
   --color-attention: #b3402a;

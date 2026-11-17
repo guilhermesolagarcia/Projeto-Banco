@@ -189,7 +189,7 @@ Cada ferramenta entra **só quando o problema dela aparece**.
 |  4   | Qualidade                                            | Vitest · Testing Library · Playwright · GitHub Actions |     |
 |  5   | Cartão 3D personalizável                             | React Three Fiber · drei                               |     |
 
-**Landing:** ✅ hero · ✅ clareza · ✅ avisos · ✅ cartão · ✅ não julga · ✅ perguntas · ⬜ fechamento · ⬜ rodapé
+**Landing:** ✅ hero · ✅ clareza · ✅ avisos · ✅ cartão · ✅ não julga · ✅ perguntas · ✅ fechamento · ✅ rodapé
 
 <br />
 

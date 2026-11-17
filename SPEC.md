@@ -166,8 +166,8 @@ Ordem atualizada em 16/11/2026, a partir da pesquisa em [`docs/research/2026-11-
 | 4 · Não julga          | Antes e depois: o banco comum ("SALDO INSUFICIENTE") vs. o Âmbar (calmo, com o próximo passo)                                                                                                                | ✅     |
 | 5 · Cartão (resina)    | Cartão de resina em CSS e a etiqueta "Em breve: personalize o seu em 3D"                                                                                                                                     | ✅     |
 | 6 · Perguntas (claro)  | "É um banco de verdade?", "Como funciona a conta demo?", "O que vocês fazem com meus dados?", com `<details>` nativo                                                                                         | ✅     |
-| 7 · Fechamento (claro) | "Veja o Âmbar funcionando com uma conta demo.", linha de confiança, botão                                                                                                                                    | ⬜     |
-| Rodapé                 | "Âmbar é um banco fictício, projeto de portfólio."                                                                                                                                                           | ⬜     |
+| 7 · Fechamento (claro) | "Veja o Âmbar funcionando com uma conta demo.", linha de confiança, botão                                                                                                                                    | ✅     |
+| Rodapé                 | "Âmbar é um banco fictício, projeto de portfólio."                                                                                                                                                           | ✅     |
 
 **Fora da landing, de propósito:** depoimentos, números de clientes e selos de segurança. Num banco fictício, seriam inventados.
 

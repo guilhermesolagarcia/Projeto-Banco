@@ -1,9 +1,11 @@
 import { AlertsSection } from "@/features/landing/alerts-section";
 import { CardSection } from "@/features/landing/card-section";
 import { ClaritySection } from "@/features/landing/clarity-section";
+import { ClosingSection } from "@/features/landing/closing-section";
 import { FaqSection } from "@/features/landing/faq-section";
 import { Hero } from "@/features/landing/hero";
 import { NoJudgmentSection } from "@/features/landing/no-judgment-section";
+import { SiteFooter } from "@/features/landing/site-footer";
 import { SiteHeader } from "@/features/landing/site-header";
 
 export default function Home() {
@@ -23,7 +25,9 @@ export default function Home() {
         <NoJudgmentSection />
         <CardSection />
         <FaqSection />
+        <ClosingSection />
       </main>
+      <SiteFooter />
     </>
   );
 }
