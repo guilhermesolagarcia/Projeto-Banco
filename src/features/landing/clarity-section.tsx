@@ -1,5 +1,13 @@
 import { ClarityCalculator } from "./clarity-calculator";
+import { ACCOUNT, DAYS_TO_PAYDAY } from "./example";
 import { Orbits } from "./orbits";
+
+const EXAMPLE = {
+  balance: ACCOUNT.balance,
+  scheduled: ACCOUNT.scheduled,
+  daily: ACCOUNT.dailySpending,
+  days: DAYS_TO_PAYDAY,
+};
 
 export function ClaritySection() {
   return (
@@ -34,7 +42,7 @@ export function ClaritySection() {
         </div>
 
         <div className="reveal">
-          <ClarityCalculator />
+          <ClarityCalculator example={EXAMPLE} />
         </div>
       </div>
     </section>

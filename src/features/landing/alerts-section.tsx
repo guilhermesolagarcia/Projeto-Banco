@@ -1,14 +1,21 @@
 import type { ReactNode } from "react";
 import { Money } from "@/components/money";
 import { projectUntilPayday } from "@/insights/projection";
-import { ACCOUNT, DAYS_TO_PAYDAY, PAYDAY_DAY, RENEWAL, TODAY, formatDate } from "./example";
+import {
+  ACCOUNT,
+  COMPARISON,
+  DAYS_TO_PAYDAY,
+  PAYDAY_DAY,
+  RENEWAL,
+  TODAY,
+  formatDate,
+} from "./example";
 
 // Rule 1: already explored in the simulator, so here it is just the short alert.
 const projection = projectUntilPayday({ ...ACCOUNT, daysLeft: DAYS_TO_PAYDAY });
 
-// Rule 2: same point of the month, last month vs. this month (delivery).
-const LAST_MONTH = 26000;
-const THIS_MONTH = 38000;
+// Rule 2: same point of the month, last month vs. this month.
+const { before: LAST_MONTH, now: THIS_MONTH } = COMPARISON;
 const TODAY_DAY = TODAY.getUTCDate();
 
 // Rule 3: the charge repeats every month; the history is how we know it is a subscription.
@@ -123,7 +130,7 @@ export function AlertsSection() {
           <li className={`${TILE} md:col-span-3 md:row-span-2`}>
             <Kind attention>Renovação</Kind>
             <h3 className="mt-6 text-2xl leading-snug font-semibold tracking-tight md:text-3xl">
-              Streaming renova amanhã.
+              {RENEWAL.merchant} renova amanhã.
             </h3>
             <p className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
               <span className="text-6xl leading-none font-semibold tracking-[-0.045em] sm:text-7xl">
@@ -166,7 +173,7 @@ export function AlertsSection() {
           <li className={`${TILE} md:col-span-2`}>
             <Kind>Comparação</Kind>
             <h3 className="mt-6 text-xl font-semibold tracking-tight">
-              <Money cents={THIS_MONTH - LAST_MONTH} /> a mais com delivery.
+              <Money cents={COMPARISON.difference} /> a mais com {COMPARISON.label}.
             </h3>
             <dl className="mt-8 mb-8 space-y-4 text-sm">
               <div>

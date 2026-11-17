@@ -3,14 +3,9 @@
 import { useId, useState } from "react";
 import { formatAmount, formatMoney, parseMoneyInput } from "@/components/money";
 import { projectUntilPayday, type ProjectionStatus } from "@/insights/projection";
-import { ACCOUNT, DAYS_TO_PAYDAY } from "./example";
 
-const EXAMPLE = {
-  balance: ACCOUNT.balance,
-  scheduled: ACCOUNT.scheduled,
-  daily: ACCOUNT.dailySpending,
-  days: DAYS_TO_PAYDAY,
-};
+/** Marina's numbers, passed in by the server section so her dataset never ships to the browser. */
+export type CalculatorExample = { balance: number; scheduled: number; daily: number; days: number };
 
 /** Field value → cents, capped at R$ 9.999.999,99 so a pasted huge number can't break the layout. */
 const MAX_CENTS = 999_999_999;
@@ -55,7 +50,7 @@ function MoneyField({ label, prefix, value, onChange }: MoneyFieldProps) {
   );
 }
 
-export function ClarityCalculator() {
+export function ClarityCalculator({ example: EXAMPLE }: { example: CalculatorExample }) {
   const daysId = useId();
   const [balance, setBalance] = useState(formatAmount(EXAMPLE.balance));
   const [scheduled, setScheduled] = useState(formatAmount(EXAMPLE.scheduled));

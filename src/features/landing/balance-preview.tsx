@@ -23,7 +23,7 @@ export function BalancePreview() {
             className="mt-1.5 size-2 shrink-0 rounded-full bg-amber-on-dark"
           />
           <span>
-            Streaming renova amanhã: <Money cents={RENEWAL.newPrice} />.{" "}
+            {RENEWAL.merchant} renova amanhã: <Money cents={RENEWAL.newPrice} />.{" "}
             <span className="text-on-dark-muted">
               Subiu <Money cents={RENEWAL.newPrice - RENEWAL.oldPrice} /> desde o mês passado.
             </span>
