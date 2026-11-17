@@ -1,28 +1,33 @@
 import type { ReactNode } from "react";
 import { Money } from "@/components/money";
 import { projectUntilPayday } from "@/insights/projection";
-import {
-  ACCOUNT,
-  DAYS_TO_PAYDAY as DAYS_LEFT,
-  PAYDAY_DAY,
-  RENEWAL,
-  TODAY,
-  formatDate,
-} from "./example";
+import { ACCOUNT, DAYS_TO_PAYDAY, PAYDAY_DAY, RENEWAL, TODAY, formatDate } from "./example";
 
-// Rule 1 runs for real here, with Marina's example (./example).
-const { balance: BALANCE, scheduled: SCHEDULED, dailySpending: DAILY } = ACCOUNT;
-const projection = projectUntilPayday({ ...ACCOUNT, daysLeft: DAYS_LEFT });
-const SPENDING = DAILY * DAYS_LEFT;
-const TODAY_DAY = TODAY.getUTCDate();
+// Rule 1: already explored in the simulator, so here it is just the short alert.
+const projection = projectUntilPayday({ ...ACCOUNT, daysLeft: DAYS_TO_PAYDAY });
 
 // Rule 2: same point of the month, last month vs. this month (delivery).
 const LAST_MONTH = 26000;
 const THIS_MONTH = 38000;
+const TODAY_DAY = TODAY.getUTCDate();
 
-// Rule 3: a recurring charge whose price went up.
+// Rule 3: the charge repeats every month; the history is how we know it is a subscription.
 const { oldPrice: OLD_PRICE, newPrice: NEW_PRICE } = RENEWAL;
-const RENEWAL_MONTH = formatDate(RENEWAL.date, { month: "short" }).replace(".", "");
+const monthLabel = (monthsBack: number) =>
+  formatDate(
+    new Date(
+      Date.UTC(
+        RENEWAL.date.getUTCFullYear(),
+        RENEWAL.date.getUTCMonth() - monthsBack,
+        RENEWAL.date.getUTCDate(),
+      ),
+    ),
+    { month: "short" },
+  ).replace(".", "");
+const HISTORY = [
+  ...[3, 2, 1].map((back) => ({ month: monthLabel(back), cents: OLD_PRICE, next: false })),
+  { month: monthLabel(0), cents: NEW_PRICE, next: true },
+];
 
 const pct = (part: number, whole: number) => `${(part / whole) * 100}%`;
 
@@ -105,60 +110,46 @@ export function AlertsSection() {
         </div>
 
         <ul className="mt-14 grid gap-5 md:grid-cols-5 md:gap-6">
-          {/* Rule 1 · Projection: the big tile */}
+          {/* Rule 3 · Renewal: the big tile, because it is the one that asks for action */}
           <li className={`${TILE} md:col-span-3 md:row-span-2`}>
-            <Kind>Projeção</Kind>
-            <h3 className="mt-6 text-xl font-semibold tracking-tight md:text-2xl">
-              Dá para chegar até dia {PAYDAY_DAY} com folga.
+            <Kind attention>Renovação</Kind>
+            <h3 className="mt-6 text-2xl leading-snug font-semibold tracking-tight md:text-3xl">
+              Streaming renova amanhã, mais caro.
             </h3>
-            <p className="mt-8 text-6xl leading-none font-semibold tracking-[-0.045em] sm:text-7xl">
-              <Money cents={projection.leftover} />
+            <p className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+              <span className="text-6xl leading-none font-semibold tracking-[-0.045em] sm:text-7xl">
+                <Money cents={NEW_PRICE} />
+              </span>
+              <span className="text-ink-muted">
+                era <Money cents={OLD_PRICE} />, subiu{" "}
+                <Money cents={NEW_PRICE - OLD_PRICE} className="font-medium text-attention" />
+              </span>
             </p>
-            <p className="mt-3 text-ink-muted">sobram no dia do salário</p>
 
-            <div className="mt-10 mb-10">
-              <div
-                aria-hidden="true"
-                className="reveal-grow flex h-4 origin-left gap-1 overflow-hidden rounded-pill"
-              >
-                <span className="bg-ink/15" style={{ width: pct(SCHEDULED, BALANCE) }} />
-                <span className="bg-ink/35" style={{ width: pct(SPENDING, BALANCE) }} />
-                <span className="bg-amber" style={{ width: pct(projection.leftover, BALANCE) }} />
-              </div>
-              <dl className="mt-4 grid grid-cols-3 gap-3 text-sm">
-                <div>
-                  <dt className="flex items-center gap-1.5 text-ink-muted">
-                    <span aria-hidden="true" className="size-2 rounded-full bg-ink/15" />
-                    Contas
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    <Money cents={SCHEDULED} />
-                  </dd>
-                </div>
-                <div>
-                  <dt className="flex items-center gap-1.5 text-ink-muted">
-                    <span aria-hidden="true" className="size-2 rounded-full bg-ink/35" />
-                    Gastos
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    <Money cents={SPENDING} />
-                  </dd>
-                </div>
-                <div>
-                  <dt className="flex items-center gap-1.5 text-ink-muted">
-                    <span aria-hidden="true" className="size-2 rounded-full bg-amber" />
-                    Sobra
-                  </dt>
-                  <dd className="mt-1 font-medium">
-                    <Money cents={projection.leftover} />
-                  </dd>
-                </div>
-              </dl>
-            </div>
+            <ol
+              aria-label="Cobranças dos últimos meses"
+              className="mt-10 mb-10 flex items-end gap-3"
+            >
+              {HISTORY.map((charge) => (
+                <li key={charge.month} className="flex flex-1 flex-col items-center gap-2 text-sm">
+                  <span className={charge.next ? "font-medium" : "text-ink-muted"}>
+                    <Money cents={charge.cents} />
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={`reveal-grow-y w-full origin-bottom rounded-xl ${charge.next ? "bg-attention" : "bg-ink/10"}`}
+                    style={{ height: `${(charge.cents / NEW_PRICE) * 6}rem` }}
+                  />
+                  <span className="text-ink-muted capitalize">
+                    {charge.next ? "amanhã" : charge.month}
+                  </span>
+                </li>
+              ))}
+            </ol>
 
             <How>
-              Saldo de <Money cents={BALANCE} /> − contas agendadas − gasto médio de{" "}
-              <Money cents={DAILY} /> por dia × {DAYS_LEFT} dias até o salário.
+              A mesma cobrança, com valor parecido, a cada ~30 dias. Se não usa mais, dá tempo de
+              cancelar antes de amanhã.
             </How>
           </li>
 
@@ -198,39 +189,21 @@ export function AlertsSection() {
             <How>O mesmo período nos dois meses, para a comparação ser justa.</How>
           </li>
 
-          {/* Rule 3 · Renewal: the one that asks for action */}
+          {/* Rule 1 · Projection: short here, the simulator above already lets you play with it */}
           <li className={`${TILE} md:col-span-2`}>
-            <Kind attention>Renovação</Kind>
-            <div className="mt-6 flex items-start gap-5">
-              <div
-                aria-hidden="true"
-                className="w-16 shrink-0 overflow-hidden rounded-2xl text-center shadow-[inset_0_0_0_1px_rgb(22_18_14/0.08)]"
-              >
-                <p className="bg-attention py-1 text-[0.65rem] font-semibold tracking-wider text-white uppercase">
-                  {RENEWAL_MONTH}
-                </p>
-                <p className="py-1.5 text-2xl font-semibold tabular-nums">
-                  {RENEWAL.date.getUTCDate()}
-                </p>
-              </div>
-              <h3 className="text-xl leading-snug font-semibold tracking-tight">
-                Streaming renova amanhã.
-              </h3>
-            </div>
+            <Kind>Projeção</Kind>
+            <h3 className="mt-6 text-xl font-semibold tracking-tight">
+              Dá para chegar até dia {PAYDAY_DAY} com folga.
+            </h3>
             <p className="mt-6 mb-8 flex items-baseline gap-3">
-              <s className="text-ink-muted">
-                <Money cents={OLD_PRICE} />
-              </s>
               <span className="text-3xl font-semibold tracking-tight">
-                <Money cents={NEW_PRICE} />
+                <Money cents={projection.leftover} />
               </span>
-              <span className="text-sm text-ink-muted">
-                subiu <Money cents={NEW_PRICE - OLD_PRICE} />
-              </span>
+              <span className="text-sm text-ink-muted">sobram no dia do salário</span>
             </p>
             <How>
-              Cobranças que se repetem a cada ~30 dias, com valor parecido. Se não usa mais, dá
-              tempo de cancelar.
+              A mesma conta do simulador: saldo − contas agendadas − gasto médio por dia × dias até
+              o salário.
             </How>
           </li>
         </ul>

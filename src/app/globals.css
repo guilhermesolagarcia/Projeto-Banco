@@ -57,6 +57,11 @@
       transform: scaleX(0);
     }
   }
+  @keyframes grow-y {
+    from {
+      transform: scaleY(0);
+    }
+  }
   @keyframes orbit {
     to {
       transform: rotate(360deg);
@@ -133,6 +138,11 @@ li {
     animation-timeline: view();
     animation-range: entry 20% cover 45%;
   }
+  .reveal-grow-y {
+    animation: grow-y linear both;
+    animation-timeline: view();
+    animation-range: entry 20% cover 45%;
+  }
 }
 
 /* Anchored sections stop with breathing room instead of glued to the top edge. */
@@ -153,7 +163,8 @@ section[id] {
   }
   /* Scroll-driven animations ignore duration, so switch them off explicitly. */
   .reveal,
-  .reveal-grow {
+  .reveal-grow,
+  .reveal-grow-y {
     animation: none !important;
   }
 }
