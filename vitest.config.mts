@@ -7,7 +7,22 @@ export default defineConfig({
     alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
   },
   test: {
-    include: ["src/**/*.test.{ts,tsx}"],
+    // Two projects: pure logic in plain Node (fast), components in a simulated browser.
+    projects: [
+      {
+        extends: true,
+        test: { name: "logic", include: ["src/**/*.test.ts"], environment: "node" },
+      },
+      {
+        extends: true,
+        test: {
+          name: "ui",
+          include: ["src/**/*.test.tsx"],
+          environment: "jsdom",
+          setupFiles: ["./src/test/setup.ts"],
+        },
+      },
+    ],
     coverage: {
       provider: "v8",
       // The insight rules are the heart of the product: pure logic, high bar.
