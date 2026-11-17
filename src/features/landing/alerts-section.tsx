@@ -51,7 +51,7 @@ function How({ children }: { children: ReactNode }) {
         Como sabemos?
         <span
           aria-hidden="true"
-          className="grid size-6 place-items-center rounded-full bg-ink/[0.06] text-base leading-none transition-transform duration-300 ease-calm group-open/how:rotate-45"
+          className="grid size-6 place-items-center rounded-full bg-ink/[0.06] text-base leading-none transition-[rotate] duration-300 ease-calm group-open/how:rotate-45"
         >
           +
         </span>
