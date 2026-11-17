@@ -2,6 +2,7 @@ import { AlertsSection } from "@/features/landing/alerts-section";
 import { CardSection } from "@/features/landing/card-section";
 import { ClaritySection } from "@/features/landing/clarity-section";
 import { Hero } from "@/features/landing/hero";
+import { NoJudgmentSection } from "@/features/landing/no-judgment-section";
 import { SiteHeader } from "@/features/landing/site-header";
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
         <Hero />
         <ClaritySection />
         <AlertsSection />
+        <NoJudgmentSection />
         <CardSection />
       </main>
     </>
