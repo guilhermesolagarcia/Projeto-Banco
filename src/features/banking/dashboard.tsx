@@ -10,7 +10,7 @@ import { AnimatedMoney } from "./animated-money";
 import { CARD, DashboardSkeleton } from "./dashboard-skeleton";
 import { Disclosure } from "./disclosure";
 import { CATEGORY_LABEL, formatDay } from "./format";
-import { MATERIALIZE, SPRING, STAGGER } from "./motion";
+import { MATERIALIZE, SPRING, STAGGER } from "@/components/motion/presets";
 
 export function Dashboard() {
   const { data, isPending, isError, refetch, isFetching } = useQuery({

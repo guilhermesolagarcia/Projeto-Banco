@@ -2,7 +2,7 @@
  * Âmbar's motion language, in one place (like the color tokens).
  * Springs, because they start from where things are and can be interrupted.
  * bounce: 0 (critically damped): nothing the person threw, so nothing overshoots.
- * Logged-in area only; the landing stays CSS-only ("0 kB of animation JS").
+ * Shared by the landing and the logged-in area, so the whole product moves the same way.
  */
 import type { Transition, Variants } from "motion/react";
 

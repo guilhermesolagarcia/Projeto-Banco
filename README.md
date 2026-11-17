@@ -10,7 +10,7 @@
 <img src="https://img.shields.io/badge/TypeScript-strict-16120E?style=flat-square&logo=typescript&logoColor=F4F0EA" alt="TypeScript strict" />
 <img src="https://img.shields.io/badge/Tailwind-4-16120E?style=flat-square&logo=tailwindcss&logoColor=F4F0EA" alt="Tailwind CSS 4" />
 <img src="https://img.shields.io/badge/WCAG-AA-2A7347?style=flat-square&labelColor=16120E" alt="WCAG AA" />
-<img src="https://img.shields.io/badge/JS%20de%20anima%C3%A7%C3%A3o-0%20kB-F28C28?style=flat-square&labelColor=16120E" alt="0 kB de JavaScript de animação" />
+<img src="https://img.shields.io/badge/Motion-molas%20sem%20quique-F28C28?style=flat-square&labelColor=16120E" alt="Motion: molas sem quique" />
 
 <br />
 <br />
@@ -151,7 +151,7 @@ const result = projectUntilPayday({
 - **Contrastes calculados (WCAG AA)**, não "de olho". Dois tokens reprovaram e foram escurecidos ([tabela](docs/superpowers/specs/2026-11-16-ambar-concept-design.md)).
 - **Tipografia:** Host Grotesk, com **números tabulares** em todo valor de dinheiro.
 - **Logo:** um sol de realeza, com núcleo, anel de moeda e raios ondulados, e uma versão reduzida para o favicon. [Ver a marca →](docs/brand/ambar-logo.html)
-- **Movimento:** CSS puro, com entrada calma e animações guiadas pela rolagem, nativas do navegador. **Zero JavaScript de animação.** Tudo para com `prefers-reduced-motion`.
+- **Movimento:** o que o CSS resolve fica em CSS (entradas, órbitas, animações guiadas pela rolagem). O **Motion** entra só onde o CSS não alcança: pílulas que deslizam entre opções, números que rolam até o novo valor, conteúdo que se materializa quando os dados chegam. Molas **sem quique** e interrompíveis, num arquivo só (`src/components/motion/presets.ts`). Custo medido na landing: **~27 kB** comprimidos, mais **~6 kB** carregados depois que a página aparece. Tudo respeita `prefers-reduced-motion`.
 
 <br />
 

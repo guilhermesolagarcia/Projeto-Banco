@@ -1,3 +1,4 @@
+import { MotionProvider } from "@/components/motion/provider";
 import { AlertsSection } from "@/features/landing/alerts-section";
 import { CardSection } from "@/features/landing/card-section";
 import { ClaritySection } from "@/features/landing/clarity-section";
@@ -18,15 +19,17 @@ export default function Home() {
         Pular para o conteúdo
       </a>
       <SiteHeader />
-      <main id="conteudo">
-        <Hero />
-        <ClaritySection />
-        <AlertsSection />
-        <NoJudgmentSection />
-        <CardSection />
-        <FaqSection />
-        <ClosingSection />
-      </main>
+      <MotionProvider>
+        <main id="conteudo">
+          <Hero />
+          <ClaritySection />
+          <AlertsSection />
+          <NoJudgmentSection />
+          <CardSection />
+          <FaqSection />
+          <ClosingSection />
+        </main>
+      </MotionProvider>
       <SiteFooter />
     </>
   );

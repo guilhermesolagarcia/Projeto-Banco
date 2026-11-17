@@ -1,6 +1,7 @@
 import { Sun } from "@/components/logo";
 import { Money } from "@/components/money";
 import { PAYDAY, addDays, daysBetween, formatDate } from "./example";
+import { JudgmentToggle } from "./judgment-toggle";
 
 // A "what if the month got tight" moment, a few days before payday: same scene for both banks.
 const PURCHASE = 8990;
@@ -10,19 +11,10 @@ const DAYS_TO_PAYDAY = daysBetween(MOMENT, PAYDAY);
 const LOCK_DATE = formatDate(MOMENT, { weekday: "long", day: "numeric", month: "long" });
 
 /*
- * The toggle is two native radios; CSS :has() swaps the scene. No JavaScript:
- * keyboard (arrows), focus and screen readers come from the platform.
+ * The scene swap is CSS :has() on two native radios (see JudgmentToggle): it works before any
+ * script loads. Motion only slides the pill.
  */
 const SWAP = "transition-[opacity,transform,filter,visibility] duration-700 ease-calm";
-
-function Segment({ id, label, checked }: { id: string; label: string; checked?: boolean }) {
-  return (
-    <label className="relative cursor-pointer rounded-pill px-5 py-2 text-sm font-medium text-ink-muted transition-colors duration-300 has-checked:bg-white has-checked:text-ink has-checked:shadow-[0_1px_2px_rgb(22_18_14/0.08),0_4px_14px_-6px_rgb(22_18_14/0.2)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-amber-signal">
-      <input type="radio" name="nj-tone" id={id} defaultChecked={checked} className="sr-only" />
-      {label}
-    </label>
-  );
-}
 
 export function NoJudgmentSection() {
   return (
@@ -39,12 +31,7 @@ export function NoJudgmentSection() {
           <Money cents={BALANCE} /> na conta. O mesmo momento, contado de dois jeitos.
         </p>
 
-        <fieldset className="reveal relative z-10 mt-10 inline-flex rounded-pill bg-ink/[0.06] p-1">
-          <legend className="sr-only">Ver a mensagem de</legend>
-          {/* Starts on the usual bank: switching to Âmbar is the reveal the visitor makes. */}
-          <Segment id="nj-common" label="Banco comum" checked />
-          <Segment id="nj-ambar" label="Âmbar" />
-        </fieldset>
+        <JudgmentToggle />
 
         {/* Phone */}
         <div className="reveal relative mx-auto mt-12 w-[17.5rem] sm:w-[19rem]">

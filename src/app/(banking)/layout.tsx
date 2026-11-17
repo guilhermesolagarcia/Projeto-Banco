@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { SessionGuard } from "@/features/auth/session-guard";
 import { BankingHeader } from "@/features/banking/banking-header";
-import { MotionProvider } from "@/features/banking/motion-provider";
+import { MotionProvider } from "@/components/motion/provider";
 import { QueryProvider } from "@/features/banking/query-provider";
 
 /*

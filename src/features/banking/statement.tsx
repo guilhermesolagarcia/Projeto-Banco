@@ -11,7 +11,7 @@ import { Money } from "@/components/money";
 import type { Transaction } from "@/mocks/marina";
 import { CARD } from "./dashboard-skeleton";
 import { CATEGORY_LABEL, formatDay } from "./format";
-import { MATERIALIZE, SNAP, SPRING } from "./motion";
+import { MATERIALIZE, SNAP, SPRING } from "@/components/motion/presets";
 import { SEGMENTS, SEGMENT_COLOR, segmentOf, type SegmentKey } from "./segments";
 import type { DayGroup, MonthGroup, StatementData, StatementInsight } from "./statement-data";
 

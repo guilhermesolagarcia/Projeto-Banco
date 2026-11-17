@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/logo";
 import { SignOutButton } from "@/features/auth/sign-out-button";
-import { SNAP } from "./motion";
+import { SNAP } from "@/components/motion/presets";
 
 const LINKS = [
   { href: "/inicio", label: "Início" },

@@ -10,6 +10,7 @@ import {
   TODAY,
   formatDate,
 } from "./example";
+import { InViewItem, InViewList, RiseBar } from "./in-view";
 
 // Rule 1: already explored in the simulator, so here it is just the short alert.
 const projection = projectUntilPayday({ ...ACCOUNT, daysLeft: DAYS_TO_PAYDAY });
@@ -48,7 +49,7 @@ const BAR: Record<Charge["kind"], string> = {
 const pct = (part: number, whole: number) => `${(part / whole) * 100}%`;
 
 const TILE =
-  "reveal flex flex-col rounded-[2rem] bg-white p-7 shadow-[0_1px_0_rgb(22_18_14/0.04),0_30px_60px_-40px_rgb(120_60_0/0.4)] md:p-9";
+  "flex flex-col rounded-[2rem] bg-white p-7 shadow-[0_1px_0_rgb(22_18_14/0.04),0_30px_60px_-40px_rgb(120_60_0/0.4)] md:p-9";
 
 function Kind({ children, attention }: { children: ReactNode; attention?: boolean }) {
   return (
@@ -125,9 +126,9 @@ export function AlertsSection() {
           </p>
         </div>
 
-        <ul className="mt-14 grid gap-5 md:grid-cols-5 md:gap-6">
+        <InViewList className="mt-14 grid gap-5 md:grid-cols-5 md:gap-6">
           {/* Rule 3 · Renewal: the big tile, because it is the one that asks for action */}
-          <li className={`${TILE} md:col-span-3 md:row-span-2`}>
+          <InViewItem className={`${TILE} md:col-span-3 md:row-span-2`}>
             <Kind attention>Renovação</Kind>
             <h3 className="mt-6 text-2xl leading-snug font-semibold tracking-tight md:text-3xl">
               {RENEWAL.merchant} renova amanhã.
@@ -146,14 +147,14 @@ export function AlertsSection() {
               aria-label="Cobranças dos últimos meses"
               className="mt-10 mb-10 flex items-end gap-3"
             >
-              {HISTORY.map((charge) => (
+              {HISTORY.map((charge, index) => (
                 <li key={charge.month} className="flex flex-1 flex-col items-center gap-2 text-sm">
                   <span className={charge.kind === "past" ? "text-ink-muted" : "font-medium"}>
                     <Money cents={charge.cents} />
                   </span>
-                  <span
-                    aria-hidden="true"
-                    className={`reveal-grow-y w-full origin-bottom rounded-xl ${BAR[charge.kind]}`}
+                  <RiseBar
+                    delay={0.25 + index * 0.08}
+                    className={`w-full rounded-xl ${BAR[charge.kind]}`}
                     style={{ height: `${(charge.cents / NEW_PRICE) * 6}rem` }}
                   />
                   <span className="text-ink-muted capitalize">
@@ -167,10 +168,10 @@ export function AlertsSection() {
               A mesma cobrança a cada ~30 dias, e cada uma até 20% diferente da anterior. A próxima
               é prevista pelo intervalo médio. Se não usa mais, dá tempo de cancelar.
             </How>
-          </li>
+          </InViewItem>
 
           {/* Rule 2 · Comparison */}
-          <li className={`${TILE} md:col-span-2`}>
+          <InViewItem className={`${TILE} md:col-span-2`}>
             <Kind>Comparação</Kind>
             <h3 className="mt-6 text-xl font-semibold tracking-tight">
               <Money cents={COMPARISON.difference} /> a mais com {COMPARISON.label}.
@@ -203,10 +204,10 @@ export function AlertsSection() {
               </div>
             </dl>
             <How>O mesmo período nos dois meses, para a comparação ser justa.</How>
-          </li>
+          </InViewItem>
 
           {/* Rule 1 · Projection: short here, the simulator above already lets you play with it */}
-          <li className={`${TILE} md:col-span-2`}>
+          <InViewItem className={`${TILE} md:col-span-2`}>
             <Kind>Projeção</Kind>
             <h3 className="mt-6 text-xl font-semibold tracking-tight">
               Dá para chegar até dia {PAYDAY_DAY} com folga.
@@ -221,8 +222,8 @@ export function AlertsSection() {
               A mesma conta do simulador: saldo − contas agendadas − gasto médio por dia × dias até
               o salário.
             </How>
-          </li>
-        </ul>
+          </InViewItem>
+        </InViewList>
       </div>
     </section>
   );

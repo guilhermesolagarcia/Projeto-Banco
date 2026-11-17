@@ -2,10 +2,10 @@
 
 import { LazyMotion, MotionConfig } from "motion/react";
 import type { ReactNode } from "react";
-import { SPRING } from "./motion";
+import { SPRING } from "./presets";
 
 // The animation features download after the page is up, not before it.
-const loadFeatures = () => import("./motion-features").then((module) => module.default);
+const loadFeatures = () => import("./features").then((module) => module.default);
 
 /*
  * reducedMotion="user": with prefers-reduced-motion, Motion drops movement (position, size,

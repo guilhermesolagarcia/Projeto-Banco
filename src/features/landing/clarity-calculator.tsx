@@ -1,6 +1,8 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useReducedMotion, useSpring, useTransform } from "motion/react";
+import * as m from "motion/react-m";
+import { useEffect, useId, useState } from "react";
 import { formatAmount, formatMoney, parseMoneyInput } from "@/components/money";
 import { projectUntilPayday, type ProjectionStatus } from "@/insights/projection";
 
@@ -66,7 +68,25 @@ export function ClarityCalculator({ example: EXAMPLE }: { example: CalculatorExa
   });
 
   const isShort = result.status === "short";
-  const [whole, cents] = formatMoney(Math.abs(result.leftover)).split(",");
+  const leftover = Math.abs(result.leftover);
+
+  // The big number and the bar chase the new result with a spring: they roll from where they
+  // are, and change course mid-way if you keep typing. Reduced motion: they just jump there.
+  const reduce = useReducedMotion();
+  const amount = useSpring(leftover, { bounce: 0, visualDuration: 0.5 });
+  const share = useSpring(result.share, { bounce: 0, visualDuration: 0.5 });
+  useEffect(() => {
+    if (reduce) {
+      amount.jump(leftover);
+      share.jump(result.share);
+    } else {
+      amount.set(leftover);
+      share.set(result.share);
+    }
+  }, [leftover, result.share, reduce, amount, share]);
+  const wholeText = useTransform(amount, (v) => formatMoney(Math.round(v)).split(",")[0]);
+  const centsText = useTransform(amount, (v) => `,${formatMoney(Math.round(v)).split(",")[1]}`);
+  const barWidth = useTransform(share, (v) => `${Math.round(v * 100)}%`);
 
   function reset() {
     setBalance(formatAmount(EXAMPLE.balance));
@@ -82,16 +102,20 @@ export function ClarityCalculator({ example: EXAMPLE }: { example: CalculatorExa
       </p>
       <p className="mt-2 flex flex-wrap items-baseline gap-x-3">
         <span className="text-5xl font-semibold tracking-[-0.05em] tabular-nums [overflow-wrap:anywhere] sm:text-7xl">
-          {whole}
-          <span className="text-on-dark-muted">,{cents}</span>
+          {/* Screen readers get the final value, never the rolling digits. */}
+          <span aria-hidden="true">
+            <m.span>{wholeText}</m.span>
+            <m.span className="text-on-dark-muted">{centsText}</m.span>
+          </span>
+          <span className="sr-only">{formatMoney(leftover)}</span>
         </span>
         <span className="text-on-dark-muted">{isShort ? "faltando" : "de folga"}</span>
       </p>
 
       <div className="mt-6 h-1.5 rounded-pill bg-white/10">
-        <div
-          className="h-full origin-left rounded-pill bg-amber shadow-[0_0_18px_rgb(242_140_40/0.7)] transition-[width] duration-500 ease-[var(--ease-calm)]"
-          style={{ width: `${Math.round(result.share * 100)}%` }}
+        <m.div
+          className="h-full origin-left rounded-pill bg-amber shadow-[0_0_18px_rgb(242_140_40/0.7)]"
+          style={{ width: barWidth }}
         />
       </div>
 

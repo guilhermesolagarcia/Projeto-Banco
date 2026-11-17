@@ -3,7 +3,7 @@
 import { AnimatePresence } from "motion/react";
 import * as m from "motion/react-m";
 import { useId, useState, type ReactNode } from "react";
-import { SNAP, SPRING } from "./motion";
+import { SNAP, SPRING } from "@/components/motion/presets";
 
 /*
  * "Show the math", opening with a spring. A button with aria-expanded + a region
