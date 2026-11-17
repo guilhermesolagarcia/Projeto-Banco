@@ -28,8 +28,8 @@ export function ClaritySection() {
             cegas.
           </p>
           <p className="mt-6 max-w-md text-on-dark-muted">
-            <span className="font-medium text-on-dark">Experimente:</span> mude os números ao lado e
-            veja a conta se refazer.
+            <span className="font-medium text-on-dark">Experimente:</span> mude os números da conta
+            e veja a conta se refazer.
           </p>
         </div>
 
