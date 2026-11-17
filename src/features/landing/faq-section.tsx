@@ -1,3 +1,4 @@
+import { Disclosure } from "@/components/motion/disclosure";
 import { PAYDAY_DAY } from "./example";
 
 // Only the doubts that stop someone from trying the demo. Answers start with the answer.
@@ -36,18 +37,9 @@ export function FaqSection() {
         <ul className="border-t border-ink/10">
           {QUESTIONS.map(({ q, a }) => (
             <li key={q} className="reveal border-b border-ink/10">
-              <details className="group">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-xl font-semibold tracking-tight md:text-2xl [&::-webkit-details-marker]:hidden">
-                  {q}
-                  <span
-                    aria-hidden="true"
-                    className="grid size-8 shrink-0 place-items-center rounded-full bg-ink/[0.06] text-lg leading-none font-normal transition-[rotate,background-color] duration-300 ease-calm group-open:rotate-45 group-open:bg-amber"
-                  >
-                    +
-                  </span>
-                </summary>
-                <p className="max-w-xl pb-7 text-lg leading-relaxed text-ink-muted">{a}</p>
-              </details>
+              <Disclosure label={q} size="lg" heading>
+                <p className="max-w-xl text-lg leading-relaxed text-ink-muted">{a}</p>
+              </Disclosure>
             </li>
           ))}
         </ul>

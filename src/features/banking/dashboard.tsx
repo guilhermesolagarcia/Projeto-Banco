@@ -8,7 +8,7 @@ import { fetchDashboard } from "./api";
 import type { DashboardData } from "./dashboard-data";
 import { AnimatedMoney } from "./animated-money";
 import { CARD, DashboardSkeleton } from "./dashboard-skeleton";
-import { Disclosure } from "./disclosure";
+import { Disclosure } from "@/components/motion/disclosure";
 import { CATEGORY_LABEL, formatDay } from "./format";
 import { MATERIALIZE, SPRING, STAGGER } from "@/components/motion/presets";
 
@@ -154,7 +154,7 @@ function DashboardView({ data }: { data: DashboardData }) {
             />
           </div>
 
-          <Disclosure label="Como calculamos isso?">
+          <Disclosure label="Como calculamos isso?" className="mt-8 border-t border-ink/10 pt-4">
             <dl className="space-y-2 text-sm tabular-nums">
               <div className="flex justify-between gap-4">
                 <dt className="text-ink-muted">Saldo hoje</dt>

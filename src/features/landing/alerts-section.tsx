@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Money } from "@/components/money";
+import { Disclosure } from "@/components/motion/disclosure";
 import { projectUntilPayday } from "@/insights/projection";
 import {
   ACCOUNT,
@@ -69,18 +70,9 @@ function Kind({ children, attention }: { children: ReactNode; attention?: boolea
 /** "How we know", one click away: the math is always available, never in the way. */
 function How({ children }: { children: ReactNode }) {
   return (
-    <details className="group/how mt-auto border-t border-ink/10 pt-4 text-sm">
-      <summary className="flex cursor-pointer list-none items-center justify-between font-medium text-ink [&::-webkit-details-marker]:hidden">
-        Como sabemos?
-        <span
-          aria-hidden="true"
-          className="grid size-6 place-items-center rounded-full bg-ink/[0.06] text-base leading-none transition-[rotate] duration-300 ease-calm group-open/how:rotate-45"
-        >
-          +
-        </span>
-      </summary>
-      <p className="mt-2 text-ink-muted">{children}</p>
-    </details>
+    <Disclosure label="Como sabemos?" className="mt-auto border-t border-ink/10 pt-4 text-sm">
+      <p className="text-ink-muted">{children}</p>
+    </Disclosure>
   );
 }
 
