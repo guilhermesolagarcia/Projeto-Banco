@@ -28,13 +28,9 @@ export function NoJudgmentSection() {
   return (
     <section id="nao-julga" aria-labelledby="nao-julga-title" className="overflow-hidden bg-white">
       <div className="shell group py-24 text-center md:py-36">
-        <p className="reveal flex items-center justify-center gap-2 text-xs font-semibold tracking-[0.08em] text-ink-muted uppercase">
-          <span aria-hidden="true" className="size-2 rounded-full bg-amber-signal" />
-          Não julga
-        </p>
         <h2
           id="nao-julga-title"
-          className="reveal mx-auto mt-4 max-w-4xl text-5xl leading-[0.98] font-semibold tracking-[-0.045em] sm:text-6xl lg:text-7xl"
+          className="reveal mx-auto max-w-4xl text-5xl leading-[0.98] font-semibold tracking-[-0.045em] sm:text-6xl lg:text-7xl"
         >
           Saldo baixo não é bronca.
         </h2>

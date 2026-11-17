@@ -25,13 +25,9 @@ export function FaqSection() {
     <section id="perguntas" aria-labelledby="perguntas-title" className="bg-paper">
       <div className="shell grid gap-10 py-24 md:grid-cols-[2fr_3fr] md:gap-16 md:py-36">
         <div className="reveal md:sticky md:top-24 md:self-start">
-          <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.08em] text-ink-muted uppercase">
-            <span aria-hidden="true" className="size-2 rounded-full bg-amber-signal" />
-            Perguntas
-          </p>
           <h2
             id="perguntas-title"
-            className="mt-4 text-4xl leading-[1.02] font-semibold tracking-[-0.035em] sm:text-5xl lg:text-6xl"
+            className="text-4xl leading-[1.02] font-semibold tracking-[-0.035em] sm:text-5xl lg:text-6xl"
           >
             Antes de você entrar.
           </h2>
