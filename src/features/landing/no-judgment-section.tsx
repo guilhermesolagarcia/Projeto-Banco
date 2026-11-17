@@ -41,8 +41,9 @@ export function NoJudgmentSection() {
 
         <fieldset className="reveal mt-10 inline-flex rounded-pill bg-ink/[0.06] p-1">
           <legend className="sr-only">Ver a mensagem de</legend>
-          <Segment id="nj-common" label="Banco comum" />
-          <Segment id="nj-ambar" label="Âmbar" checked />
+          {/* Starts on the usual bank: switching to Âmbar is the reveal the visitor makes. */}
+          <Segment id="nj-common" label="Banco comum" checked />
+          <Segment id="nj-ambar" label="Âmbar" />
         </fieldset>
 
         {/* Phone */}
@@ -141,7 +142,7 @@ export function NoJudgmentSection() {
             Grita, não diz quanto falta e ainda aproveita para vender crédito.
           </span>
           <span className={`hidden group-has-[#nj-ambar:checked]:inline`}>
-            Diz quanto falta e qual é o próximo passo. Sem drama: dá tempo.
+            Diz quanto falta e qual é o próximo passo.
           </span>
         </p>
       </div>
