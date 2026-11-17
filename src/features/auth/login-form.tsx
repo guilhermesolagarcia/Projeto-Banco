@@ -2,9 +2,16 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { useEffect, useSyncExternalStore } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { DEMO_ACCOUNT, isDemoAccount, startSession } from "./session";
+import {
+  DEMO_ACCOUNT,
+  hasSession,
+  isDemoAccount,
+  startSession,
+  subscribeToSession,
+} from "./session";
 
 // Messages say what is missing and how to fix it. They never blame the person.
 const schema = z.object({
@@ -33,6 +40,13 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 
 export function LoginForm() {
   const router = useRouter();
+
+  // Already signed in: skip the form.
+  const signedIn = useSyncExternalStore(subscribeToSession, hasSession, () => false);
+  useEffect(() => {
+    if (signedIn) router.replace("/inicio");
+  }, [signedIn, router]);
+
   const {
     register,
     handleSubmit,

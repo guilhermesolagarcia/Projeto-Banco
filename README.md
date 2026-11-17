@@ -5,7 +5,7 @@
 <br />
 <br />
 
-<img src="https://img.shields.io/badge/status-Fase%201%20·%20landing-F28C28?style=flat-square&labelColor=16120E" alt="Status: Fase 1, landing" />
+<img src="https://img.shields.io/badge/status-Fase%203%20·%20dashboard-F28C28?style=flat-square&labelColor=16120E" alt="Status: Fase 3, dashboard" />
 <img src="https://img.shields.io/badge/Next.js-16-16120E?style=flat-square&logo=nextdotjs&logoColor=F4F0EA" alt="Next.js 16" />
 <img src="https://img.shields.io/badge/TypeScript-strict-16120E?style=flat-square&logo=typescript&logoColor=F4F0EA" alt="TypeScript strict" />
 <img src="https://img.shields.io/badge/Tailwind-4-16120E?style=flat-square&logo=tailwindcss&logoColor=F4F0EA" alt="Tailwind CSS 4" />
@@ -184,8 +184,8 @@ Cada ferramenta entra **só quando o problema dela aparece**.
 | :--: | :--------------------------------------------------- | :----------------------------------------------------- | :-: |
 |  0   | Conceito, marca, validação com conselho de IAs, spec | `brainstorming` · `llm-council`                        | ✅  |
 |  1   | Fundação e landing                                   | Next.js · TypeScript · Tailwind · ESLint · Prettier    | 🔄  |
-|  2   | Login com conta demo                                 | React Hook Form · Zod                                  |     |
-|  3   | Dashboard e extrato com o motor de insights          | MSW · TanStack Query · Motion                          |     |
+|  2   | Login com conta demo                                 | React Hook Form · Zod                                  | ✅  |
+|  3   | Dashboard e extrato com o motor de insights          | MSW · TanStack Query · Motion                          | 🔄  |
 |  4   | Qualidade                                            | Vitest · Testing Library · Playwright · GitHub Actions |     |
 |  5   | Cartão 3D personalizável                             | React Three Fiber · drei                               |     |
 
