@@ -45,3 +45,6 @@ next-env.d.ts
 
 # browser test artifacts
 .playwright-mcp/
+
+# impeccable critique snapshots (tool history, not product)
+.impeccable/

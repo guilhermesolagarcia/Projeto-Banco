@@ -189,7 +189,7 @@ Login com conta demo **já preenchida**. Validação com React Hook Form + Zod. 
 
 ## Módulo `insights` (Fase 3), resumo
 
-Dataset de 90 dias da Marina (centavos inteiros, "hoje" congelado em 18/11/2026, fuso de São Paulo) e as 3 regras do doc de design, seção 2.1: projeção, comparação por categoria e recorrência perto de renovar. Cada regra devolve também o texto de "Como calculamos isso?". Não usa React. Será detalhado quando a Fase 3 começar.
+Dataset de 90 dias da Marina (centavos inteiros, "hoje" congelado em 23/11/2026 como na landing, fuso de São Paulo) e as 3 regras do doc de design, seção 2.1: projeção, comparação por categoria e recorrência perto de renovar. Cada regra devolve também o texto de "Como calculamos isso?". Não usa React. Será detalhado quando a Fase 3 começar.
 
 ## Módulo `banking` (Fase 3), resumo
 
