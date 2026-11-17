@@ -1,6 +1,6 @@
 /** Shared card surface for the banking screens. */
 export const CARD =
-  "rounded-[2rem] bg-white p-7 shadow-[0_1px_0_rgb(22_18_14/0.04),0_30px_60px_-40px_rgb(120_60_0/0.4)] md:p-9";
+  "min-w-0 rounded-[2rem] bg-white p-6 sm:p-7 shadow-[0_1px_0_rgb(22_18_14/0.04),0_30px_60px_-40px_rgb(120_60_0/0.4)] md:p-9";
 
 /* ---------- Loading: the same grid, quiet blocks, so nothing jumps when data arrives ---------- */
 

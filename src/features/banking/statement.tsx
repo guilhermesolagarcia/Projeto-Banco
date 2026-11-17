@@ -117,7 +117,7 @@ function SegmentOption({
   onSelect: () => void;
 }) {
   return (
-    <label className="flex shrink-0 cursor-pointer items-center gap-2 rounded-pill border border-ink/10 bg-white px-3.5 py-1.5 text-sm text-ink-muted transition-colors hover:border-ink/25 has-checked:border-ink has-checked:bg-ink has-checked:text-paper has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-amber-signal">
+    <label className="relative flex shrink-0 cursor-pointer items-center gap-2 rounded-pill border border-ink/10 bg-white px-3.5 py-1.5 text-sm text-ink-muted transition-colors hover:border-ink/25 has-checked:border-ink has-checked:bg-ink has-checked:text-paper has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-amber-signal">
       <input
         type="radio"
         name="statement-segment"
@@ -271,7 +271,8 @@ export function Statement({ data }: { data: StatementData }) {
   return (
     <div className="space-y-6">
       <FilterBar>
-        <fieldset>
+        {/* min-w-0: a fieldset is min-content wide by default and would push the page sideways. */}
+        <fieldset className="min-w-0">
           <legend className="sr-only">Mês</legend>
           <div className="inline-flex flex-wrap rounded-pill bg-ink/[0.06] p-1">
             {data.months.map((item) => (
@@ -284,7 +285,7 @@ export function Statement({ data }: { data: StatementData }) {
             ))}
           </div>
         </fieldset>
-        <fieldset>
+        <fieldset className="min-w-0">
           <legend className="sr-only">Categoria</legend>
           <div className="-mx-5 flex gap-2 overflow-x-auto px-5 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0">
             <SegmentOption

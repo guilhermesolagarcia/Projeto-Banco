@@ -50,7 +50,7 @@ const BAR: Record<Charge["kind"], string> = {
 const pct = (part: number, whole: number) => `${(part / whole) * 100}%`;
 
 const TILE =
-  "flex flex-col rounded-[2rem] bg-white p-7 shadow-[0_1px_0_rgb(22_18_14/0.04),0_30px_60px_-40px_rgb(120_60_0/0.4)] md:p-9";
+  "flex min-w-0 flex-col rounded-[2rem] bg-white p-6 sm:p-7 shadow-[0_1px_0_rgb(22_18_14/0.04),0_30px_60px_-40px_rgb(120_60_0/0.4)] md:p-9";
 
 function Kind({ children, attention }: { children: ReactNode; attention?: boolean }) {
   return (
@@ -137,10 +137,13 @@ export function AlertsSection() {
 
             <ol
               aria-label="Cobranças dos últimos meses"
-              className="mt-10 mb-10 flex items-end gap-3"
+              className="mt-10 mb-10 flex items-end gap-1.5 sm:gap-3"
             >
               {HISTORY.map((charge, index) => (
-                <li key={charge.month} className="flex flex-1 flex-col items-center gap-2 text-sm">
+                <li
+                  key={charge.month}
+                  className="flex min-w-0 flex-1 flex-col items-center gap-2 text-xs sm:text-sm"
+                >
                   <span className={charge.kind === "past" ? "text-ink-muted" : "font-medium"}>
                     <Money cents={charge.cents} />
                   </span>

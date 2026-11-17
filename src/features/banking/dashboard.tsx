@@ -132,7 +132,7 @@ function DashboardView({ data }: { data: DashboardData }) {
             {title}
           </h2>
           <p className="mt-6 flex flex-wrap items-baseline gap-x-3">
-            <span className="text-6xl leading-none font-semibold tracking-[-0.045em] sm:text-7xl">
+            <span className="text-[clamp(2.5rem,12vw,4.5rem)] leading-none font-semibold tracking-[-0.045em]">
               <AnimatedMoney cents={Math.abs(projection.leftover)} />
             </span>
             <span className="text-ink-muted">
@@ -193,7 +193,7 @@ function DashboardView({ data }: { data: DashboardData }) {
         <m.section
           variants={MATERIALIZE}
           aria-labelledby="balance-title"
-          className="relative overflow-hidden rounded-[2rem] bg-ink p-7 text-on-dark md:col-span-2 md:p-9"
+          className="relative min-w-0 overflow-hidden rounded-[2rem] bg-ink p-6 sm:p-7 text-on-dark md:col-span-2 md:p-9"
         >
           <div
             aria-hidden="true"
@@ -202,7 +202,7 @@ function DashboardView({ data }: { data: DashboardData }) {
           <h2 id="balance-title" className="relative text-sm text-on-dark-muted">
             Saldo disponível
           </h2>
-          <p className="relative mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">
+          <p className="relative mt-2 text-[clamp(2rem,9vw,3rem)] font-semibold tracking-tight">
             <AnimatedMoney cents={data.balance} />
           </p>
         </m.section>

@@ -3,7 +3,7 @@
 import * as m from "motion/react-m";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Logo } from "@/components/logo";
+import { Logo, Sun } from "@/components/logo";
 import { SignOutButton } from "@/features/auth/sign-out-button";
 import { SNAP } from "@/components/motion/presets";
 
@@ -19,9 +19,11 @@ const LINKS = [
 export function BankingHeader() {
   const pathname = usePathname();
   return (
-    <header className="shell flex items-center justify-between gap-4 py-5">
+    <header className="shell flex items-center justify-between gap-2 py-5">
       <Link href="/" aria-label="Âmbar, página inicial" className="rounded-md">
-        <Logo />
+        {/* Under 360px the word does not fit next to the nav: the sun alone (the link keeps its name). */}
+        <Logo className="hidden min-[360px]:inline-flex" />
+        <Sun size={34} className="text-amber-signal min-[360px]:hidden" />
       </Link>
       <nav aria-label="Conta" className="flex items-center gap-1">
         {LINKS.map((link) => {
