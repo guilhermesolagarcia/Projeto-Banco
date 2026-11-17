@@ -1,32 +1,8 @@
 import { addDays, samePointLastMonth } from "@/insights/spending";
-import { TODAY, TRANSACTIONS, type Category, type Transaction } from "@/mocks/marina";
+import { TODAY, TRANSACTIONS, type Transaction } from "@/mocks/marina";
 import { DASHBOARD } from "./dashboard-data";
 import { formatDay } from "./format";
-
-/*
- * Month summary: fixed bills in one gray block, day-to-day spending by category.
- * Fixed order and fixed color per segment (never by rank), so a category looks the same
- * in every month. The order keeps similar colors apart (validated, see globals.css).
- */
-export const SEGMENTS = [
-  { key: "fixas", label: "Contas fixas" },
-  { key: "lazer", label: "Lazer" },
-  { key: "transporte", label: "Transporte" },
-  { key: "mercado", label: "Mercado" },
-  { key: "saude", label: "Saúde" },
-  { key: "delivery", label: "Delivery" },
-] as const;
-export type SegmentKey = (typeof SEGMENTS)[number]["key"];
-
-/** Day-to-day categories keep their own segment; everything else is a fixed bill. */
-const DAY_TO_DAY: Partial<Record<Category, SegmentKey>> = {
-  lazer: "lazer",
-  transporte: "transporte",
-  mercado: "mercado",
-  saude: "saude",
-  delivery: "delivery",
-};
-const segmentOf = (category: Category): SegmentKey => DAY_TO_DAY[category] ?? "fixas";
+import { SEGMENTS, segmentOf, type SegmentKey } from "./segments";
 
 export type DayGroup = { date: string; label: string; total: number; items: Transaction[] };
 export type MonthGroup = {
