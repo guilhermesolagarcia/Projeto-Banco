@@ -48,3 +48,9 @@ next-env.d.ts
 
 # impeccable critique snapshots (tool history, not product)
 .impeccable/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
