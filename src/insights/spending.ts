@@ -46,6 +46,17 @@ export type Comparison<C extends string = string> = {
   difference: number;
 };
 
+/**
+ * Day 1 of last month up to the same day as today (clamped: Mar 31 → Feb 28).
+ * Date.UTC handles the year turn, so January compares with December.
+ */
+export function samePointLastMonth(today: string): { start: string; end: string } {
+  const [year, month, day] = today.split("-").map(Number);
+  const start = new Date(Date.UTC(year, month - 2, 1)).toISOString().slice(0, 10);
+  const lastMonthDays = new Date(Date.UTC(year, month - 1, 0)).getUTCDate();
+  return { start, end: addDays(start, Math.min(day, lastMonthDays) - 1) };
+}
+
 /** Shown only when the rise is at least R$ 50 and at least 20%. */
 const MIN_DIFFERENCE = 5000;
 const MIN_RATIO = 0.2;
@@ -59,12 +70,8 @@ export function compareWithLastMonth<C extends string>(
   today: string,
   categories: readonly C[],
 ): Comparison<C> | null {
-  const [year, month, day] = today.split("-").map(Number);
   const monthStart = today.slice(0, 8) + "01";
-  const last = new Date(Date.UTC(year, month - 2, 1));
-  const lastMonthDays = new Date(Date.UTC(year, month - 1, 0)).getUTCDate();
-  const lastStart = last.toISOString().slice(0, 10);
-  const lastSameDay = addDays(lastStart, Math.min(day, lastMonthDays) - 1);
+  const { start: lastStart, end: lastSameDay } = samePointLastMonth(today);
 
   let best: Comparison<C> | null = null;
   for (const category of categories) {

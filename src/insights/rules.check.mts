@@ -10,7 +10,12 @@ import {
 } from "../mocks/marina.ts";
 import { projectUntilPayday } from "./projection.ts";
 import { findRenewals } from "./recurring.ts";
-import { averageDailySpending, compareWithLastMonth, daysBetween } from "./spending.ts";
+import {
+  averageDailySpending,
+  compareWithLastMonth,
+  daysBetween,
+  samePointLastMonth,
+} from "./spending.ts";
 
 // Rule 1: 4.218,90 − 2.958,90 − 54,00 × 12 = 612,00.
 const daily = averageDailySpending(TRANSACTIONS, TODAY, VARIABLE_CATEGORIES);
@@ -30,6 +35,9 @@ assert.deepEqual(compareWithLastMonth(TRANSACTIONS, TODAY, VARIABLE_CATEGORIES),
   now: 38000,
   difference: 12000,
 });
+// "Same point of last month" across the year turn and into a shorter month.
+assert.deepEqual(samePointLastMonth("2027-01-15"), { start: "2026-12-01", end: "2026-12-15" });
+assert.deepEqual(samePointLastMonth("2026-03-31"), { start: "2026-02-01", end: "2026-02-28" });
 // Under R$ 50, or under 20%, says nothing.
 const small = [
   { date: "2026-10-05", category: "lazer", amount: -10000 },
