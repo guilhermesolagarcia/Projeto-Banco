@@ -7,7 +7,13 @@ import { Money } from "@/components/money";
 import type { Transaction } from "@/mocks/marina";
 import { CARD } from "./dashboard-skeleton";
 import { CATEGORY_LABEL } from "./format";
-import { INSIGHT, STATEMENT, type DayGroup, type MonthGroup } from "./statement-data";
+import {
+  INSIGHT,
+  STATEMENT,
+  type DayGroup,
+  type MonthGroup,
+  type SegmentKey,
+} from "./statement-data";
 
 function Amount({ cents, className = "" }: { cents: number; className?: string }) {
   // Money in is green; money out stays ink. Spending is not an error.
@@ -57,10 +63,18 @@ function InsightNote() {
   );
 }
 
-const SHADES = ["bg-ink/70", "bg-ink/50", "bg-ink/35", "bg-ink/20", "bg-ink/10"];
+// One color per segment, always the same (tokens in globals.css). Written out for Tailwind.
+const SEGMENT_COLOR: Record<SegmentKey, string> = {
+  fixas: "bg-cat-fixas",
+  lazer: "bg-cat-lazer",
+  transporte: "bg-cat-transporte",
+  mercado: "bg-cat-mercado",
+  saude: "bg-cat-saude",
+  delivery: "bg-cat-delivery",
+};
 
 function MonthSummary({ month, current }: { month: MonthGroup; current: boolean }) {
-  const top = month.byCategory.slice(0, 5);
+  const segments = month.segments.filter((s) => s.spent > 0);
   return (
     <div className={CARD}>
       <h2 className="text-2xl font-semibold tracking-tight first-letter:uppercase">
@@ -81,25 +95,30 @@ function MonthSummary({ month, current }: { month: MonthGroup; current: boolean 
           </dd>
         </div>
       </dl>
-      {/* Decorative: the same numbers are written in the list right below. */}
+      {/* The bar is decorative for screen readers: the legend below writes every value. */}
       <div aria-hidden="true" className="mt-6 flex h-3 gap-0.5 overflow-hidden rounded-pill">
-        {top.map((c, i) => (
+        {segments.map((s) => (
           <span
-            key={c.category}
-            className={current && c.category === INSIGHT?.category ? "bg-amber" : SHADES[i]}
-            style={{ width: `${(c.spent / month.spent) * 100}%` }}
+            key={s.key}
+            title={s.label}
+            className={SEGMENT_COLOR[s.key]}
+            style={{ width: `${(s.spent / month.spent) * 100}%` }}
           />
         ))}
       </div>
       <ul
-        aria-label="Maiores gastos do mês"
-        className="mt-4 grid grid-cols-2 gap-x-6 gap-y-1.5 text-sm sm:grid-cols-3"
+        aria-label="Para onde foi o dinheiro"
+        className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 text-sm sm:grid-cols-3"
       >
-        {top.map((c) => (
-          <li key={c.category} className="flex justify-between gap-3">
-            <span className="text-ink-muted">{CATEGORY_LABEL[c.category]}</span>
-            <span className="tabular-nums">
-              <Money cents={c.spent} />
+        {segments.map((s) => (
+          <li key={s.key} className="flex items-center gap-2">
+            <span
+              aria-hidden="true"
+              className={`size-2.5 shrink-0 rounded-full ${SEGMENT_COLOR[s.key]}`}
+            />
+            <span className="text-ink-muted">{s.label}</span>
+            <span className="ml-auto tabular-nums">
+              <Money cents={s.spent} />
             </span>
           </li>
         ))}

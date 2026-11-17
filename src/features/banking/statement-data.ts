@@ -3,13 +3,38 @@ import { TODAY, TRANSACTIONS, type Category, type Transaction } from "@/mocks/ma
 import { DASHBOARD } from "./dashboard-data";
 import { formatDay } from "./format";
 
+/*
+ * Month summary: fixed bills in one gray block, day-to-day spending by category.
+ * Fixed order and fixed color per segment (never by rank), so a category looks the same
+ * in every month. The order keeps similar colors apart (validated, see globals.css).
+ */
+export const SEGMENTS = [
+  { key: "fixas", label: "Contas fixas" },
+  { key: "lazer", label: "Lazer" },
+  { key: "transporte", label: "Transporte" },
+  { key: "mercado", label: "Mercado" },
+  { key: "saude", label: "Saúde" },
+  { key: "delivery", label: "Delivery" },
+] as const;
+export type SegmentKey = (typeof SEGMENTS)[number]["key"];
+
+/** Day-to-day categories keep their own segment; everything else is a fixed bill. */
+const DAY_TO_DAY: Partial<Record<Category, SegmentKey>> = {
+  lazer: "lazer",
+  transporte: "transporte",
+  mercado: "mercado",
+  saude: "saude",
+  delivery: "delivery",
+};
+const segmentOf = (category: Category): SegmentKey => DAY_TO_DAY[category] ?? "fixas";
+
 export type DayGroup = { date: string; label: string; total: number; items: Transaction[] };
 export type MonthGroup = {
   key: string;
   label: string;
   income: number;
   spent: number;
-  byCategory: { category: Category; spent: number }[];
+  segments: { key: SegmentKey; label: string; spent: number }[];
   days: DayGroup[];
 };
 
@@ -31,7 +56,7 @@ function groupStatement(rows: readonly Transaction[]): MonthGroup[] {
         label: formatDay(`${key}-01`, { month: "long", year: "numeric" }),
         income: 0,
         spent: 0,
-        byCategory: [],
+        segments: SEGMENTS.map((s) => ({ ...s, spent: 0 })),
         days: [],
       };
       months.set(key, month);
@@ -39,9 +64,8 @@ function groupStatement(rows: readonly Transaction[]): MonthGroup[] {
     if (t.amount > 0) month.income += t.amount;
     else {
       month.spent -= t.amount;
-      const slot = month.byCategory.find((c) => c.category === t.category);
-      if (slot) slot.spent -= t.amount;
-      else month.byCategory.push({ category: t.category, spent: -t.amount });
+      const segment = month.segments.find((s) => s.key === segmentOf(t.category));
+      if (segment) segment.spent -= t.amount;
     }
     let day = month.days.at(-1);
     if (!day || day.date !== t.date) {
@@ -51,7 +75,6 @@ function groupStatement(rows: readonly Transaction[]): MonthGroup[] {
     day.total += t.amount;
     day.items.push(t);
   }
-  for (const month of months.values()) month.byCategory.sort((a, b) => b.spent - a.spent);
   return [...months.values()];
 }
 

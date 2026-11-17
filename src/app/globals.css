@@ -31,6 +31,19 @@
   --color-positive: #2a7347;
   --color-positive-on-dark: #8fd3a8;
 
+  /*
+   * Spending categories (statement summary). Validated with the dataviz checker on white:
+   * lightness, chroma, protan/deutan separation and normal-vision separation all pass in this
+   * order. Earthy on purpose, so none reads as attention (warning) or positive (money in).
+   * Transporte is under 3:1 on white, so the legend always writes names and values.
+   */
+  --color-cat-fixas: #cfc7bc;
+  --color-cat-lazer: #c85a5a;
+  --color-cat-transporte: #c99a12;
+  --color-cat-mercado: #4f8a3e;
+  --color-cat-saude: #2f7bb0;
+  --color-cat-delivery: #e0761f;
+
   /* Shape */
   --radius-card: 1.375rem;
   --radius-pill: 9999px;
