@@ -1,3 +1,4 @@
+import { AlertsSection } from "@/features/landing/alerts-section";
 import { CardSection } from "@/features/landing/card-section";
 import { ClaritySection } from "@/features/landing/clarity-section";
 import { Hero } from "@/features/landing/hero";
@@ -16,6 +17,7 @@ export default function Home() {
       <main id="conteudo">
         <Hero />
         <ClaritySection />
+        <AlertsSection />
         <CardSection />
       </main>
     </>
