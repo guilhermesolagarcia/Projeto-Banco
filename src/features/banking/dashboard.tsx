@@ -1,12 +1,16 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import * as m from "motion/react-m";
 import type { ReactNode } from "react";
 import { Money } from "@/components/money";
 import { fetchDashboard } from "./api";
 import type { DashboardData } from "./dashboard-data";
+import { AnimatedMoney } from "./animated-money";
 import { CARD, DashboardSkeleton } from "./dashboard-skeleton";
+import { Disclosure } from "./disclosure";
 import { CATEGORY_LABEL, formatDay } from "./format";
+import { MATERIALIZE, SPRING, STAGGER } from "./motion";
 
 export function Dashboard() {
   const { data, isPending, isError, refetch, isFetching } = useQuery({
@@ -99,19 +103,23 @@ function DashboardView({ data }: { data: DashboardData }) {
   }[projection.status];
 
   return (
-    <>
-      <p className="animate-rise text-ink-muted first-letter:uppercase">
+    <m.div initial="hidden" animate="shown" variants={STAGGER}>
+      <m.p variants={MATERIALIZE} className="text-ink-muted first-letter:uppercase">
         {formatDay(data.today, { weekday: "long", day: "numeric", month: "long" })}
-      </p>
-      <h1 className="mt-2 animate-rise text-5xl leading-[0.98] font-semibold tracking-[-0.045em] [animation-delay:80ms] sm:text-6xl">
+      </m.p>
+      <m.h1
+        variants={MATERIALIZE}
+        className="mt-2 text-5xl leading-[0.98] font-semibold tracking-[-0.045em] sm:text-6xl"
+      >
         Olá, Marina.
-      </h1>
+      </m.h1>
 
-      <div className="mt-10 grid gap-5 md:grid-cols-5 md:gap-6">
+      <m.div variants={STAGGER} className="mt-10 grid gap-5 md:grid-cols-5 md:gap-6">
         {/* Rule 1 · Projection: the headline of the account */}
-        <section
+        <m.section
+          variants={MATERIALIZE}
           aria-labelledby="projection-title"
-          className={`${CARD} animate-card-in [animation-delay:150ms] md:col-span-3 md:row-span-2`}
+          className={`${CARD} md:col-span-3 md:row-span-2`}
         >
           <p className="flex items-center gap-2 text-sm font-medium text-ink-muted">
             <span aria-hidden="true" className="size-2 rounded-full bg-amber-signal" />
@@ -125,7 +133,7 @@ function DashboardView({ data }: { data: DashboardData }) {
           </h2>
           <p className="mt-6 flex flex-wrap items-baseline gap-x-3">
             <span className="text-6xl leading-none font-semibold tracking-[-0.045em] sm:text-7xl">
-              <Money cents={Math.abs(projection.leftover)} />
+              <AnimatedMoney cents={Math.abs(projection.leftover)} />
             </span>
             <span className="text-ink-muted">
               {projection.status === "short" ? "faltando" : "de folga"}
@@ -137,23 +145,17 @@ function DashboardView({ data }: { data: DashboardData }) {
             </p>
           )}
           <div aria-hidden="true" className="mt-8 h-2 rounded-pill bg-paper">
-            <div
-              className="h-full origin-left animate-grow-x rounded-pill bg-amber [animation-delay:600ms]"
+            <m.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ ...SPRING, delay: 0.35 }}
+              className="h-full origin-left rounded-pill bg-amber"
               style={{ width: `${Math.round(projection.share * 100)}%` }}
             />
           </div>
 
-          <details className="group/how mt-8 border-t border-ink/10 pt-4">
-            <summary className="flex cursor-pointer list-none items-center justify-between font-medium [&::-webkit-details-marker]:hidden">
-              Como calculamos isso?
-              <span
-                aria-hidden="true"
-                className="grid size-6 place-items-center rounded-full bg-ink/[0.06] leading-none transition-[rotate] duration-300 ease-calm group-open/how:rotate-45"
-              >
-                +
-              </span>
-            </summary>
-            <dl className="mt-4 space-y-2 text-sm tabular-nums">
+          <Disclosure label="Como calculamos isso?">
+            <dl className="space-y-2 text-sm tabular-nums">
               <div className="flex justify-between gap-4">
                 <dt className="text-ink-muted">Saldo hoje</dt>
                 <dd>
@@ -184,13 +186,14 @@ function DashboardView({ data }: { data: DashboardData }) {
             <p className="mt-3 text-sm text-ink-muted">
               O gasto por dia é a média dos seus gastos do dia a dia nos últimos 60 dias.
             </p>
-          </details>
-        </section>
+          </Disclosure>
+        </m.section>
 
         {/* Balance */}
-        <section
+        <m.section
+          variants={MATERIALIZE}
           aria-labelledby="balance-title"
-          className="relative animate-card-in overflow-hidden rounded-[2rem] bg-ink p-7 text-on-dark [animation-delay:250ms] md:col-span-2 md:p-9"
+          className="relative overflow-hidden rounded-[2rem] bg-ink p-7 text-on-dark md:col-span-2 md:p-9"
         >
           <div
             aria-hidden="true"
@@ -200,14 +203,15 @@ function DashboardView({ data }: { data: DashboardData }) {
             Saldo disponível
           </h2>
           <p className="relative mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">
-            <Money cents={data.balance} />
+            <AnimatedMoney cents={data.balance} />
           </p>
-        </section>
+        </m.section>
 
         {/* Alerts: only what the rules found today */}
-        <section
+        <m.section
+          variants={MATERIALIZE}
           aria-labelledby="alerts-title"
-          className={`${CARD} animate-card-in [animation-delay:350ms] md:col-span-2`}
+          className={`${CARD} md:col-span-2`}
         >
           <h2 id="alerts-title" className="text-sm font-medium text-ink-muted">
             Avisos
@@ -262,11 +266,15 @@ function DashboardView({ data }: { data: DashboardData }) {
               <li className="text-ink-muted">Nada pedindo atenção agora. Tudo tranquilo.</li>
             )}
           </ul>
-        </section>
-      </div>
+        </m.section>
+      </m.div>
 
       {/* Recent transactions */}
-      <section aria-labelledby="recent-title" className={`${CARD} mt-5 md:mt-6`}>
+      <m.section
+        variants={MATERIALIZE}
+        aria-labelledby="recent-title"
+        className={`${CARD} mt-5 md:mt-6`}
+      >
         <h2 id="recent-title" className="text-sm font-medium text-ink-muted">
           Últimas transações
         </h2>
@@ -292,7 +300,7 @@ function DashboardView({ data }: { data: DashboardData }) {
             </li>
           ))}
         </ul>
-      </section>
-    </>
+      </m.section>
+    </m.div>
   );
 }

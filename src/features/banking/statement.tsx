@@ -3,10 +3,12 @@
  * Rule 2 (category comparison) sits in the middle of the list, right after the purchase
  * that confirms it, where the person would notice it anyway.
  */
+import * as m from "motion/react-m";
 import { Money } from "@/components/money";
 import type { Transaction } from "@/mocks/marina";
 import { CARD } from "./dashboard-skeleton";
 import { CATEGORY_LABEL } from "./format";
+import { MATERIALIZE, SPRING, STAGGER } from "./motion";
 import type {
   DayGroup,
   MonthGroup,
@@ -45,7 +47,15 @@ function Row({ t }: { t: Transaction }) {
 
 function InsightNote({ insight }: { insight: StatementInsight }) {
   return (
-    <div role="note" className="rounded-2xl border border-amber-signal/25 bg-amber/[0.07] p-4">
+    // The one thing in the statement that asks for attention: it arrives as you reach it.
+    <m.div
+      role="note"
+      variants={MATERIALIZE}
+      initial="hidden"
+      whileInView="shown"
+      viewport={{ once: true, amount: 0.6 }}
+      className="rounded-2xl border border-amber-signal/25 bg-amber/[0.07] p-4"
+    >
       <p className="flex items-center gap-2 text-sm font-medium text-ink-muted">
         <span aria-hidden="true" className="size-2 rounded-full bg-amber-signal" />
         Comparação
@@ -58,7 +68,7 @@ function InsightNote({ insight }: { insight: StatementInsight }) {
         Até hoje: <Money cents={insight.now} /> em {insight.countNow} pedidos. No mesmo ponto do mês
         passado: <Money cents={insight.before} /> em {insight.countBefore}.
       </p>
-    </div>
+    </m.div>
   );
 }
 
@@ -97,11 +107,14 @@ function MonthSummary({ month, current }: { month: MonthGroup; current: boolean 
         </dl>
         {/* The bar is decorative for screen readers: the legend next to it writes every value. */}
         <div aria-hidden="true" className="mt-8 flex h-4 gap-1">
-          {segments.map((s) => (
-            <span
+          {segments.map((s, index) => (
+            <m.span
               key={s.key}
               title={s.label}
-              className={`min-w-1.5 rounded-pill ${SEGMENT_COLOR[s.key]}`}
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ ...SPRING, delay: 0.2 + index * 0.06 }}
+              className={`min-w-1.5 origin-left rounded-pill ${SEGMENT_COLOR[s.key]}`}
               style={{ width: `${(s.spent / month.spent) * 100}%` }}
             />
           ))}
@@ -155,15 +168,20 @@ function Day({ day, insight }: { day: DayGroup; insight: StatementInsight | null
 
 export function Statement({ data }: { data: StatementData }) {
   return (
-    <div className="space-y-14">
+    <m.div initial="hidden" animate="shown" variants={STAGGER} className="space-y-14">
       {data.months.map((month, index) => (
-        <section key={month.key} aria-label={month.label} className="space-y-6">
+        <m.section
+          key={month.key}
+          variants={MATERIALIZE}
+          aria-label={month.label}
+          className="space-y-6"
+        >
           <MonthSummary month={month} current={index === 0} />
           {month.days.map((day) => (
             <Day key={day.date} day={day} insight={data.insight} />
           ))}
-        </section>
+        </m.section>
       ))}
-    </div>
+    </m.div>
   );
 }
