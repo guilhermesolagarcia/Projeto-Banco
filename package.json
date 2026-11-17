@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "check:insights": "node --no-warnings src/insights/projection.check.mts"
   },
   "dependencies": {
     "next": "16.4.6",

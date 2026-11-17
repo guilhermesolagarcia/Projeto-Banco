@@ -155,16 +155,23 @@ export function Money({ cents, className }: MoneyProps) {
 
 Construída **seção por seção**. Cada seção é uma tarefa revisada por você antes da próxima. É a peça mais caprichada do site, mas com o timebox definido no plano.
 
-| Seção                  | Conteúdo (detalhes no doc de design, seção 3)                                                                                                         |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Menu                   | Logo, âncoras "Conta" e "Cartão", botão "Entrar"                                                                                                      |
-| 1 · Hero (claro)       | Eyebrow "Conta digital", título "Sem susto no fim do mês.", texto de apoio, botão "Experimentar com conta demo", cartão de saldo escuro com um recado |
-| 2 · Clareza (grafite)  | Título, saldo gigante em números tabulares, linha de progresso âmbar                                                                                  |
-| 3 · Cartão (resina)    | Título e cartão de resina em CSS, com o logo gravado                                                                                                  |
-| 4 · Fechamento (claro) | "Veja o Âmbar funcionando com uma conta demo.", linha de confiança, botão                                                                             |
-| Rodapé                 | "Âmbar é um banco fictício, projeto de portfólio."                                                                                                    |
+Ordem atualizada em 16/11/2026, a partir da pesquisa em [`docs/research/2026-11-16-landing-bancos.md`](docs/research/2026-11-16-landing-bancos.md). Cada seção nova precisa provar um pilar do conceito que a página ainda não mostra.
 
-**Regras:** os números exibidos na landing são **ilustrativos**. O recado não tem botões que parecem clicáveis. Os botões levam para `/login`, que na Fase 1 mostra "em breve".
+| Seção                  | Conteúdo                                                                                                                                                                                                     | Status |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------ |
+| Menu                   | Logo, âncoras "Conta" e "Cartão", botão "Entrar"                                                                                                                                                             | ✅     |
+| 1 · Hero (claro)       | Título, texto de apoio, botão da conta demo, cartão de saldo + cartão de projeção, órbitas, os 3 pilares                                                                                                     | ✅     |
+| 2 · Clareza (grafite)  | **Simulador interativo:** a pessoa edita saldo, contas, gasto por dia e dias até o salário, e vê a projeção e o "Como calculamos isso?" ao vivo. Usa a função pura da Regra 1 (`src/insights/projection.ts`) | 🔄     |
+| 3 · Avisos (claro)     | Os 3 tipos de aviso do motor de insights, como cartões de exemplo                                                                                                                                            | ⬜     |
+| 4 · Não julga          | Antes e depois: o banco comum ("SALDO INSUFICIENTE") vs. o Âmbar (calmo, com o próximo passo)                                                                                                                | ⬜     |
+| 5 · Cartão (resina)    | Cartão de resina em CSS e a etiqueta "Em breve: personalize o seu em 3D"                                                                                                                                     | ✅     |
+| 6 · Perguntas (claro)  | "É um banco de verdade?", "Como funciona a conta demo?", "O que vocês fazem com meus dados?", com `<details>` nativo                                                                                         | ⬜     |
+| 7 · Fechamento (claro) | "Veja o Âmbar funcionando com uma conta demo.", linha de confiança, botão                                                                                                                                    | ⬜     |
+| Rodapé                 | "Âmbar é um banco fictício, projeto de portfólio."                                                                                                                                                           | ⬜     |
+
+**Fora da landing, de propósito:** depoimentos, números de clientes e selos de segurança. Num banco fictício, seriam inventados.
+
+**Regras:** os números exibidos na landing são **ilustrativos**, exceto os do simulador, que são calculados. O recado não tem botões que parecem clicáveis. Os botões levam para `/login`, que na Fase 1 mostra "em breve".
 
 **Pronto quando:**
 
