@@ -7,12 +7,12 @@ import { Money } from "@/components/money";
 import type { Transaction } from "@/mocks/marina";
 import { CARD } from "./dashboard-skeleton";
 import { CATEGORY_LABEL } from "./format";
-import {
-  INSIGHT,
-  STATEMENT,
-  type DayGroup,
-  type MonthGroup,
-  type SegmentKey,
+import type {
+  DayGroup,
+  MonthGroup,
+  SegmentKey,
+  StatementData,
+  StatementInsight,
 } from "./statement-data";
 
 function Amount({ cents, className = "" }: { cents: number; className?: string }) {
@@ -43,8 +43,7 @@ function Row({ t }: { t: Transaction }) {
   );
 }
 
-function InsightNote() {
-  if (!INSIGHT) return null;
+function InsightNote({ insight }: { insight: StatementInsight }) {
   return (
     <div role="note" className="rounded-2xl border border-amber-signal/25 bg-amber/[0.07] p-4">
       <p className="flex items-center gap-2 text-sm font-medium text-ink-muted">
@@ -52,12 +51,12 @@ function InsightNote() {
         Comparação
       </p>
       <p className="mt-2 font-semibold tracking-tight">
-        <Money cents={INSIGHT.difference} /> a mais com{" "}
-        {CATEGORY_LABEL[INSIGHT.category].toLowerCase()} este mês.
+        <Money cents={insight.difference} /> a mais com{" "}
+        {CATEGORY_LABEL[insight.category].toLowerCase()} este mês.
       </p>
       <p className="mt-1 text-sm text-ink-muted">
-        Até hoje: <Money cents={INSIGHT.now} /> em {INSIGHT.countNow} pedidos. No mesmo ponto do mês
-        passado: <Money cents={INSIGHT.before} /> em {INSIGHT.countBefore}.
+        Até hoje: <Money cents={insight.now} /> em {insight.countNow} pedidos. No mesmo ponto do mês
+        passado: <Money cents={insight.before} /> em {insight.countBefore}.
       </p>
     </div>
   );
@@ -131,7 +130,7 @@ function MonthSummary({ month, current }: { month: MonthGroup; current: boolean 
   );
 }
 
-function Day({ day }: { day: DayGroup }) {
+function Day({ day, insight }: { day: DayGroup; insight: StatementInsight | null }) {
   return (
     <div>
       <div className="flex items-baseline justify-between gap-4 px-1 text-sm">
@@ -142,9 +141,9 @@ function Day({ day }: { day: DayGroup }) {
         {day.items.map((t) => (
           <li key={t.id} className="border-t border-ink/10 first:border-t-0">
             <Row t={t} />
-            {t.id === INSIGHT?.anchorId && (
+            {insight && t.id === insight.anchorId && (
               <div className="pb-4">
-                <InsightNote />
+                <InsightNote insight={insight} />
               </div>
             )}
           </li>
@@ -154,14 +153,14 @@ function Day({ day }: { day: DayGroup }) {
   );
 }
 
-export function Statement() {
+export function Statement({ data }: { data: StatementData }) {
   return (
     <div className="space-y-14">
-      {STATEMENT.map((month, index) => (
+      {data.months.map((month, index) => (
         <section key={month.key} aria-label={month.label} className="space-y-6">
           <MonthSummary month={month} current={index === 0} />
           {month.days.map((day) => (
-            <Day key={day.date} day={day} />
+            <Day key={day.date} day={day} insight={data.insight} />
           ))}
         </section>
       ))}

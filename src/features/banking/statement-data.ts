@@ -107,3 +107,9 @@ export const INSIGHT = comparison
       countBefore: lastMonth.length,
     }
   : null;
+
+export type StatementInsight = NonNullable<typeof INSIGHT>;
+
+/** The JSON shape of GET /api/extrato. */
+export type StatementData = { months: MonthGroup[]; insight: StatementInsight | null };
+export const STATEMENT_DATA: StatementData = { months: STATEMENT, insight: INSIGHT };

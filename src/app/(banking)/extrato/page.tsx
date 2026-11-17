@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { BankingHeader } from "@/features/banking/banking-header";
-import { Statement } from "@/features/banking/statement";
+import { StatementLoader } from "@/features/banking/statement-loader";
 
 export const metadata: Metadata = { title: "Extrato · Âmbar" };
 
@@ -13,7 +13,7 @@ export default function StatementPage() {
           Extrato
         </h1>
         <div className="mt-10 max-w-3xl">
-          <Statement />
+          <StatementLoader />
         </div>
       </main>
     </div>
