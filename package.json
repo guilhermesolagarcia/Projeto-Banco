@@ -9,7 +9,7 @@
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
     "format": "prettier --write .",
-    "check:insights": "node --no-warnings src/insights/projection.check.mts"
+    "check:insights": "node --no-warnings src/insights/projection.check.mts && node --no-warnings src/mocks/marina.check.mts"
   },
   "dependencies": {
     "@hookform/resolvers": "7.0.7",
