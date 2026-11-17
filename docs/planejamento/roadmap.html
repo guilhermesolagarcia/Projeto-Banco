@@ -60,6 +60,10 @@
         line-height: 1.05;
         font-weight: 600;
       }
+      h1,
+      h2 {
+        text-wrap: balance;
+      }
       h1 {
         font-size: 44pt;
       }
@@ -308,7 +312,7 @@
         Âmbar
       </div>
       <div>
-        <p class="eyebrow" style="color: #a8a49f">Planejamento · Fases 5 em diante</p>
+        <p class="eyebrow" style="color: #a8a49f">Planejamento · Fases 5 a 14</p>
         <h1>Do conceito<br />ao banco completo.</h1>
         <p class="sub">
           O que já está pronto, o que vem a seguir, em que ordem e com qual critério de “pronto”. Um
@@ -317,7 +321,7 @@
       </div>
       <div class="meta">
         <div><b>17 de novembro de 2026</b>Data</div>
-        <div><b>Rascunho para decisão</b>Status</div>
+        <div><b>Ordem aprovada</b>Status</div>
         <div><b>Portfólio de frontend</b>Contexto</div>
       </div>
     </section>
@@ -423,292 +427,334 @@
     <!-- 3 · Roadmap overview -->
     <section class="page">
       <p class="eyebrow">O roteiro</p>
-      <h2>Sete fases até o lançamento.</h2>
-      <p class="muted" style="max-width: 155mm">
-        A ordem segue uma regra simples: <b>primeiro o que um banco precisa fazer</b> (mover
-        dinheiro), depois o que diferencia o Âmbar (o assistente, os planos), e por último o que
-        <b>mostra</b> o produto pronto (os anúncios e o lançamento). Anúncio de função que não
-        existe é promessa vazia.
+      <h2>Dez fases até um banco completo.</h2>
+      <p class="muted" style="max-width: 160mm">
+        Primeiro a base (navegação de app e dados), depois o que um banco faz todo dia (Pix e
+        cartão), depois o que diferencia o Âmbar (planejar, benefícios, assistente) e, por último, o
+        que mostra tudo pronto (a retrospectiva, o cartão 3D, os vídeos e o lançamento). Cada fase:
+        <b>visual aprovado → código → testes → CI verde</b>.
       </p>
-
-      <table style="margin-top: 5mm">
+      <table style="margin-top: 4mm">
         <thead>
           <tr>
             <th>Fase</th>
             <th>Entrega</th>
-            <th>Por que nessa posição</th>
-            <th>Novas ferramentas</th>
+            <th>Destaque</th>
+            <th>Ferramenta nova</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td class="num"><b>5</b></td>
-            <td>
-              <b>Pix e transferências</b><br /><span class="muted"
-                >enviar, receber, comprovante</span
-              >
-            </td>
-            <td>É o coração de um banco. Sem mover dinheiro, o Âmbar é só um extrato bonito.</td>
-            <td>Mutações no TanStack Query, QR Code</td>
+            <td><b>Fundação</b></td>
+            <td>navegação de app, dados ampliados, instalar como app</td>
+            <td>PWA</td>
           </tr>
           <tr>
             <td class="num"><b>6</b></td>
-            <td><b>Planos</b><br /><span class="muted">decisão em aberto, pág. 5</span></td>
-            <td>Usa o motor de insights e a projeção, que já existem.</td>
-            <td>A definir com a decisão</td>
+            <td><b>Pix</b></td>
+            <td>projeção antes de confirmar, rachar a conta, boleto</td>
+            <td>QR Code</td>
           </tr>
           <tr>
             <td class="num"><b>7</b></td>
-            <td><b>Assistente virtual</b></td>
-            <td>Fica melhor quando há mais coisas para explicar: Pix, metas, planos.</td>
-            <td>Etapa 1: nenhuma. Etapa 2: API do Claude</td>
+            <td><b>Cartão</b></td>
+            <td>fatura em 3 frases, cartão virtual por assinatura</td>
+            <td>—</td>
           </tr>
           <tr>
             <td class="num"><b>8</b></td>
-            <td><b>Benefícios e parceiros</b></td>
-            <td>Benefício calculado a partir dos gastos, outra regra do motor.</td>
-            <td>Nenhuma</td>
+            <td><b>Planejar</b></td>
+            <td>caixinhas, “Posso comprar?”, calendário do mês</td>
+            <td>—</td>
           </tr>
           <tr>
             <td class="num"><b>9</b></td>
-            <td><b>Cartão 3D personalizável</b></td>
-            <td>Já estava no roteiro; vira o “uau” dos anúncios.</td>
-            <td>React Three Fiber · drei</td>
+            <td><b>Benefícios e Âmbar Mais</b></td>
+            <td>Mango, ZOD, Nexo e Drago’s; cashback calculado</td>
+            <td>—</td>
           </tr>
           <tr>
             <td class="num"><b>10</b></td>
-            <td><b>Anúncios em vídeo</b></td>
-            <td>Mostram as funções prontas, com as cores e os componentes do próprio site.</td>
-            <td>Remotion</td>
+            <td><b>Assistente e glossário</b></td>
+            <td>responde com as regras, nunca inventa número</td>
+            <td>(opcional) API do Claude</td>
           </tr>
           <tr>
             <td class="num"><b>11</b></td>
+            <td><b>Retrospectiva e confiança</b></td>
+            <td>o “Wrapped” do dinheiro, modo discreto</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td class="num"><b>12</b></td>
+            <td><b>Cartão 3D</b></td>
+            <td>resina girando, cor e nome à escolha</td>
+            <td>React Three Fiber</td>
+          </tr>
+          <tr>
+            <td class="num"><b>13</b></td>
+            <td><b>Vídeos</b></td>
+            <td>5 vídeos, incluindo a retrospectiva</td>
+            <td>Remotion</td>
+          </tr>
+          <tr>
+            <td class="num"><b>14</b></td>
             <td><b>Lançamento</b></td>
-            <td>Publicar só quando o produto estiver à altura.</td>
-            <td>Vercel · Lighthouse</td>
+            <td>publicação, Lighthouse, auditoria final</td>
+            <td>Vercel</td>
           </tr>
         </tbody>
       </table>
-
       <div class="note">
-        <b>Sobre o cartão 3D:</b> ele era a Fase 5 no roteiro original. A proposta é movê-lo para
-        depois das funções de banco, para ele aparecer nos anúncios já “vestindo” um produto
-        completo. Se preferir manter a ordem antiga, nada nas outras fases depende dele.
+        <b>Por que a Fundação vem primeiro:</b> o Âmbar passa de 2 telas logadas para umas 10. O
+        cabeçalho “Início · Extrato · Sair” não comporta isso, e as funções novas precisam de dados
+        que ainda não existem (cartão, fatura, contatos, caixinhas, parceiros).
       </div>
       <div class="footer"><span>Âmbar · Planejamento</span><span>3</span></div>
     </section>
 
-    <!-- 4 · Phase 5: Pix -->
+    <!-- 4 · Partners -->
     <section class="page">
-      <div class="phase-head">
-        <div>
-          <p class="phase-num">Fase 5</p>
-          <h2 style="margin: 1mm 0 0">Pix e transferências</h2>
-        </div>
-        <span class="tag next">Próxima</span>
-      </div>
-      <p class="muted" style="max-width: 155mm">
-        Enviar e receber dinheiro, do jeito Âmbar: antes de confirmar, a pessoa vê
-        <b>como fica o mês</b>
-        depois daquele Pix. É a Regra 1 (projeção) aplicada no momento em que ela mais importa.
+      <p class="eyebrow">Parceiros</p>
+      <h2>Um universo de marcas que conversam entre si.</h2>
+      <p class="muted" style="max-width: 160mm">
+        Os parceiros do Âmbar são marcas fictícias que o autor já criou em outros projetos. Isso
+        evita usar marcas reais sem autorização e vira um diferencial raro de portfólio:
+        <b>um ecossistema inteiro</b>, em que o banco conversa com a marca de tecnologia, a loja, o
+        energético e o estúdio.
       </p>
-
       <div class="grid2" style="margin-top: 5mm">
-        <div class="card">
-          <p class="label">Enviar</p>
+        <div class="card" style="border-top: 2mm solid #f2a33a">
+          <p class="label">Mango · parceiro principal</p>
+          <h3>A “Apple” do universo</h3>
+          <p class="muted">MangoBook, Mangophone, Mangopad.</p>
           <ul>
-            <li>Pix por chave: e-mail, telefone, CPF fictício ou chave aleatória.</li>
-            <li>Contatos recentes e favoritos.</li>
-            <li>Revisão antes de confirmar: valor, para quem, quando.</li>
-            <li>
-              <b>“Depois desse Pix, sobram R$ X até dia 5”</b>, com o “Como calculamos isso?”.
-            </li>
-            <li>Agendar para outra data, com a projeção recalculada.</li>
-            <li>Comprovante para compartilhar.</li>
+            <li>Parcelar o MangoBook com o custo real à mostra.</li>
+            <li>“MangoCare” incluso no plano Âmbar Mais.</li>
+            <li>A compra-exemplo do “Posso comprar?”.</li>
           </ul>
         </div>
-        <div class="card">
-          <p class="label">Receber</p>
+        <div class="card" style="border-top: 2mm solid #16120e">
+          <p class="label">ZOD</p>
+          <h3>Energético</h3>
+          <p class="muted">Consumo do dia a dia.</p>
           <ul>
-            <li>Minhas chaves Pix (criar e apagar, na conta demo).</li>
-            <li>QR Code com valor opcional e “copia e cola”.</li>
-            <li>Pedido de pagamento com link.</li>
-            <li>O extrato passa a mostrar entradas e saídas de Pix, com os nomes legíveis.</li>
+            <li>Cashback em compras ZOD.</li>
+            <li>Aparece só para quem já compra a categoria.</li>
           </ul>
         </div>
-      </div>
-
-      <div class="grid2">
-        <div class="card">
-          <p class="label">Como o conceito aparece</p>
+        <div class="card" style="border-top: 2mm solid #6b6f78">
+          <p class="label">Nexo</p>
+          <h3>Loja de setups e periféricos</h3>
+          <p class="muted">Teclados, headsets, cadeiras.</p>
           <ul>
-            <li><b>Explica:</b> o impacto na projeção antes do “confirmar”.</li>
-            <li><b>Avisa:</b> “Esse Pix aperta o mês” quando a sobra fica no limite.</li>
-            <li><b>Não julga:</b> o aviso nunca bloqueia; a decisão é da pessoa.</li>
+            <li>Cashback e desconto pagando com Pix.</li>
+            <li>Parcelamento comparado com o à vista.</li>
           </ul>
         </div>
-        <div class="card">
-          <p class="label">Pronto quando</p>
+        <div class="card" style="border-top: 2mm solid #c8102e">
+          <p class="label">Drago’s Tattoo</p>
+          <h3>Estúdio de tatuagem</h3>
+          <p class="muted">Blackwork, fine line, tradicional.</p>
           <ul>
-            <li>Enviar, agendar e receber funcionam no celular e no teclado.</li>
-            <li>A projeção recalculada vem de uma regra testada.</li>
-            <li>Erros (saldo insuficiente, chave inválida) não culpam ninguém.</li>
-            <li>Fluxo novo no Playwright e CI verde.</li>
+            <li>Parcelar a sessão sem susto.</li>
+            <li>Benefício local para clientes Âmbar.</li>
           </ul>
         </div>
       </div>
-      <div class="note warn">
-        <b>Limite honesto:</b> é tudo de mentira (MSW e o navegador). Nenhum dado real de pessoa,
-        CPF de verdade ou integração com o sistema Pix do Banco Central. Os textos da tela dizem
-        isso.
+      <div class="note">
+        <b>A regra dos benefícios:</b> nada de vitrine de ofertas. Todo benefício é
+        <b>calculado sobre os gastos da pessoa</b> (“no último mês, R$ 19 teriam voltado”) e só
+        aparece se ela já gasta naquela categoria.
       </div>
       <div class="footer"><span>Âmbar · Planejamento</span><span>4</span></div>
     </section>
 
-    <!-- 5 · Phase 6: plans (decision) -->
+    <!-- 5 · Phases 5 and 6 -->
     <section class="page">
-      <p class="phase-num">Fase 6 · Decisão em aberto</p>
-      <h2 style="margin-top: 1mm">Planos</h2>
-      <p class="muted" style="max-width: 155mm">
-        “Planos” pode significar duas coisas bem diferentes. As duas cabem no Âmbar; a pergunta é
-        qual vem primeiro.
-      </p>
-
-      <div class="grid2" style="margin-top: 5mm">
-        <div class="card">
-          <p class="label">A · Planos de conta</p>
-          <p>
-            Níveis de conta, como “Âmbar” (grátis) e “Âmbar Mais” (pago), com benefícios diferentes.
-          </p>
-          <ul>
-            <li>Página de comparação de planos na landing.</li>
-            <li>Tela de “mudar de plano” na conta.</li>
-            <li>Combina com a Fase 8 (benefícios).</li>
-          </ul>
-          <p class="muted" style="margin-top: 3mm">
-            <b>Risco:</b> página de preço é o lugar onde bancos mais escondem letras miúdas. O Âmbar
-            teria que mostrar <i>quanto custa por mês e o que se ganha de volta</i>, calculado com
-            os gastos da pessoa.
-          </p>
-        </div>
-        <div class="card">
-          <p class="label">B · Planejamento financeiro</p>
-          <p>Metas e “caixinhas”: guardar para a viagem, para a reserva, para o IPVA.</p>
-          <ul>
-            <li>Criar uma meta com valor e data.</li>
-            <li>“Para chegar lá, guarde R$ X por mês”, calculado.</li>
-            <li>A projeção do painel passa a considerar o que vai para as caixinhas.</li>
-          </ul>
-          <p class="muted" style="margin-top: 3mm">
-            <b>Força:</b> é a frase-guia “sem susto no fim do mês” levada para o ano inteiro.
-          </p>
-        </div>
-      </div>
-
-      <div class="note">
-        <b>Recomendação:</b> começar pela <b>B (caixinhas e metas)</b>, porque é a mais fiel ao
-        conceito e usa o motor de insights. A <b>A (planos de conta)</b> entra junto com os
-        benefícios na Fase 8, quando houver vantagens reais para mostrar em cada nível.
-      </div>
-      <div class="footer"><span>Âmbar · Planejamento</span><span>5</span></div>
-    </section>
-
-    <!-- 6 · Phase 7: assistant -->
-    <section class="page">
-      <p class="phase-num">Fase 7</p>
-      <h2 style="margin-top: 1mm">Assistente virtual</h2>
-      <p class="muted" style="max-width: 155mm">
-        Um lugar para perguntar sobre o próprio dinheiro em português simples: “quanto posso gastar
-        por dia até o salário?”, “por que meu delivery subiu?”, “quais assinaturas eu tenho?”. A
-        regra de ouro do Âmbar vale aqui também: <b>o assistente nunca inventa um número</b>.
-      </p>
-
-      <div class="grid2" style="margin-top: 5mm">
-        <div class="card">
-          <p class="label">Etapa 1 · Assistente das regras</p>
-          <p>
-            Perguntas reconhecidas por intenção, e respostas montadas
-            <b>pelas mesmas regras do painel</b>.
-          </p>
-          <ul>
-            <li>Grátis, rápido e funciona na conta demo.</li>
-            <li>Toda resposta tem “Como calculamos isso?”.</li>
-            <li>Sugestões de perguntas, para ninguém travar na tela vazia.</li>
-            <li>Totalmente testável.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <p class="label">Etapa 2 · IA de verdade (opcional)</p>
-          <p>
-            A API do Claude entende perguntas livres e
-            <b>chama as nossas regras como ferramentas</b> para buscar os números.
-          </p>
-          <ul>
-            <li>Linguagem natural de verdade.</li>
-            <li>Precisa de servidor (rota do Next) e chave de API.</li>
-            <li>Tem custo por uso: limite de mensagens na demo.</li>
-            <li>A chave nunca vai para o navegador nem para o Git.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="note">
-        <b>Recomendação:</b> fazer a Etapa 1 primeiro. Ela já entrega o “uau” e cria as peças
-        (intenções, respostas com cálculo, interface de conversa) que a Etapa 2 reaproveita. A Etapa
-        2 entra se o custo e o servidor fizerem sentido no lançamento.
-      </div>
-
-      <div class="card">
-        <p class="label">Pronto quando</p>
-        <ul>
-          <li>Responde pelo menos 8 tipos de pergunta, cada um com o cálculo à mostra.</li>
-          <li>Quando não sabe, diz que não sabe e sugere o que perguntar.</li>
-          <li>Funciona com leitor de tela: cada resposta é anunciada, e o foco não se perde.</li>
-          <li>Testes de cada intenção; fluxo de conversa no Playwright.</li>
-        </ul>
-      </div>
-      <div class="footer"><span>Âmbar · Planejamento</span><span>6</span></div>
-    </section>
-
-    <!-- 7 · Phase 8 + 9 -->
-    <section class="page">
-      <p class="phase-num">Fase 8</p>
-      <h2 style="margin-top: 1mm">Benefícios e parceiros</h2>
-      <p class="muted" style="max-width: 155mm">
-        Benefício do jeito Âmbar: <b>calculado a partir dos gastos da pessoa</b>, não uma vitrine de
-        ofertas. “Você gastou R$ 380 com delivery este mês; com o cashback do parceiro, R$ 19
-        voltariam.”
-      </p>
-
-      <div class="note warn">
-        <b>Atenção: empresas reais.</b> Mostrar marcas reais como “parceiras” de um banco fictício
-        sugere um acordo que não existe. Isso é associação falsa de marca, pode gerar problema
-        jurídico mesmo num portfólio, e um avaliador atento percebe. <b>Recomendação:</b> parceiros
-        fictícios no mesmo padrão dos dados de hoje (StreamFlix, Rango Delivery, Drogaria Vida) ou
-        categorias genéricas (“cashback em farmácias”). Se um dia houver parceria de verdade, ela
-        entra com autorização por escrito.
-      </div>
-
+      <p class="phase-num">Fase 5 <span class="tag next" style="margin-left: 2mm">Próxima</span></p>
+      <h2 style="margin-top: 1mm">Fundação do banco</h2>
       <div class="grid2">
         <div class="card">
           <p class="label">O que entra</p>
           <ul>
-            <li>Cashback por categoria, calculado sobre o extrato.</li>
-            <li>“Quanto você teria ganhado no último mês”.</li>
-            <li>Parceiros fictícios com página própria.</li>
+            <li>
+              <b>Navegação de app:</b> barra inferior no celular (5 destinos), lateral no desktop.
+            </li>
+            <li>
+              <b>Dados ampliados:</b> cartão e fatura, contatos e chaves Pix, caixinhas, parceiros.
+            </li>
+            <li>
+              <b>API falsa que muda de estado:</b> mandar um Pix muda o saldo, com “desfazer” e
+              “recomeçar a demo”.
+            </li>
+            <li><b>Instalar como app</b> (PWA): ícone, tela de abertura.</li>
           </ul>
         </div>
         <div class="card">
           <p class="label">Pronto quando</p>
           <ul>
-            <li>Todo benefício mostrado vem de uma regra testada.</li>
-            <li>Nenhuma marca real, nenhum logo de terceiros.</li>
-            <li>Sem “oferta imperdível”: o tom continua calmo.</li>
+            <li>Início e Extrato funcionam dentro da navegação nova.</li>
+            <li>O app instala no celular e no desktop.</li>
+            <li>Os números da landing continuam os mesmos.</li>
+            <li>Os 63 testes atuais continuam verdes.</li>
           </ul>
         </div>
       </div>
 
-      <p class="phase-num" style="margin-top: 8mm">Fase 9</p>
+      <p class="phase-num" style="margin-top: 7mm">Fase 6</p>
+      <h2 style="margin-top: 1mm">Pix e transferências</h2>
+      <div class="grid2">
+        <div class="card">
+          <p class="label">O que entra</p>
+          <ul>
+            <li>Enviar por chave ou contato, com revisão.</li>
+            <li><b>“Depois desse Pix, sobram R$ X até dia 5”</b> antes de confirmar.</li>
+            <li>Agendar e Pix automático, com a projeção recalculada.</li>
+            <li>Receber: chaves, QR Code, copia e cola.</li>
+            <li><b>Rachar a conta:</b> uma cobrança Pix para cada amigo.</li>
+            <li>Pagar boleto e comprovante para compartilhar.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="label">Regras novas e tom</p>
+          <ul>
+            <li>Projeção depois de uma saída hipotética.</li>
+            <li>Divisão justa em centavos: nenhum centavo some ou sobra.</li>
+            <li><b>Avisa:</b> “Esse Pix aperta o mês”.</li>
+            <li><b>Não julga:</b> o aviso nunca bloqueia; a decisão é da pessoa.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>Âmbar · Planejamento</span><span>5</span></div>
+    </section>
+
+    <!-- 6 · Phases 7 and 8 -->
+    <section class="page">
+      <p class="phase-num">Fase 7</p>
+      <h2 style="margin-top: 1mm">Cartão</h2>
+      <div class="grid2">
+        <div class="card">
+          <p class="label">O que entra</p>
+          <ul>
+            <li>
+              <b>Fatura explicada em 3 frases:</b> a maior categoria, o que mudou, se dá para pagar
+              sem apertar o mês.
+            </li>
+            <li><b>Um cartão virtual por assinatura:</b> cancelar é apagar o cartão.</li>
+            <li>
+              <b>Parcelamento com custo real:</b> “12x sem juros na Mango” contra “à vista com
+              desconto”.
+            </li>
+            <li>Bloquear, desbloquear e ajustar o limite.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="label">Por que é especial</p>
+          <p>
+            O cartão virtual por assinatura conversa com a <b>Regra 3</b>: o Âmbar detecta a
+            assinatura, avisa quando ela vai renovar e deixa cancelar num gesto. Explica, avisa e
+            resolve.
+          </p>
+        </div>
+      </div>
+
+      <p class="phase-num" style="margin-top: 7mm">Fase 8</p>
+      <h2 style="margin-top: 1mm">Planejar</h2>
+      <div class="grid2">
+        <div class="card">
+          <p class="label">O que entra</p>
+          <ul>
+            <li><b>Caixinhas e metas:</b> “para a viagem, guarde R$ X por mês”.</li>
+            <li><b>“Posso comprar?”:</b> simula o MangoBook e mostra os próximos 12 meses.</li>
+            <li><b>Calendário do mês:</b> salário, contas, renovações e parcelas.</li>
+            <li><b>Painel de assinaturas</b> com o total por ano.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="label">Regras novas</p>
+          <ul>
+            <li>Aporte mensal para chegar a uma meta.</li>
+            <li>Projeção de 12 meses com uma compra.</li>
+            <li>Agenda do mês.</li>
+            <li>A projeção do painel passa a contar as caixinhas.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>Âmbar · Planejamento</span><span>6</span></div>
+    </section>
+
+    <!-- 7 · Phases 9 and 10 -->
+    <section class="page">
+      <p class="phase-num">Fase 9</p>
+      <h2 style="margin-top: 1mm">Benefícios e Âmbar Mais</h2>
+      <div class="grid2">
+        <div class="card">
+          <p class="label">O que entra</p>
+          <ul>
+            <li>Página de parceiros com a identidade de cada marca.</li>
+            <li>Cashback calculado: “no último mês, R$ X teriam voltado”.</li>
+            <li>Ofertas que respeitam: só da categoria em que você já gasta.</li>
+            <li><b>Âmbar Mais:</b> o plano pago, com MangoCare incluso.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="label">O jeito Âmbar de vender um plano</p>
+          <p>
+            Página de preço é onde os bancos escondem letras miúdas. O Âmbar faz o contrário: mostra
+            <b>quanto custa por mês e quanto volta</b>, calculado com os seus gastos. Se o plano não
+            se paga para você, ele diz.
+          </p>
+        </div>
+      </div>
+
+      <p class="phase-num" style="margin-top: 7mm">Fase 10</p>
+      <h2 style="margin-top: 1mm">Assistente e glossário</h2>
+      <div class="grid2">
+        <div class="card">
+          <p class="label">O que entra</p>
+          <ul>
+            <li>Conversa com pelo menos 8 tipos de pergunta, respondidas <b>pelas regras</b>.</li>
+            <li>Toda resposta com “Como calculamos isso?”.</li>
+            <li>Quando não sabe, diz e sugere o que perguntar.</li>
+            <li><b>Glossário vivo:</b> “rotativo”, “CET” explicados onde aparecem.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="label">Etapa opcional</p>
+          <p>
+            A API do Claude entende perguntas livres e chama as nossas regras como ferramentas.
+            Precisa de servidor e chave, e tem custo por uso. Entra se fizer sentido no lançamento.
+          </p>
+        </div>
+      </div>
+      <div class="footer"><span>Âmbar · Planejamento</span><span>7</span></div>
+    </section>
+
+    <!-- 8 · Phases 11 and 12 -->
+    <section class="page">
+      <p class="phase-num">Fase 11</p>
+      <h2 style="margin-top: 1mm">Retrospectiva e confiança</h2>
+      <div class="grid2">
+        <div class="card">
+          <p class="label">Retrospectiva do mês</p>
+          <p>
+            O “Wrapped” do dinheiro: telas animadas com os destaques de outubro (o último mês
+            completo), todos calculados. “Sua categoria do mês: mercado.”
+          </p>
+        </div>
+        <div class="card">
+          <p class="label">Confiança</p>
+          <ul>
+            <li><b>Modo discreto:</b> esconde os valores num toque.</li>
+            <li>Central de notificações calma.</li>
+            <li><b>Bloquear tudo</b> (cartões e Pix) num toque, com desfazer.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="phase-num" style="margin-top: 7mm">Fase 12</p>
       <h2 style="margin-top: 1mm">Cartão 3D personalizável</h2>
       <div class="grid2">
         <div class="card">
@@ -722,30 +768,27 @@
         <div class="card">
           <p class="label">Pronto quando</p>
           <ul>
-            <li>Roda a 60 quadros por segundo num celular médio.</li>
-            <li>Com movimento reduzido, fica parado e continua bonito.</li>
-            <li>Sem WebGL, cai no cartão em CSS sem quebrar nada.</li>
+            <li>60 quadros por segundo num celular médio.</li>
+            <li>Parado e bonito com movimento reduzido.</li>
+            <li>Sem WebGL, cai no cartão em CSS.</li>
           </ul>
         </div>
       </div>
-      <div class="footer"><span>Âmbar · Planejamento</span><span>7</span></div>
+      <div class="footer"><span>Âmbar · Planejamento</span><span>8</span></div>
     </section>
 
-    <!-- 8 · Phase 10: Remotion -->
+    <!-- 9 · Phases 13 and 14, decisions -->
     <section class="page">
-      <p class="phase-num">Fase 10</p>
-      <h2 style="margin-top: 1mm">Anúncios em vídeo com Remotion</h2>
-      <p class="muted" style="max-width: 155mm">
-        O Remotion faz vídeo <b>com código React</b>. Na prática, os anúncios usam as mesmas cores,
-        a mesma fonte, as mesmas molas e até os mesmos componentes do site: o cartão de saldo, a
-        tela de bloqueio do “Não julga”, o cartão de resina. Se o produto muda, o vídeo é
-        renderizado de novo, sem reeditar nada à mão.
+      <p class="phase-num">Fase 13</p>
+      <h2 style="margin-top: 1mm">Vídeos com Remotion</h2>
+      <p class="muted" style="max-width: 160mm">
+        Vídeo feito <b>com código React</b>: as mesmas cores, fontes, molas e componentes do site.
+        Se o produto muda, o vídeo é renderizado de novo.
       </p>
-
-      <table style="margin-top: 5mm">
+      <table>
         <thead>
           <tr>
-            <th>Roteiro</th>
+            <th>Vídeo</th>
             <th>Ideia</th>
             <th>Formato</th>
           </tr>
@@ -753,119 +796,58 @@
         <tbody>
           <tr>
             <td><b>Sem susto</b></td>
-            <td>O saldo, as contas e o “sobram R$ 612 até dia 5” se montando na tela.</td>
+            <td>o saldo e o “sobram R$ 612 até dia 5” se montando</td>
             <td>15 s · 9:16</td>
           </tr>
           <tr>
             <td><b>Não julga</b></td>
-            <td>A tela de bloqueio: “SALDO INSUFICIENTE” vira o recado calmo do Âmbar.</td>
+            <td>“SALDO INSUFICIENTE” vira o recado calmo do Âmbar</td>
             <td>15 s · 9:16</td>
           </tr>
           <tr>
             <td><b>Avisa antes</b></td>
-            <td>“StreamFlix renova amanhã”, com o histórico de cobranças subindo.</td>
+            <td>“StreamFlix renova amanhã”, o histórico subindo</td>
             <td>15 s · 9:16</td>
           </tr>
           <tr>
             <td><b>O Âmbar</b></td>
-            <td>Os três pilares e o cartão de resina girando no final.</td>
+            <td>os pilares, os parceiros e o cartão 3D girando</td>
             <td>30 s · 16:9</td>
           </tr>
+          <tr>
+            <td><b>Sua retrospectiva</b></td>
+            <td>o “Wrapped” da Marina, renderizado com os dados dela</td>
+            <td>20 s · 9:16</td>
+          </tr>
         </tbody>
       </table>
 
-      <div class="grid2" style="margin-top: 5mm">
-        <div class="card">
-          <p class="label">Pronto quando</p>
-          <ul>
-            <li>Os quatro vídeos renderizados em MP4, com legenda.</li>
-            <li>Os números dos vídeos vêm dos mesmos dados da Marina.</li>
-            <li>Música livre de direitos, com a licença registrada.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <p class="label">Cuidados</p>
-          <ul>
-            <li>
-              Licença do Remotion: gratuita para pessoa física e times pequenos; conferir as
-              condições antes de qualquer uso comercial.
-            </li>
-            <li>Nenhuma marca, pessoa ou voz real.</li>
-            <li>Os vídeos dizem que o Âmbar é fictício.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer"><span>Âmbar · Planejamento</span><span>8</span></div>
-    </section>
-
-    <!-- 9 · Launch + decisions + next steps -->
-    <section class="page">
-      <p class="phase-num">Fase 11</p>
+      <p class="phase-num" style="margin-top: 6mm">Fase 14</p>
       <h2 style="margin-top: 1mm">Lançamento</h2>
-      <div class="card">
-        <ul>
-          <li>Publicação na Vercel, com a demo funcionando de ponta a ponta.</li>
-          <li>Lighthouse no celular: acessibilidade 100, desempenho 90 ou mais.</li>
-          <li>Auditoria final de interface (<i>impeccable audit</i>), sem problemas P0 nem P1.</li>
-          <li>README que explica o projeto em 90 segundos, com os vídeos da Fase 10.</li>
-        </ul>
-      </div>
+      <p>
+        Vercel, Lighthouse no celular (acessibilidade 100, desempenho 90+), auditoria final de
+        interface e o README com os vídeos.
+      </p>
 
-      <p class="eyebrow" style="margin-top: 8mm">Decisões para você</p>
-      <h2>O que precisa da sua resposta.</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Pergunta</th>
-            <th>Recomendação</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="num">1</td>
-            <td>“Planos” são planos de conta (A) ou caixinhas e metas (B)?</td>
-            <td>B primeiro, A junto com os benefícios</td>
-          </tr>
-          <tr>
-            <td class="num">2</td>
-            <td>O assistente usa IA de verdade (com custo e servidor) ou só as regras?</td>
-            <td>Regras primeiro; IA como etapa 2</td>
-          </tr>
-          <tr>
-            <td class="num">3</td>
-            <td>Parceiros reais ou fictícios?</td>
-            <td>Fictícios</td>
-          </tr>
-          <tr>
-            <td class="num">4</td>
-            <td>O cartão 3D vai para depois das funções de banco?</td>
-            <td>Sim (Fase 9)</td>
-          </tr>
-          <tr>
-            <td class="num">5</td>
-            <td>
-              Alguma função de banco que ficou de fora? (boleto, fatura do cartão, investimentos)
-            </td>
-            <td>Boleto e fatura cabem na Fase 5 ou numa 5b</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p class="eyebrow" style="margin-top: 8mm">Próximos passos</p>
-      <div class="timeline">
-        <div class="when">Agora</div>
-        <div><p>Você responde às 5 decisões.</p></div>
-        <div class="when">Depois</div>
-        <div>
-          <p>
-            Detalhar a Fase 5 na SPEC (telas, regras, “pronto quando”) e montar o visual para
-            aprovação, como fizemos com o extrato.
-          </p>
-        </div>
-        <div class="when">Em paralelo</div>
-        <div><p>Fechar as pendências da Fase 1: Lighthouse e auditoria de interface.</p></div>
-      </div>
+      <p class="eyebrow" style="margin-top: 6mm">Decisões tomadas em 17/11/2026</p>
+      <ul>
+        <li>
+          <b>Ordem:</b> as 10 fases. <b>Parceiros:</b> Mango, ZOD, Nexo e Drago’s; nenhuma marca
+          real.
+        </li>
+        <li>
+          <b>Planos:</b> caixinhas e metas na Fase 8; o plano Âmbar Mais com os benefícios, na Fase
+          9.
+        </li>
+        <li>
+          <b>Assistente:</b> regras primeiro; IA de verdade como etapa opcional. <b>Vercel:</b> só
+          no lançamento.
+        </li>
+      </ul>
+      <p class="muted" style="margin-top: 3mm">
+        <b>Próximo passo:</b> o visual da navegação nova (Fase 5), no celular e no desktop, para
+        aprovação.
+      </p>
       <div class="footer"><span>Âmbar · Planejamento</span><span>9</span></div>
     </section>
 
