@@ -39,7 +39,7 @@ export function NoJudgmentSection() {
           <Money cents={BALANCE} /> na conta. O mesmo momento, contado de dois jeitos.
         </p>
 
-        <fieldset className="reveal mt-10 inline-flex rounded-pill bg-ink/[0.06] p-1">
+        <fieldset className="reveal relative z-10 mt-10 inline-flex rounded-pill bg-ink/[0.06] p-1">
           <legend className="sr-only">Ver a mensagem de</legend>
           {/* Starts on the usual bank: switching to Âmbar is the reveal the visitor makes. */}
           <Segment id="nj-common" label="Banco comum" checked />
@@ -51,7 +51,7 @@ export function NoJudgmentSection() {
           {/* Warm halo behind the phone, only for Âmbar */}
           <div
             aria-hidden="true"
-            className={`absolute -inset-24 -z-0 rounded-full bg-[radial-gradient(closest-side,rgb(242_140_40/0.28),transparent)] opacity-0 blur-2xl ${SWAP} group-has-[#nj-ambar:checked]:opacity-100`}
+            className={`pointer-events-none absolute -inset-24 -z-0 rounded-full bg-[radial-gradient(closest-side,rgb(242_140_40/0.28),transparent)] opacity-0 blur-2xl ${SWAP} group-has-[#nj-ambar:checked]:opacity-100`}
           />
           <div className="relative aspect-[9/19] rounded-[3rem] bg-ink p-2.5 shadow-[0_40px_80px_-30px_rgb(22_18_14/0.55),inset_0_0_0_1px_rgb(255_255_255/0.08)]">
             <div className="relative h-full overflow-hidden rounded-[2.5rem] text-left">
