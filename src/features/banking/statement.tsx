@@ -76,48 +76,52 @@ const SEGMENT_COLOR: Record<SegmentKey, string> = {
 function MonthSummary({ month, current }: { month: MonthGroup; current: boolean }) {
   const segments = month.segments.filter((s) => s.spent > 0);
   return (
-    <div className={CARD}>
-      <h2 className="text-2xl font-semibold tracking-tight first-letter:uppercase">
-        {month.label}
-        {current && <span className="ml-2 text-base font-normal text-ink-muted">até hoje</span>}
-      </h2>
-      <dl className="mt-7 grid grid-cols-2 gap-6">
-        <div>
-          <dt className="text-sm text-ink-muted">Entrou</dt>
-          <dd className="mt-1 text-2xl font-semibold text-positive tabular-nums">
-            <Money cents={month.income} />
-          </dd>
+    <div className={`${CARD} grid gap-8 md:grid-cols-[1fr_15rem] md:items-center`}>
+      <div>
+        <h2 className="text-2xl font-semibold tracking-tight first-letter:uppercase">
+          {month.label}
+          {current && <span className="ml-2 text-base font-normal text-ink-muted">até hoje</span>}
+        </h2>
+        <dl className="mt-7 grid grid-cols-2 gap-6">
+          <div>
+            <dt className="text-sm text-ink-muted">Entrou</dt>
+            <dd className="mt-1 text-2xl font-semibold text-positive tabular-nums">
+              <Money cents={month.income} />
+            </dd>
+          </div>
+          <div>
+            <dt className="text-sm text-ink-muted">Saiu</dt>
+            <dd className="mt-1 text-2xl font-semibold tabular-nums">
+              <Money cents={month.spent} />
+            </dd>
+          </div>
+        </dl>
+        {/* The bar is decorative for screen readers: the legend next to it writes every value. */}
+        <div aria-hidden="true" className="mt-8 flex h-4 gap-1">
+          {segments.map((s) => (
+            <span
+              key={s.key}
+              title={s.label}
+              className={`min-w-1.5 rounded-pill ${SEGMENT_COLOR[s.key]}`}
+              style={{ width: `${(s.spent / month.spent) * 100}%` }}
+            />
+          ))}
         </div>
-        <div>
-          <dt className="text-sm text-ink-muted">Saiu</dt>
-          <dd className="mt-1 text-2xl font-semibold tabular-nums">
-            <Money cents={month.spent} />
-          </dd>
-        </div>
-      </dl>
-      {/* The bar is decorative for screen readers: the legend below writes every value. */}
-      <div aria-hidden="true" className="mt-8 flex h-4 gap-1">
-        {segments.map((s) => (
-          <span
-            key={s.key}
-            title={s.label}
-            className={`min-w-1.5 rounded-pill ${SEGMENT_COLOR[s.key]}`}
-            style={{ width: `${(s.spent / month.spent) * 100}%` }}
-          />
-        ))}
       </div>
+
+      {/* Legend in its own box, beside the bar on wide screens, below it on phones. */}
       <ul
         aria-label="Para onde foi o dinheiro"
-        className="mt-6 grid grid-cols-1 gap-x-10 gap-y-3 text-sm sm:grid-cols-2 lg:grid-cols-3"
+        className="space-y-3 rounded-2xl bg-paper p-5 text-sm"
       >
         {segments.map((s) => (
-          <li key={s.key} className="flex items-center gap-2">
+          <li key={s.key} className="flex items-center gap-2.5">
             <span
               aria-hidden="true"
               className={`size-2.5 shrink-0 rounded-full ${SEGMENT_COLOR[s.key]}`}
             />
             <span className="text-ink-muted">{s.label}</span>
-            <span className="ml-auto tabular-nums">
+            <span className="ml-auto pl-4 tabular-nums">
               <Money cents={s.spent} />
             </span>
           </li>
