@@ -5,7 +5,7 @@
 <br />
 <br />
 
-<img src="https://img.shields.io/badge/status-Fase%204%20·%20qualidade-F28C28?style=flat-square&labelColor=16120E" alt="Status: Fase 4, qualidade" />
+<img src="https://img.shields.io/badge/status-Fase%205%20·%20fundação-F28C28?style=flat-square&labelColor=16120E" alt="Status: Fase 5, fundação do banco" />
 <a href="https://github.com/guilhermesolagarcia/Projeto-Banco/actions/workflows/ci.yml"><img src="https://github.com/guilhermesolagarcia/Projeto-Banco/actions/workflows/ci.yml/badge.svg" alt="CI: lint, tipos e testes" /></a>
 <img src="https://img.shields.io/badge/Next.js-16-16120E?style=flat-square&logo=nextdotjs&logoColor=F4F0EA" alt="Next.js 16" />
 <img src="https://img.shields.io/badge/TypeScript-strict-16120E?style=flat-square&logo=typescript&logoColor=F4F0EA" alt="TypeScript strict" />
@@ -94,13 +94,13 @@ O Âmbar faz o contrário. A dor que originou o projeto foi simples: _"elementos
 
 <img src="docs/readme/cartao.png" alt="Seção Cartão: cartão de resina âmbar flutuando no escuro" width="100%" />
 
-<p align="center"><sub><b>Cartão</b> · 100% CSS, com o sol gravado. Vira a versão 2D de reserva do cartão 3D da Fase 5.</sub></p>
+<p align="center"><sub><b>Cartão</b> · 100% CSS, com o sol gravado. Vira a versão 2D de reserva do cartão 3D da Fase 12.</sub></p>
 
 <br />
 
 <img src="docs/readme/painel.png" alt="Painel da conta demo: projeção até o salário, saldo, avisos e últimas transações" width="100%" />
 
-<p align="center"><sub><b>Painel</b> · nada aqui é texto fixo: R$ 612,00, a renovação e a comparação saem das regras rodando sobre 148 transações, servidas por uma API falsa (MSW).</sub></p>
+<p align="center"><sub><b>Painel</b> · a lateral mostra todos os destinos; no celular, uma barra com cinco. Nada aqui é texto fixo: R$ 612,00, a renovação e a comparação saem das regras rodando sobre 148 transações, servidas por uma API falsa (MSW).</sub></p>
 
 <br />
 
@@ -116,7 +116,7 @@ O Âmbar faz o contrário. A dor que originou o projeto foi simples: _"elementos
   <img src="docs/readme/mobile-clareza.png" alt="Simulador no celular" width="30%" />
   &nbsp;
   <img src="docs/readme/mobile-painel.png" alt="Painel no celular" width="30%" />
-  <p><sub><b>Mobile-first</b> · a partir de 320 px, sem rolagem lateral (um teste do Playwright garante). No celular, o exemplo aparece antes do botão.</sub></p>
+  <p><sub><b>Mobile-first</b> · a partir de 320 px, sem rolagem lateral (um teste do Playwright garante). No celular, o exemplo aparece antes do botão, e a navegação vira uma barra inferior de cinco lugares, acima da barrinha de gestos do iPhone.</sub></p>
 </div>
 
 <br />
@@ -202,14 +202,23 @@ npm run dev        # → http://localhost:3000
 
 Cada ferramenta entra **só quando o problema dela aparece**.
 
-| Fase | Entrega                                              | Ferramentas                                            |     |
-| :--: | :--------------------------------------------------- | :----------------------------------------------------- | :-: |
-|  0   | Conceito, marca, validação com conselho de IAs, spec | `brainstorming` · `llm-council`                        | ✅  |
-|  1   | Fundação e landing                                   | Next.js · TypeScript · Tailwind · ESLint · Prettier    | 🔄  |
-|  2   | Login com conta demo                                 | React Hook Form · Zod                                  | ✅  |
-|  3   | Dashboard e extrato com o motor de insights          | MSW · TanStack Query · Motion                          | ✅  |
-|  4   | Qualidade                                            | Vitest · Testing Library · Playwright · GitHub Actions | 🔄  |
-|  5   | Cartão 3D personalizável                             | React Three Fiber · drei                               |     |
+| Fase | Entrega                                                              | Ferramentas                                            |     |
+| :--: | :------------------------------------------------------------------- | :----------------------------------------------------- | :-: |
+|  0   | Conceito, marca, validação com conselho de IAs, spec                 | `brainstorming` · `llm-council`                        | ✅  |
+|  1   | Fundação e landing                                                   | Next.js · TypeScript · Tailwind · ESLint · Prettier    | 🔄  |
+|  2   | Login com conta demo                                                 | React Hook Form · Zod                                  | ✅  |
+|  3   | Dashboard e extrato com o motor de insights                          | MSW · TanStack Query · Motion                          | ✅  |
+|  4   | Qualidade                                                            | Vitest · Testing Library · Playwright · GitHub Actions | ✅  |
+|  5   | Fundação do banco: navegação de app, demo com estado, app instalável | manifesto do Next (PWA, sem service worker próprio)    | ✅  |
+|  6   | Pix e transferências                                                 | —                                                      |     |
+|  7   | Cartão                                                               | —                                                      |     |
+|  8   | Planejar: caixinhas, metas, "Posso comprar?"                         | —                                                      |     |
+|  9   | Benefícios e Âmbar Mais                                              | —                                                      |     |
+|  10  | Assistente e glossário                                               | —                                                      |     |
+|  11  | Retrospectiva e confiança                                            | —                                                      |     |
+|  12  | Cartão 3D personalizável                                             | React Three Fiber · drei                               |     |
+|  13  | Vídeos com Remotion                                                  | Remotion                                               |     |
+|  14  | Lançamento                                                           | —                                                      |     |
 
 **Landing:** ✅ hero · ✅ clareza · ✅ avisos · ✅ cartão · ✅ não julga · ✅ perguntas · ✅ fechamento · ✅ rodapé
 
