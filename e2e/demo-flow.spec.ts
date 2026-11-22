@@ -195,3 +195,20 @@ test("a demo action survives a reload, and starting over undoes it", async ({ pa
   ).toBeVisible();
   await expect(page.getByText("Pix para Lucas Andrade").visible()).toHaveCount(0);
 });
+
+test("manifest: the Âmbar installs as an app that opens on the dashboard", async ({ request }) => {
+  const response = await request.get("/manifest.webmanifest");
+  expect(response.status()).toBe(200);
+  const manifest = (await response.json()) as {
+    display: string;
+    start_url: string;
+    icons: { src: string; sizes: string }[];
+  };
+  expect(manifest).toMatchObject({ display: "standalone", start_url: "/inicio" });
+  expect([...new Set(manifest.icons.map((i) => i.sizes))]).toEqual(["192x192", "512x512"]);
+  for (const icon of manifest.icons) {
+    const image = await request.get(icon.src);
+    expect(image.status(), icon.src).toBe(200);
+    expect(image.headers()["content-type"]).toBe("image/png");
+  }
+});

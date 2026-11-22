@@ -16,11 +16,16 @@ export const metadata: Metadata = {
   title: "Âmbar · Sem susto no fim do mês",
   description:
     "Âmbar é um banco digital fictício que explica, avisa e não julga. Projeto de portfólio.",
+  // Installed on the iPhone: its own name under the icon, full screen, dark status bar text.
+  appleWebApp: { capable: true, title: "Âmbar", statusBarStyle: "default" },
 };
 
 // Mobile browser bar matches the paper background, so the site feels like an app.
+// viewportFit "cover": the page goes under the notch, and env(safe-area-inset-*) keeps the
+// bottom bar clear of the home indicator.
 export const viewport: Viewport = {
   themeColor: "#f4f0ea",
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
