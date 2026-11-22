@@ -43,6 +43,7 @@ const ICONS = {
       <circle cx="9" cy="17" r="2" />
     </>
   ),
+  reset: <path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4v3.5H8" />,
   out: <path d="M14 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4M10 8l-4 4 4 4M6 12h9" />,
   chevron: <path d="m9 6 6 6-6 6" />,
 } satisfies Record<string, ReactNode>;

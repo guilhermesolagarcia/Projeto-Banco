@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SignOutButton } from "@/features/auth/sign-out-button";
 import { NavIcon } from "@/features/banking/nav-icons";
 import { NAV_ITEMS } from "@/features/banking/nav-items";
+import { ResetDemoLoader } from "@/features/banking/reset-demo-loader";
 
 export const metadata: Metadata = { title: "Mais · Âmbar" };
 
@@ -45,6 +46,9 @@ export default function MorePage() {
       <h2 className="mt-8 px-1 text-sm font-medium text-ink-muted">Demonstração</h2>
       <ul className={`${LIST} mt-2.5`}>
         <li>
+          <ResetDemoLoader className={ROW} />
+        </li>
+        <li className="border-t border-ink/10">
           <SignOutButton className={ROW}>
             <NavIcon name="out" className="size-6 text-ink-muted" />
             <span className="font-medium">Sair</span>

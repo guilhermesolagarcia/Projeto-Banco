@@ -11,6 +11,7 @@ export const CATEGORY_LABEL: Record<Category, string> = {
   transporte: "Transporte",
   lazer: "Lazer",
   saude: "Saúde",
+  transferencias: "Transferências",
 };
 
 /** "YYYY-MM-DD" → text in pt-BR, read as a calendar day (UTC) so server and browser agree. */

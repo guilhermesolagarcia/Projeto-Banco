@@ -152,3 +152,46 @@ test.describe("app navigation on a phone", () => {
     expect(end!.y + end!.height).toBeLessThanOrEqual(bar!.y);
   });
 });
+
+test("a demo action survives a reload, and starting over undoes it", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await signIn(page);
+  await expect(
+    page
+      .getByText(/4\.218,90/)
+      .visible()
+      .first(),
+  ).toBeVisible();
+
+  // The Pix screen arrives in Phase 6: send one straight to the fake API, as that screen will.
+  await page.evaluate(() =>
+    fetch("/api/demo/acoes", {
+      method: "POST",
+      body: JSON.stringify({ type: "pix-out", date: "2026-11-23", contactId: "c1", amount: 5000 }),
+    }),
+  );
+  // A plain reload (F5): the service worker stays on and the action comes back from localStorage.
+  await page.reload();
+  await expect(
+    page
+      .getByText(/4\.168,90/)
+      .visible()
+      .first(),
+  ).toBeVisible();
+  await expect(page.getByText("Pix para Lucas Andrade").visible()).toBeVisible();
+
+  await page.goto("/mais");
+  await page.getByRole("button", { name: /Recomeçar a demo/ }).click();
+  await expect(
+    page.getByRole("status").filter({ hasText: "A demo voltou ao começo." }),
+  ).toBeVisible();
+
+  await page.getByRole("link", { name: "Início" }).visible().click();
+  await expect(
+    page
+      .getByText(/4\.218,90/)
+      .visible()
+      .first(),
+  ).toBeVisible();
+  await expect(page.getByText("Pix para Lucas Andrade").visible()).toHaveCount(0);
+});

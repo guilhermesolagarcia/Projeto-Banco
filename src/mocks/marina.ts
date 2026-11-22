@@ -16,7 +16,9 @@ export type Category =
   | "delivery"
   | "transporte"
   | "lazer"
-  | "saude";
+  | "saude"
+  // Money sent to people (demo Pix). Not day-to-day spending, so it stays out of the daily average.
+  | "transferencias";
 
 /** Day-to-day spending: the base of the daily average (Rule 1) and of the comparison (Rule 2). */
 export const VARIABLE_CATEGORIES: readonly Category[] = [
