@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { setupServer } from "msw/node";
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { DashboardData } from "@/features/banking/dashboard-data";
 import { handlers } from "./handlers";
 
@@ -46,5 +46,22 @@ describe("the stateful demo API", () => {
   it("refuses an action with the wrong shape", async () => {
     const response = await post("/api/demo/acoes", { type: "pix-out", amount: -5 });
     expect(response.status).toBe(400);
+  }, 15_000);
+});
+
+describe("on plain http (a phone opening the dev server by its network IP)", () => {
+  // crypto.randomUUID only exists on https and localhost.
+  beforeEach(() => vi.stubGlobal("crypto", { ...crypto, randomUUID: undefined }));
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("still records a sent Pix", async () => {
+    const sent = await post("/api/demo/acoes", {
+      type: "pix-out",
+      date: "2026-11-23",
+      contactId: "c1",
+      amount: 5000,
+    });
+    expect(sent.ok).toBe(true);
+    expect(await balance()).toBe(421890 - 5000);
   }, 15_000);
 });

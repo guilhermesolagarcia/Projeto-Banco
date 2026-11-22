@@ -47,7 +47,9 @@ export const handlers = [
   /** Body: a DemoAction without its id. */
   http.post("/api/demo/acoes", async ({ request }) => {
     const body: unknown = await request.json().catch(() => null);
-    const action = { ...(body as object), id: crypto.randomUUID() };
+    // Not crypto.randomUUID(): it is missing on plain http (a phone on the dev server's network IP).
+    const id = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+    const action = { ...(body as object), id };
     if (!isDemoAction(action)) return new HttpResponse(null, { status: 400 });
     const state = applyAction(loadDemoState(), action);
     saveDemoState(state);
