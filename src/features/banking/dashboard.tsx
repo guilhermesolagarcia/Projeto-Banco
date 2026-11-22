@@ -2,7 +2,9 @@
 
 import { useQuery } from "@tanstack/react-query";
 import * as m from "motion/react-m";
+import Link from "next/link";
 import type { ReactNode } from "react";
+import { NavIcon } from "./nav-icons";
 import { Money } from "@/components/money";
 import { fetchDashboard } from "./api";
 import type { DashboardData } from "./dashboard-data";
@@ -206,6 +208,14 @@ function DashboardView({ data }: { data: DashboardData }) {
           <p className="relative mt-2 text-[clamp(2rem,9vw,3rem)] font-semibold tracking-tight">
             <AnimatedMoney cents={data.balance} />
           </p>
+          {/* Looking at the balance is when "where did it go?" comes up: the statement is one tap away. */}
+          <Link
+            href="/extrato"
+            className="relative mt-5 inline-flex items-center gap-1.5 rounded-pill bg-on-dark/12 py-2.5 pr-3.5 pl-4 text-sm font-medium transition-colors hover:bg-on-dark/20"
+          >
+            Ver extrato
+            <NavIcon name="chevron" className="size-4" />
+          </Link>
         </m.section>
 
         {/* Alerts: only what the rules found today */}

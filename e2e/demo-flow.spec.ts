@@ -28,7 +28,8 @@ test("the whole demo: landing → login → dashboard → statement", async ({ p
   ).toBeVisible();
   await expect(page.getByText(/StreamFlix renova amanhã/).visible()).toBeVisible();
 
-  await page.getByRole("link", { name: "Extrato" }).click();
+  // The shortcut on the balance card (the bottom bar keeps the statement inside "Mais").
+  await page.getByRole("link", { name: "Ver extrato" }).click();
   await expect(page).toHaveURL(/\/extrato$/);
   // People click the whole pill (the label); the radio inside is visually hidden.
   const delivery = page.getByRole("radio", { name: "Delivery" });
@@ -51,9 +52,11 @@ test("the banking area sends visitors without a session to the login", async ({ 
   await expect(page.getByRole("heading", { name: "Olá, Marina." })).toBeHidden();
 });
 
-test("signing out ends the session", async ({ page }) => {
+test("signing out ends the session", async ({ page, isMobile }) => {
   await signIn(page);
-  await page.getByRole("button", { name: "Sair" }).click();
+  // Desktop: at the foot of the sidebar. Phone: inside "Mais".
+  if (isMobile) await page.getByRole("link", { name: "Mais" }).click();
+  await page.getByRole("button", { name: "Sair" }).visible().click();
   await expect(page).toHaveURL(/\/login$/);
   await page.goto("/extrato");
   await expect(page).toHaveURL(/\/login$/);
@@ -91,7 +94,20 @@ test.describe("at 320 px wide (the smallest common phone)", () => {
   // SPEC: "a partir de 320 px, sem rolagem horizontal". A fieldset once broke this on /extrato.
   test("no page scrolls sideways", async ({ page }) => {
     // Public pages first: once signed in, /login redirects to the dashboard.
-    const pages = ["/", "/login", "signin", "/inicio", "/extrato"];
+    const pages = [
+      "/",
+      "/login",
+      "signin",
+      "/inicio",
+      "/extrato",
+      "/pix",
+      "/cartao",
+      "/planejar",
+      "/beneficios",
+      "/assistente",
+      "/configuracoes",
+      "/mais",
+    ];
     for (const path of pages) {
       if (path === "signin") {
         await signIn(page);
@@ -108,5 +124,31 @@ test.describe("at 320 px wide (the smallest common phone)", () => {
         `${path} is ${scrollWidth}px wide on a ${width}px screen`,
       ).toBeLessThanOrEqual(width);
     }
+  });
+});
+
+test.describe("app navigation on a phone", () => {
+  test.skip(({ isMobile }) => !isMobile, "The bottom bar is the phone's navigation.");
+
+  test("the bottom bar has five places and marks the current one", async ({ page }) => {
+    await signIn(page);
+    await page.goto("/pix");
+    const bar = page.getByRole("navigation", { name: "Principal" }).visible();
+    await expect(bar.getByRole("link")).toHaveCount(5);
+    await expect(bar.getByRole("link", { name: "Pix" })).toHaveAttribute("aria-current", "page");
+  });
+
+  test("the end of the page stays above the bar", async ({ page }) => {
+    await signIn(page);
+    const last = page
+      .getByRole("heading", { name: "Últimas transações" })
+      .locator("..")
+      .getByRole("listitem")
+      .last();
+    await last.scrollIntoViewIfNeeded();
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    const bar = await page.getByRole("navigation", { name: "Principal" }).visible().boundingBox();
+    const end = await last.boundingBox();
+    expect(end!.y + end!.height).toBeLessThanOrEqual(bar!.y);
   });
 });

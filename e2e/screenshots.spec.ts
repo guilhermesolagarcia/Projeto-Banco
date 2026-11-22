@@ -45,7 +45,7 @@ test.describe("desktop", () => {
     await signIn(page);
     await settle(page);
     await page.screenshot({ path: `${OUT}/painel.png`, fullPage: true });
-    await page.getByRole("link", { name: "Extrato" }).click();
+    await page.getByRole("link", { name: "Ver extrato" }).click();
     await expect(page.getByRole("radio", { name: "novembro" })).toBeChecked();
     await settle(page);
     await page.screenshot({ path: `${OUT}/extrato.png` });
