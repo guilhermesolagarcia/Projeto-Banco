@@ -5,7 +5,7 @@
 <br />
 <br />
 
-<img src="https://img.shields.io/badge/status-Fase%205%20·%20fundação-F28C28?style=flat-square&labelColor=16120E" alt="Status: Fase 5, fundação do banco" />
+<img src="https://img.shields.io/badge/status-Fase%206%20·%20Pix-F28C28?style=flat-square&labelColor=16120E" alt="Status: Fase 6, Pix e transferências" />
 <a href="https://github.com/guilhermesolagarcia/Projeto-Banco/actions/workflows/ci.yml"><img src="https://github.com/guilhermesolagarcia/Projeto-Banco/actions/workflows/ci.yml/badge.svg" alt="CI: lint, tipos e testes" /></a>
 <img src="https://img.shields.io/badge/Next.js-16-16120E?style=flat-square&logo=nextdotjs&logoColor=F4F0EA" alt="Next.js 16" />
 <img src="https://img.shields.io/badge/TypeScript-strict-16120E?style=flat-square&logo=typescript&logoColor=F4F0EA" alt="TypeScript strict" />
@@ -210,7 +210,7 @@ Cada ferramenta entra **só quando o problema dela aparece**.
 |  3   | Dashboard e extrato com o motor de insights                          | MSW · TanStack Query · Motion                          | ✅  |
 |  4   | Qualidade                                                            | Vitest · Testing Library · Playwright · GitHub Actions | ✅  |
 |  5   | Fundação do banco: navegação de app, demo com estado, app instalável | manifesto do Next (PWA, sem service worker próprio)    | ✅  |
-|  6   | Pix e transferências                                                 | —                                                      |     |
+|  6   | Pix e transferências                                                 | —                                                      | 🔄  |
 |  7   | Cartão                                                               | —                                                      |     |
 |  8   | Planejar: caixinhas, metas, "Posso comprar?"                         | —                                                      |     |
 |  9   | Benefícios e Âmbar Mais                                              | —                                                      |     |
