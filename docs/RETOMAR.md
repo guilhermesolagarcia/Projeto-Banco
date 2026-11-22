@@ -1,25 +1,27 @@
 # Como retomar o Âmbar
 
-> Atualizado em 17/11/2026. Leia isto primeiro em qualquer sessão nova.
+> Atualizado em 22/11/2026. Leia isto primeiro em qualquer sessão nova.
 
 ## Onde paramos
 
-- **Fases 0 a 4 prontas:** landing, login demo, painel, extrato, motor de insights (3 regras), API falsa (MSW), Motion, 47 testes Vitest (100% nas regras) + 16 Playwright, CI no GitHub Actions.
+- **Fases 0 a 5 prontas:** landing, login demo, painel, extrato, motor de insights (3 regras), API falsa (MSW) com estado (um Pix da demo sobrevive ao F5; "Recomeçar a demo" no Mais), navegação de app (barra inferior no celular, lateral no desktop), dados do cartão, Pix, caixinhas e parceiros, app instalável. 68 testes Vitest (100% nas regras) + 22 Playwright, CI no GitHub Actions.
 - **Planejamento aprovado** para as Fases 5 a 14 (banco completo):
   - Visão geral para ler: `docs/planejamento/ambar-planejamento.pdf`
   - O "contrato" de todas as fases: `docs/superpowers/specs/2026-11-17-ambar-expansion-design.md`
-  - O plano detalhado da próxima fase: `docs/superpowers/plans/2026-11-17-fase-5-fundacao.md`
+  - O que aconteceu na Fase 5: `docs/diario/2026-11-22.md`
 - **Parceiros:** Mango (a "Apple" do universo), ZOD, Nexo e Drago's Tattoo, marcas fictícias do próprio autor. Nenhuma marca real.
 
 ## Próximo passo exato
 
-**Fase 5, Tarefa 1:** montar o visual da navegação nova (barra inferior no celular, lateral no desktop, tela "Mais") como protótipo, fotografar com o Playwright e **esperar a aprovação** antes de qualquer código.
+1. **Push da `main`** (11 commits da Fase 5 ainda só locais) e conferir o CI verde.
+2. **Conferência manual do app instalável:** DevTools → Application → Manifest sem erros; "Adicionar à tela inicial" no celular abre no Início.
+3. **Fase 6 · Pix e transferências:** escrever o plano (`superpowers:writing-plans`) a partir da seção Fase 6 da spec. Ele já tem a base: `POST /api/demo/acoes` (tipo `pix-out`), `PIX_CONTACTS` e `PIX_KEYS` em `src/mocks/pix.ts`, categoria `transferencias`. Começar pelo visual para aprovação, como na Fase 5.
 
 Execução escolhida: o próprio Claude, tarefa por tarefa, na conversa, com revisão no fim.
 
 ## Texto para colar numa sessão nova
 
-> Vamos continuar o Âmbar. Leia `docs/RETOMAR.md`, depois o plano `docs/superpowers/plans/2026-11-17-fase-5-fundacao.md`, e comece pela Tarefa 1 (o visual da navegação para eu aprovar). Execução: você mesmo, tarefa por tarefa.
+> Vamos continuar o Âmbar. Leia `docs/RETOMAR.md` e a seção Fase 6 da spec `docs/superpowers/specs/2026-11-17-ambar-expansion-design.md`. Escreva o plano da Fase 6 e comece pelo visual do Pix para eu aprovar. Execução: você mesmo, tarefa por tarefa.
 
 ## Como trabalhamos (combinado)
 
@@ -56,3 +58,5 @@ node docs/planejamento/gerar-pdf.mjs                               # regera o PD
 - Lighthouse no celular e `impeccable audit` (Fase 1).
 - **Talvez:** revisitar o resumo do mês no extrato.
 - Extrato ocupa só metade da largura no desktop: manter, centralizar ou alargar (decisão do dono).
+- Vão em branco dentro do cartão da projeção no desktop.
+- Sair da conta não apaga as ações da demo ("Recomeçar a demo" apaga).
